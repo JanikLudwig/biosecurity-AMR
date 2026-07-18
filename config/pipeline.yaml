@@ -1,0 +1,23 @@
+amrfinder:
+  backend: auto
+  docker_image: ncbi/amr:4.2.7-2026-05-15.1
+  organism: Staphylococcus_aureus
+  threads: 4
+  plus: false
+paths:
+  genomes: data/raw/genomes
+  amrfinder_results: data/interim/amrfinder
+  amrfinder_logs: logs/amrfinder
+  reports: reports
+  processed: data/processed
+antibiotics:
+  selected: []
+cohort:
+  min_cases_per_class: 10
+  pilot_size: 20
+  random_seed: 42
+  qc_filters:
+    require_public: true
+    exclude_poor: true
+    checkm_completeness_min: 95.0
+    checkm_contamination_max: 5.0
