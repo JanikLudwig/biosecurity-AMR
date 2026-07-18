@@ -9,8 +9,3 @@ dist/
 venv/
 *.tsv.out
 scratch/
-
-# Raw sp_gene pull is ~63MB and fully regenerable via dataset/fetch_amr_genes.py;
-# the compact derived feature matrix (dataset/features_gene_presence.csv) is
-# what actually gets committed.
-bvbrc_data/staph_aureus_sp_gene_amr.csv
