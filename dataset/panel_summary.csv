@@ -1,0 +1,6 @@
+antibiotic,drug_class,n_genomes_labeled,resistant,susceptible,intermediate,conflicting,R:S_balance
+cefoxitin,BETA-LACTAM (mecA/mecC surrogate marker for MRSA),2096,1308,770,0,18,0.589
+ciprofloxacin,FLUOROQUINOLONE (gyrA/grlA),3320,1381,1864,73,2,0.741
+erythromycin,MACROLIDE (ermA/ermC/msrA),3361,1452,1899,8,2,0.765
+gentamicin,AMINOGLYCOSIDE (aac(6')-aph(2'')),3385,375,2934,76,0,0.128
+trimethoprim/sulfamethoxazole,"FOLATE-PATHWAY-INHIBITOR (dfrA/dfrG, sul)",1536,290,1242,3,1,0.233
