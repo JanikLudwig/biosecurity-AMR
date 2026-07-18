@@ -1,0 +1,4 @@
+# Core engine (annotate/predict/report/CLI) has NO third-party dependencies —
+# it runs on pure Python 3.9+ stdlib. The packages below are only for the demo UI.
+streamlit>=1.30
+pandas>=1.5

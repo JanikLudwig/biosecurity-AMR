@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "genome-firewall"
+version = "0.1.0"
+description = "Zero-shot, rule-based AMR decision-support prototype (Genome Firewall v0)."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Genome Firewall team" }]
+keywords = ["antimicrobial-resistance", "AMR", "biosecurity", "AMRFinderPlus", "cAMRah"]
+
+# Core engine is dependency-free. The demo UI needs streamlit + pandas.
+dependencies = []
+
+[project.optional-dependencies]
+app = ["streamlit>=1.30", "pandas>=1.5"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+genome-firewall = "genome_firewall.cli:main"
+
+[tool.setuptools]
+packages = ["genome_firewall"]
+
+[tool.setuptools.package-data]
+genome_firewall = ["data/*.json", "examples/*.tsv"]
