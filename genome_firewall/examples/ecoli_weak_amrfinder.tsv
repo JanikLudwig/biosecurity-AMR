@@ -1,3 +1,0 @@
-Protein identifier	Contig id	Start	Stop	Strand	Gene symbol	Sequence name	Scope	Element type	Element subtype	Class	Subclass	Method	Target length	Reference sequence length	% Coverage of reference sequence	% Identity to reference sequence	Alignment length	Accession of closest sequence	Name of closest sequence	HMM id	HMM description
-NA	contig1	1	900	+	oqxA	OqxAB multidrug efflux pump subunit	core	AMR	AMR	PHENICOL/QUINOLONE	QUINOLONE	PARTIALX	300	300	78.0	92.0	300	REF0001	OqxAB multidrug efflux pump subunit	NA	NA
-NA	contig1	1	900	+	sul2	sulfonamide-resistant dihydropteroate synthase	core	AMR	AMR	SULFONAMIDE	SULFONAMIDE	EXACTX	300	300	100.0	100.0	300	REF0001	sulfonamide-resistant dihydropteroate synthase	NA	NA

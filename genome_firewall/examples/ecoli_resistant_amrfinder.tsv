@@ -1,8 +1,0 @@
-Protein identifier	Contig id	Start	Stop	Strand	Gene symbol	Sequence name	Scope	Element type	Element subtype	Class	Subclass	Method	Target length	Reference sequence length	% Coverage of reference sequence	% Identity to reference sequence	Alignment length	Accession of closest sequence	Name of closest sequence	HMM id	HMM description
-NA	contig1	1	900	+	blaCTX-M-15	CTX-M family extended-spectrum class A beta-lactamase	core	AMR	AMR	BETA-LACTAM	CEPHALOSPORIN	EXACTX	300	300	100.0	100.0	300	REF0001	CTX-M family extended-spectrum class A beta-lactamase	NA	NA
-NA	contig1	1	900	+	blaTEM-1	TEM family class A broad-spectrum beta-lactamase	core	AMR	AMR	BETA-LACTAM	BETA-LACTAM	EXACTX	300	300	100.0	100.0	300	REF0001	TEM family class A broad-spectrum beta-lactamase	NA	NA
-NA	contig2	1	900	+	gyrA_S83L	DNA gyrase subunit A (QRDR)	core	AMR	POINT	QUINOLONE	QUINOLONE	POINTX	300	300	100.0	99.9	300	REF0001	DNA gyrase subunit A (QRDR)	NA	NA
-NA	contig2	1	900	+	parC_S80I	topoisomerase IV subunit A (QRDR)	core	AMR	POINT	QUINOLONE	QUINOLONE	POINTX	300	300	100.0	99.8	300	REF0001	topoisomerase IV subunit A (QRDR)	NA	NA
-NA	contig3	1	900	+	aac(3)-IId	aminoglycoside N-acetyltransferase	core	AMR	AMR	AMINOGLYCOSIDE	GENTAMICIN	EXACTX	300	300	100.0	100.0	300	REF0001	aminoglycoside N-acetyltransferase	NA	NA
-NA	contig3	1	900	+	dfrA17	dihydrofolate reductase	core	AMR	AMR	TRIMETHOPRIM	TRIMETHOPRIM	EXACTX	300	300	100.0	100.0	300	REF0001	dihydrofolate reductase	NA	NA
-NA	contig3	1	900	+	sul1	sulfonamide-resistant dihydropteroate synthase	core	AMR	AMR	SULFONAMIDE	SULFONAMIDE	EXACTX	300	300	100.0	100.0	300	REF0001	sulfonamide-resistant dihydropteroate synthase	NA	NA
