@@ -1,0 +1,47 @@
+[registry]
+version = "2026-07-19.1"
+species = "Staphylococcus aureus"
+amrfinder_mapping_source = "https://www.ncbi.nlm.nih.gov/pathogens/pathogens_help/"
+mechanism_source = "https://www.ebi.ac.uk/chembl/explore/drug_mechanisms"
+
+[drugs.ciprofloxacin]
+target_label = "DNA gyrase and topoisomerase IV"
+target_probe_kind = "pyhmmer_protein"
+target_symbols = ["gyrA", "gyrB", "grlA", "grlB"]
+minimum_targets_detected = 4
+resistance_terms = ["CIPROFLOXACIN", "QUINOLONE"]
+
+[drugs.cefoxitin]
+target_label = "Native penicillin-binding proteins"
+target_probe_kind = "pyhmmer_protein"
+target_symbols = ["pbpA", "pbpB"]
+minimum_targets_detected = 2
+resistance_terms = ["BETA-LACTAM", "CEPHALOSPORIN", "METHICILLIN"]
+
+[drugs.erythromycin]
+target_label = "23S ribosomal RNA within the bacterial 50S ribosomal subunit"
+target_probe_kind = "staphylococcus_23s_rrna"
+target_symbols = ["23S rRNA"]
+minimum_targets_detected = 1
+resistance_terms = ["ERYTHROMYCIN"]
+
+[drugs.clindamycin]
+target_label = "23S ribosomal RNA within the bacterial 50S ribosomal subunit"
+target_probe_kind = "staphylococcus_23s_rrna"
+target_symbols = ["23S rRNA"]
+minimum_targets_detected = 1
+resistance_terms = ["CLINDAMYCIN"]
+
+[drugs.gentamicin]
+target_label = "16S ribosomal RNA within the bacterial 30S ribosomal subunit"
+target_probe_kind = "conserved_16s_rrna"
+target_symbols = ["16S rRNA"]
+minimum_targets_detected = 1
+resistance_terms = ["GENTAMICIN"]
+
+[drugs.tetracycline]
+target_label = "16S ribosomal RNA within the bacterial 30S ribosomal subunit"
+target_probe_kind = "conserved_16s_rrna"
+target_symbols = ["16S rRNA"]
+minimum_targets_detected = 1
+resistance_terms = ["TETRACYCLINE"]

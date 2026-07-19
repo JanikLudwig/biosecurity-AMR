@@ -1,0 +1,18 @@
+{
+  "source": "UniProt reference proteins ported from origin/version1",
+  "provenance_note": "Accessions and sequences are frozen application resources; verify upstream records before changing them.",
+  "species": "Staphylococcus aureus",
+  "references": {
+    "pbpA": {"accession": "Q53725", "description": "Penicillin-binding protein 1", "source_url": "https://rest.uniprot.org/uniprotkb/Q53725.fasta", "sha256": "5a311fb3ab3a5fff8ecca15ecc82b4eeec00651797ed347a599f88e870c255ac"},
+    "pbpB": {"accession": "Q8KHY3", "description": "Penicillin-binding protein 2", "source_url": "https://rest.uniprot.org/uniprotkb/Q8KHY3.fasta", "sha256": "3fa41249cc35d969a22efef8179f65443cac08778b7bc3975f28118c97057e57"},
+    "gyrA": {"accession": "P20831", "description": "DNA gyrase subunit A", "source_url": "https://rest.uniprot.org/uniprotkb/P20831.fasta", "sha256": "06a49a8c3f1a71afe9b2c9048e4d9a9a762751c003797504f9a280d8a4130b3d"},
+    "gyrB": {"accession": "P0A0K8", "description": "DNA gyrase subunit B", "source_url": "https://rest.uniprot.org/uniprotkb/P0A0K8.fasta", "sha256": "8c6792e91a85b0aff58b0681dadbef37dc40836fe6599310d679de22d996a6b9"},
+    "grlA": {"accession": "P0C1U9", "description": "Topoisomerase IV subunit A", "source_url": "https://rest.uniprot.org/uniprotkb/P0C1U9.fasta", "sha256": "772aa99b9ab4d116987afbe818ef866a3daeb1b6f1e478dc913d5b25b4381b1e"},
+    "grlB": {"accession": "P0C1S7", "description": "Topoisomerase IV subunit B", "source_url": "https://rest.uniprot.org/uniprotkb/P0C1S7.fasta", "sha256": "cf3461c032c4adeccb3503d9197b43b67afcca504fb785daab9ada082ff7a07f"}
+  },
+  "thresholds": {
+    "minimum_identity": 0.8,
+    "minimum_reference_coverage": 0.6,
+    "maximum_evalue": 1e-10
+  }
+}

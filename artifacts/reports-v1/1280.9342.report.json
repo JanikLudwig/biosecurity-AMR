@@ -1,0 +1,436 @@
+{
+  "decisions": [
+    {
+      "all_relevant_elements": [
+        "blaI",
+        "blaZ",
+        "mecA",
+        "mecR1"
+      ],
+      "antibiotic": "cefoxitin",
+      "call": "no_call",
+      "confidence": 0.5192101999233868,
+      "evidence_category": "known_resistance_evidence_but_model_uncertain",
+      "feature_similarity": 0.875,
+      "feature_similarity_floor": 0.5,
+      "lineage_status": "in_distribution",
+      "maximum_training_ani": 0.999971716255685,
+      "minimum_training_ani": 0.9923668127847838,
+      "model_signal": "no_call",
+      "nearest_training_genome": "1280.9284",
+      "probability_resistant": 0.5192101999233868,
+      "reasons": [
+        "calibrated_probability_inside_no_call_region"
+      ],
+      "supporting_elements": [
+        "blaI",
+        "blaZ",
+        "mecA"
+      ],
+      "target_label": "Native penicillin-binding proteins",
+      "target_status": "present",
+      "targets_detected": [
+        "pbpA",
+        "pbpB"
+      ],
+      "unknown_features": []
+    },
+    {
+      "all_relevant_elements": [
+        "gyrA_S84L",
+        "parC_S80F"
+      ],
+      "antibiotic": "ciprofloxacin",
+      "call": "likely_to_fail",
+      "confidence": 0.9115808149173174,
+      "evidence_category": "known_resistance_gene_or_mutation",
+      "feature_similarity": 0.8888888888888888,
+      "feature_similarity_floor": 0.5,
+      "lineage_status": "in_distribution",
+      "maximum_training_ani": 0.999971716255685,
+      "minimum_training_ani": 0.9923668127847838,
+      "model_signal": "resistant_signal",
+      "nearest_training_genome": "1280.9284",
+      "probability_resistant": 0.9115808149173174,
+      "reasons": [],
+      "supporting_elements": [
+        "gyrA_S84L",
+        "parC_S80F"
+      ],
+      "target_label": "DNA gyrase and topoisomerase IV",
+      "target_status": "present",
+      "targets_detected": [
+        "grlA",
+        "grlB",
+        "gyrA",
+        "gyrB"
+      ],
+      "unknown_features": []
+    },
+    {
+      "all_relevant_elements": [],
+      "antibiotic": "erythromycin",
+      "call": "no_call",
+      "confidence": 0.6594781351649603,
+      "evidence_category": "no_known_resistance_signal",
+      "feature_similarity": 0.8888888888888888,
+      "feature_similarity_floor": 0.5,
+      "lineage_status": "in_distribution",
+      "maximum_training_ani": 0.999971716255685,
+      "minimum_training_ani": 0.9923668127847838,
+      "model_signal": "no_call",
+      "nearest_training_genome": "1280.9284",
+      "probability_resistant": 0.3405218648350397,
+      "reasons": [
+        "calibrated_probability_inside_no_call_region"
+      ],
+      "supporting_elements": [],
+      "target_label": "23S ribosomal RNA within the bacterial 50S ribosomal subunit",
+      "target_status": "present",
+      "targets_detected": [
+        "23S rRNA"
+      ],
+      "unknown_features": []
+    }
+  ],
+  "defensive_use_only": true,
+  "evidence_sources": {
+    "amrfinder_mapping": "https://www.ncbi.nlm.nih.gov/pathogens/pathogens_help/",
+    "drug_mechanisms": "https://www.ebi.ac.uk/chembl/explore/drug_mechanisms"
+  },
+  "generated_at": "2026-07-19T08:38:27.471585+00:00",
+  "genome_id": "1280.9342",
+  "lineage": {
+    "maximum_training_ani": 0.999971716255685,
+    "minimum_training_ani": 0.9923668127847838,
+    "nearest_training_genome": "1280.9284",
+    "status": "in_distribution"
+  },
+  "provenance": {
+    "amrfinder_database": "2026-05-15.1",
+    "amrfinder_version": "4.2.7",
+    "drug_registry_version": "2026-07-19.1",
+    "model_directory": "artifacts/models-v1"
+  },
+  "qc": {
+    "ambiguous_bases": 0,
+    "ambiguous_fraction": 0.0,
+    "contig_n50": 80789,
+    "contigs": 62,
+    "genome_length": 2803086,
+    "passed": true,
+    "reasons": [],
+    "sha256": "35671022e2fa3124ba0d3d83bf749634e44f1e31004cfe72f242acf0d76b925d"
+  },
+  "schema_version": "1.0",
+  "species_scope": "Staphylococcus aureus",
+  "warning": "Research prototype only. Every prediction must be confirmed with standard laboratory antimicrobial-susceptibility testing.",
+  "workflows": {
+    "M1": {
+      "evidence": [
+        {
+          "amr_class": "BETA-LACTAM",
+          "amr_subclass": "BETA-LACTAM",
+          "coverage": 100.0,
+          "element_name": "penicillinase repressor BlaI",
+          "element_symbol": "blaI",
+          "evidence_category": "known_resistance_gene",
+          "feature_key": "gene::blaI",
+          "feature_value": 1,
+          "genome_id": "1280.9342",
+          "identity": 96.03,
+          "method": "BLASTX"
+        },
+        {
+          "amr_class": "BETA-LACTAM",
+          "amr_subclass": "BETA-LACTAM",
+          "coverage": 100.0,
+          "element_name": "penicillin-hydrolyzing class A beta-lactamase BlaZ",
+          "element_symbol": "blaZ",
+          "evidence_category": "known_resistance_gene",
+          "feature_key": "gene::blaZ",
+          "feature_value": 1,
+          "genome_id": "1280.9342",
+          "identity": 94.66,
+          "method": "BLASTX"
+        },
+        {
+          "amr_class": "BETA-LACTAM",
+          "amr_subclass": "METHICILLIN",
+          "coverage": 100.0,
+          "element_name": "PBP2a family beta-lactam-resistant peptidoglycan transpeptidase MecA",
+          "element_symbol": "mecA",
+          "evidence_category": "known_resistance_gene",
+          "feature_key": "gene::mecA",
+          "feature_value": 1,
+          "genome_id": "1280.9342",
+          "identity": 100.0,
+          "method": "EXACTX"
+        },
+        {
+          "amr_class": "BETA-LACTAM",
+          "amr_subclass": "METHICILLIN",
+          "coverage": 55.56,
+          "element_name": "beta-lactam sensor/signal transducer MecR1",
+          "element_symbol": "mecR1",
+          "evidence_category": "known_resistance_gene",
+          "feature_key": "gene::mecR1",
+          "feature_value": 1,
+          "genome_id": "1280.9342",
+          "identity": 100.0,
+          "method": "PARTIALX"
+        },
+        {
+          "amr_class": "OXAZOLIDINONE",
+          "amr_subclass": "LINEZOLID",
+          "coverage": 99.97,
+          "element_name": "Staphylococcus aureus linezolid resistant 23S",
+          "element_symbol": "23S_C2220T",
+          "evidence_category": "known_resistance_mutation",
+          "feature_key": "mutation::23S::C2220T",
+          "feature_value": 1,
+          "genome_id": "1280.9342",
+          "identity": 99.93,
+          "method": "POINTN"
+        },
+        {
+          "amr_class": "TRIMETHOPRIM",
+          "amr_subclass": "TRIMETHOPRIM",
+          "coverage": 100.0,
+          "element_name": "Staphylococcus aureus trimethoprim resistant DfrB",
+          "element_symbol": "dfrB_A135T",
+          "evidence_category": "known_resistance_mutation",
+          "feature_key": "mutation::dfrB::A135T",
+          "feature_value": 1,
+          "genome_id": "1280.9342",
+          "identity": 98.11,
+          "method": "POINTX"
+        },
+        {
+          "amr_class": "QUINOLONE",
+          "amr_subclass": "QUINOLONE",
+          "coverage": 100.0,
+          "element_name": "Staphylococcus aureus quinolone resistant GyrA",
+          "element_symbol": "gyrA_S84L",
+          "evidence_category": "known_resistance_mutation",
+          "feature_key": "mutation::gyrA::S84L",
+          "feature_value": 1,
+          "genome_id": "1280.9342",
+          "identity": 99.77,
+          "method": "POINTX"
+        },
+        {
+          "amr_class": "QUINOLONE",
+          "amr_subclass": "QUINOLONE",
+          "coverage": 100.0,
+          "element_name": "Staphylococcus aureus quinolone resistant ParC",
+          "element_symbol": "parC_S80F",
+          "evidence_category": "known_resistance_mutation",
+          "feature_key": "mutation::parC::S80F",
+          "feature_value": 1,
+          "genome_id": "1280.9342",
+          "identity": 99.12,
+          "method": "POINTX"
+        }
+      ],
+      "feature_schema": "613c136d34b6a4629a271686843e8fbcc8d0ad1a279c2a5a01c94ef2c840efdb",
+      "name": "AMRFinderPlus feature extraction",
+      "recognized_features": [
+        "gene::blaI",
+        "gene::blaZ",
+        "gene::mecA",
+        "gene::mecR1",
+        "mutation::23S::C2220T",
+        "mutation::dfrB::A135T",
+        "mutation::gyrA::S84L",
+        "mutation::parC::S80F"
+      ],
+      "unknown_features": []
+    },
+    "M2": {
+      "drugs": {
+        "cefoxitin": {
+          "detected": [
+            "pbpA",
+            "pbpB"
+          ],
+          "evidence": [
+            {
+              "bitscore": 1662.3,
+              "contig": "accn|1280.9342.con.0029",
+              "evalue": 0.0,
+              "identity": 0.996,
+              "orf_id": "accn|1280.9342.con.0029_24",
+              "present": true,
+              "reference": "pbpA|Q53725 Penicillin-binding protein 1",
+              "reference_coverage": 1.0,
+              "symbol": "pbpA"
+            },
+            {
+              "bitscore": 1632.06,
+              "contig": "accn|1280.9342.con.0006",
+              "evalue": 0.0,
+              "identity": 0.9945,
+              "orf_id": "accn|1280.9342.con.0006_36",
+              "present": true,
+              "reference": "pbpB|Q8KHY3 Penicillin-binding protein 2",
+              "reference_coverage": 1.0,
+              "symbol": "pbpB"
+            }
+          ],
+          "probe_kind": "pyhmmer_protein",
+          "required_count": 2,
+          "status": "present"
+        },
+        "ciprofloxacin": {
+          "detected": [
+            "grlA",
+            "grlB",
+            "gyrA",
+            "gyrB"
+          ],
+          "evidence": [
+            {
+              "bitscore": 1924.6,
+              "contig": "accn|1280.9342.con.0023",
+              "evalue": 0.0,
+              "identity": 0.9978,
+              "orf_id": "accn|1280.9342.con.0023_12",
+              "present": true,
+              "reference": "gyrA|P20831 DNA gyrase subunit A",
+              "reference_coverage": 1.0,
+              "symbol": "gyrA"
+            },
+            {
+              "bitscore": 1450.91,
+              "contig": "accn|1280.9342.con.0023",
+              "evalue": 0.0,
+              "identity": 1.0,
+              "orf_id": "accn|1280.9342.con.0023_11",
+              "present": true,
+              "reference": "gyrB|P0A0K8 DNA gyrase subunit B",
+              "reference_coverage": 1.0,
+              "symbol": "gyrB"
+            },
+            {
+              "bitscore": 1744.23,
+              "contig": "accn|1280.9342.con.0039",
+              "evalue": 0.0,
+              "identity": 0.9962,
+              "orf_id": "accn|1280.9342.con.0039_4",
+              "present": true,
+              "reference": "grlA|P0C1U9 Topoisomerase IV subunit A (ParC)",
+              "reference_coverage": 1.0,
+              "symbol": "grlA"
+            },
+            {
+              "bitscore": 1467.08,
+              "contig": "accn|1280.9342.con.0039",
+              "evalue": 0.0,
+              "identity": 0.9985,
+              "orf_id": "accn|1280.9342.con.0039_5",
+              "present": true,
+              "reference": "grlB|P0C1S7 Topoisomerase IV subunit B (ParE)",
+              "reference_coverage": 1.0,
+              "symbol": "grlB"
+            }
+          ],
+          "probe_kind": "pyhmmer_protein",
+          "required_count": 4,
+          "status": "present"
+        },
+        "erythromycin": {
+          "detected": [
+            "23S rRNA"
+          ],
+          "evidence": [
+            {
+              "method": "blastn",
+              "present": true,
+              "symbol": "23S rRNA"
+            }
+          ],
+          "probe_kind": "staphylococcus_23s_rrna",
+          "required_count": 1,
+          "status": "present"
+        }
+      },
+      "method": "Pyrodigal ORF calling + PyHMMER protein homology; BLASTN for RNA targets",
+      "predicted_proteins": 2611,
+      "protein_hits": {
+        "grlA": {
+          "bitscore": 1744.23,
+          "contig": "accn|1280.9342.con.0039",
+          "evalue": 0.0,
+          "identity": 0.9962,
+          "orf_id": "accn|1280.9342.con.0039_4",
+          "present": true,
+          "reference": "grlA|P0C1U9 Topoisomerase IV subunit A (ParC)",
+          "reference_coverage": 1.0,
+          "symbol": "grlA"
+        },
+        "grlB": {
+          "bitscore": 1467.08,
+          "contig": "accn|1280.9342.con.0039",
+          "evalue": 0.0,
+          "identity": 0.9985,
+          "orf_id": "accn|1280.9342.con.0039_5",
+          "present": true,
+          "reference": "grlB|P0C1S7 Topoisomerase IV subunit B (ParE)",
+          "reference_coverage": 1.0,
+          "symbol": "grlB"
+        },
+        "gyrA": {
+          "bitscore": 1924.6,
+          "contig": "accn|1280.9342.con.0023",
+          "evalue": 0.0,
+          "identity": 0.9978,
+          "orf_id": "accn|1280.9342.con.0023_12",
+          "present": true,
+          "reference": "gyrA|P20831 DNA gyrase subunit A",
+          "reference_coverage": 1.0,
+          "symbol": "gyrA"
+        },
+        "gyrB": {
+          "bitscore": 1450.91,
+          "contig": "accn|1280.9342.con.0023",
+          "evalue": 0.0,
+          "identity": 1.0,
+          "orf_id": "accn|1280.9342.con.0023_11",
+          "present": true,
+          "reference": "gyrB|P0A0K8 DNA gyrase subunit B",
+          "reference_coverage": 1.0,
+          "symbol": "gyrB"
+        },
+        "pbpA": {
+          "bitscore": 1662.3,
+          "contig": "accn|1280.9342.con.0029",
+          "evalue": 0.0,
+          "identity": 0.996,
+          "orf_id": "accn|1280.9342.con.0029_24",
+          "present": true,
+          "reference": "pbpA|Q53725 Penicillin-binding protein 1",
+          "reference_coverage": 1.0,
+          "symbol": "pbpA"
+        },
+        "pbpB": {
+          "bitscore": 1632.06,
+          "contig": "accn|1280.9342.con.0006",
+          "evalue": 0.0,
+          "identity": 0.9945,
+          "orf_id": "accn|1280.9342.con.0006_36",
+          "present": true,
+          "reference": "pbpB|Q8KHY3 Penicillin-binding protein 2",
+          "reference_coverage": 1.0,
+          "symbol": "pbpB"
+        }
+      },
+      "protein_thresholds": {
+        "maximum_evalue": 1e-10,
+        "minimum_identity": 0.8,
+        "minimum_reference_coverage": 0.6
+      },
+      "workflow": "M2"
+    }
+  }
+}

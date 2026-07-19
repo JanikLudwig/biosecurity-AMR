@@ -1,0 +1,10 @@
+genome_id,feature_key,element_symbol,element_name,evidence_category,amr_class,amr_subclass,method,coverage,identity,feature_value
+d2bfd8a3da830dbab450,gene::blaI,blaI,penicillinase repressor BlaI,known_resistance_gene,BETA-LACTAM,BETA-LACTAM,BLASTX,100.0,96.03,1
+d2bfd8a3da830dbab450,gene::blaZ,blaZ,penicillin-hydrolyzing class A beta-lactamase BlaZ,known_resistance_gene,BETA-LACTAM,BETA-LACTAM,BLASTX,100.0,94.66,1
+d2bfd8a3da830dbab450,gene::dfrG,dfrG,trimethoprim-resistant dihydrofolate reductase DfrG,known_resistance_gene,TRIMETHOPRIM,TRIMETHOPRIM,EXACTX,100.0,100.0,1
+d2bfd8a3da830dbab450,gene::fosB,fosB,FosB/FosD family fosfomycin resistance bacillithiol transferase,known_resistance_gene,FOSFOMYCIN,FOSFOMYCIN,BLASTX,100.0,98.56,1
+d2bfd8a3da830dbab450,gene::tet(K),tet(K),tetracycline efflux MFS transporter Tet(K),known_resistance_gene,TETRACYCLINE,TETRACYCLINE,BLASTX,100.0,99.78,1
+d2bfd8a3da830dbab450,mutation::glpT::A100V,glpT_A100V,Staphylococcus aureus fosfomycin resistant GlpT,known_resistance_mutation,FOSFOMYCIN,FOSFOMYCIN,POINTX,100.0,99.56,1
+d2bfd8a3da830dbab450,mutation::glpT::L27F,glpT_L27F,Staphylococcus aureus fosfomycin resistant GlpT,known_resistance_mutation,FOSFOMYCIN,FOSFOMYCIN,POINTX,100.0,99.56,1
+d2bfd8a3da830dbab450,mutation::murA::E291D,murA_E291D,Staphylococcus aureus fosfomycin resistant MurA,known_resistance_mutation,FOSFOMYCIN,FOSFOMYCIN,POINTX,100.0,99.52,1
+d2bfd8a3da830dbab450,mutation::murA::T396N,murA_T396N,Staphylococcus aureus fosfomycin resistant MurA,known_resistance_mutation,FOSFOMYCIN,FOSFOMYCIN,POINTX,100.0,99.52,1

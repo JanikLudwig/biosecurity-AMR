@@ -1,0 +1,12 @@
+{
+    "timestamp": "2026-07-19T07:04:10.223104",
+    "total_genomes_in_manifest": 3356,
+    "success": 3356,
+    "skipped": 100,
+    "failed": 0,
+    "total_runtime_s": 40153.8,
+    "total_runtime_h": 11.15,
+    "mean_runtime_s": 11.96,
+    "median_runtime_s": 11.06,
+    "actual_genomes_per_min": 5.01
+}

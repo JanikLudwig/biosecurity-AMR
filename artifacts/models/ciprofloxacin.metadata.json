@@ -1,0 +1,47 @@
+{
+  "antibiotic": "ciprofloxacin",
+  "calibration_status": "sigmoid",
+  "called_test_metrics": {
+    "accuracy": 0.9523809523809523,
+    "called_count": 63,
+    "coverage": 0.9545454545454546,
+    "resistant_calls": 13,
+    "resistant_fraction_in_susceptible_calls": 0.0,
+    "susceptible_calls": 50,
+    "susceptible_fraction_in_resistant_calls": 0.23076923076923078
+  },
+  "class_counts": {
+    "calibration": {
+      "resistant": 20,
+      "susceptible": 50
+    },
+    "test": {
+      "resistant": 11,
+      "susceptible": 55
+    },
+    "train": {
+      "resistant": 165,
+      "susceptible": 163
+    }
+  },
+  "decision_thresholds": {
+    "lower": 0.38040340004594925,
+    "resistant_call_error": 0.05555555555555555,
+    "resistant_calls": 18,
+    "susceptible_call_error": 0.057692307692307696,
+    "susceptible_calls": 52,
+    "upper": 0.486736418156267
+  },
+  "feature_count": 104,
+  "no_call_rate": 0.045454545454545456,
+  "status": "trained",
+  "test_metrics": {
+    "auroc": 0.9867768595041322,
+    "balanced_accuracy": 0.9272727272727272,
+    "brier": 0.047252605165358785,
+    "f1": 0.8333333333333334,
+    "pr_auc": 0.947348484848485,
+    "resistant_recall": 0.9090909090909091,
+    "susceptible_recall": 0.9454545454545454
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "antibiotic": "gentamicin",
+  "calibration_status": "sigmoid",
+  "called_test_metrics": {
+    "accuracy": 0.9436619718309859,
+    "called_count": 71,
+    "coverage": 0.9861111111111112,
+    "resistant_calls": 9,
+    "resistant_fraction_in_susceptible_calls": 0.016129032258064516,
+    "susceptible_calls": 62,
+    "susceptible_fraction_in_resistant_calls": 0.3333333333333333
+  },
+  "class_counts": {
+    "calibration": {
+      "resistant": 14,
+      "susceptible": 59
+    },
+    "test": {
+      "resistant": 8,
+      "susceptible": 64
+    },
+    "train": {
+      "resistant": 53,
+      "susceptible": 284
+    }
+  },
+  "decision_thresholds": {
+    "lower": 0.4992069923919221,
+    "resistant_call_error": 0.0,
+    "resistant_calls": 12,
+    "susceptible_call_error": 0.03278688524590164,
+    "susceptible_calls": 61,
+    "upper": 0.6571150669031448
+  },
+  "feature_count": 104,
+  "no_call_rate": 0.013888888888888888,
+  "status": "trained",
+  "test_metrics": {
+    "auroc": 0.9150390625,
+    "balanced_accuracy": 0.9140625,
+    "brier": 0.05495094341727139,
+    "f1": 0.7777777777777778,
+    "pr_auc": 0.768262987012987,
+    "resistant_recall": 0.875,
+    "susceptible_recall": 0.953125
+  }
+}

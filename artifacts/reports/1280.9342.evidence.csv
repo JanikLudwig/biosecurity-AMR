@@ -1,0 +1,9 @@
+genome_id,feature_key,element_symbol,element_name,evidence_category,amr_class,amr_subclass,method,coverage,identity,feature_value
+1280.9342,gene::blaI,blaI,penicillinase repressor BlaI,known_resistance_gene,BETA-LACTAM,BETA-LACTAM,BLASTX,100.0,96.03,1
+1280.9342,gene::blaZ,blaZ,penicillin-hydrolyzing class A beta-lactamase BlaZ,known_resistance_gene,BETA-LACTAM,BETA-LACTAM,BLASTX,100.0,94.66,1
+1280.9342,gene::mecA,mecA,PBP2a family beta-lactam-resistant peptidoglycan transpeptidase MecA,known_resistance_gene,BETA-LACTAM,METHICILLIN,EXACTX,100.0,100.0,1
+1280.9342,gene::mecR1,mecR1,beta-lactam sensor/signal transducer MecR1,known_resistance_gene,BETA-LACTAM,METHICILLIN,PARTIALX,55.56,100.0,1
+1280.9342,mutation::23S_C2220T,23S_C2220T,Staphylococcus aureus linezolid resistant 23S,known_resistance_mutation,OXAZOLIDINONE,LINEZOLID,POINTN,99.97,99.93,1
+1280.9342,mutation::dfrB_A135T,dfrB_A135T,Staphylococcus aureus trimethoprim resistant DfrB,known_resistance_mutation,TRIMETHOPRIM,TRIMETHOPRIM,POINTX,100.0,98.11,1
+1280.9342,mutation::gyrA_S84L,gyrA_S84L,Staphylococcus aureus quinolone resistant GyrA,known_resistance_mutation,QUINOLONE,QUINOLONE,POINTX,100.0,99.77,1
+1280.9342,mutation::parC_S80F,parC_S80F,Staphylococcus aureus quinolone resistant ParC,known_resistance_mutation,QUINOLONE,QUINOLONE,POINTX,100.0,99.12,1

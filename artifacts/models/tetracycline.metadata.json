@@ -1,0 +1,47 @@
+{
+  "antibiotic": "tetracycline",
+  "calibration_status": "sigmoid_partial_thresholds",
+  "called_test_metrics": {
+    "accuracy": 0.9230769230769231,
+    "called_count": 52,
+    "coverage": 0.8125,
+    "resistant_calls": 0,
+    "resistant_fraction_in_susceptible_calls": 0.07692307692307693,
+    "susceptible_calls": 52,
+    "susceptible_fraction_in_resistant_calls": null
+  },
+  "class_counts": {
+    "calibration": {
+      "resistant": 13,
+      "susceptible": 59
+    },
+    "test": {
+      "resistant": 14,
+      "susceptible": 50
+    },
+    "train": {
+      "resistant": 73,
+      "susceptible": 254
+    }
+  },
+  "decision_thresholds": {
+    "lower": 0.2774843845644633,
+    "resistant_call_error": null,
+    "resistant_calls": 0,
+    "susceptible_call_error": 0.09836065573770492,
+    "susceptible_calls": 61,
+    "upper": null
+  },
+  "feature_count": 104,
+  "no_call_rate": 0.1875,
+  "status": "trained",
+  "test_metrics": {
+    "auroc": 0.9728571428571429,
+    "balanced_accuracy": 0.7657142857142857,
+    "brier": 0.07735944505388181,
+    "f1": 0.6666666666666666,
+    "pr_auc": 0.8856753365681936,
+    "resistant_recall": 0.5714285714285714,
+    "susceptible_recall": 0.96
+  }
+}

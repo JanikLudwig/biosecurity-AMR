@@ -1,0 +1,20 @@
+genome_id,feature_key,element_symbol,element_name,evidence_category,amr_class,amr_subclass,method,coverage,identity,feature_value
+df9e4efa026a4999404f,gene::ant(9)-Ia,ant(9)-Ia,aminoglycoside nucleotidyltransferase ANT(9)-Ia,known_resistance_gene,AMINOGLYCOSIDE,SPECTINOMYCIN,INTERNAL_STOP,100.0,99.62,1
+df9e4efa026a4999404f,gene::blaI,blaI,penicillinase repressor BlaI,known_resistance_gene,BETA-LACTAM,BETA-LACTAM,EXACTX,100.0,100.0,1
+df9e4efa026a4999404f,gene::blaPC1,blaPC1,BlaZ family penicillin-hydrolyzing class A beta-lactamase PC1,known_resistance_gene,BETA-LACTAM,BETA-LACTAM,ALLELEX,100.0,100.0,1
+df9e4efa026a4999404f,gene::blaR1,blaR1,beta-lactam sensor/signal transducer BlaR1,known_resistance_gene,BETA-LACTAM,BETA-LACTAM,BLASTX,100.0,99.83,1
+df9e4efa026a4999404f,gene::dfrG,dfrG,trimethoprim-resistant dihydrofolate reductase DfrG,known_resistance_gene,TRIMETHOPRIM,TRIMETHOPRIM,EXACTX,100.0,100.0,1
+df9e4efa026a4999404f,gene::erm(A),erm(A),23S rRNA (adenine(2058)-N(6))-methyltransferase Erm(A),known_resistance_gene,LINCOSAMIDE/MACROLIDE,AZITHROMYCIN/CLARITHROMYCIN/CLINDAMYCIN/ERYTHROMYCIN/TELITHROMYCIN,PARTIAL_CONTIG_ENDX,82.72,100.0,1
+df9e4efa026a4999404f,gene::fosB,fosB,FosB/FosD family fosfomycin resistance bacillithiol transferase,known_resistance_gene,FOSFOMYCIN,FOSFOMYCIN,EXACTX,100.0,100.0,1
+df9e4efa026a4999404f,gene::mecA,mecA,PBP2a family beta-lactam-resistant peptidoglycan transpeptidase MecA,known_resistance_gene,BETA-LACTAM,METHICILLIN,BLASTX,100.0,99.7,1
+df9e4efa026a4999404f,gene::mecI,mecI,mecA-type methicillin resistance repressor MecI,known_resistance_gene,BETA-LACTAM,METHICILLIN,INTERNAL_STOP,100.0,99.19,1
+df9e4efa026a4999404f,gene::mecR1,mecR1,beta-lactam sensor/signal transducer MecR1,known_resistance_gene,BETA-LACTAM,METHICILLIN,EXACTX,100.0,100.0,1
+df9e4efa026a4999404f,gene::qacA,qacA,quaternary ammonium compound efflux MFS transporter QacA,known_resistance_gene,QUATERNARY AMMONIUM,QUATERNARY AMMONIUM,EXACTX,100.0,100.0,1
+df9e4efa026a4999404f,gene::tet(K),tet(K),tetracycline efflux MFS transporter Tet(K),known_resistance_gene,TETRACYCLINE,TETRACYCLINE,EXACTX,100.0,100.0,1
+df9e4efa026a4999404f,gene::tet(M),tet(M),tetracycline resistance ribosomal protection protein Tet(M),known_resistance_gene,TETRACYCLINE,TETRACYCLINE,EXACTX,100.0,100.0,1
+df9e4efa026a4999404f,mutation::folP::E258EKE,folP_E258EKE,Staphylococcus aureus sulfonamide resistant FolP,known_resistance_mutation,SULFONAMIDE,SULFONAMIDE,POINTX,100.0,94.8,1
+df9e4efa026a4999404f,mutation::folP::F17L,folP_F17L,Staphylococcus aureus sulfonamide resistant FolP,known_resistance_mutation,SULFONAMIDE,SULFONAMIDE,POINTX,100.0,94.8,1
+df9e4efa026a4999404f,mutation::gyrA::S84L,gyrA_S84L,Staphylococcus aureus quinolone resistant GyrA,known_resistance_mutation,QUINOLONE,QUINOLONE,POINTX,100.0,98.87,1
+df9e4efa026a4999404f,mutation::mprF::T345A,mprF_T345A,Staphylococcus aureus daptomycin resistant MprF,known_resistance_mutation,LIPOPEPTIDE,DAPTOMYCIN,POINTX,100.0,99.88,1
+df9e4efa026a4999404f,mutation::murA::G257D,murA_G257D,Staphylococcus aureus fosfomycin resistant MurA,known_resistance_mutation,FOSFOMYCIN,FOSFOMYCIN,POINTX,100.0,99.76,1
+df9e4efa026a4999404f,mutation::parC::S80F,parC_S80F,Staphylococcus aureus quinolone resistant ParC,known_resistance_mutation,QUINOLONE,QUINOLONE,POINTX,100.0,99.5,1

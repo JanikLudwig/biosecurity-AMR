@@ -1,0 +1,21 @@
+{
+  "antibiotics": [
+    "erythromycin",
+    "ciprofloxacin",
+    "gentamicin",
+    "tetracycline",
+    "clindamycin"
+  ],
+  "excluded_counts": {
+    "conflicting_genome_drug_pairs": 5,
+    "non_binary_or_missing_label": 4418,
+    "outside_supported_drugs": 29637
+  },
+  "genome_count": 2000,
+  "label_count": 9192,
+  "seed": 42,
+  "source": "data/BVBRC_genome_amr.csv",
+  "source_sha256": "e14463494db369edfdf2683e939165dbb1fab2d6f737d7dbe481046f762cae16",
+  "species": "Staphylococcus aureus",
+  "taxon_id": 1280
+}

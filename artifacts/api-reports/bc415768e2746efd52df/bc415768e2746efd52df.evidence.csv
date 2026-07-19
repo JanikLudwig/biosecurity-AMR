@@ -1,0 +1,2 @@
+genome_id,feature_key,element_symbol,element_name,evidence_category,amr_class,amr_subclass,method,coverage,identity,feature_value
+bc415768e2746efd52df,gene::fosB,fosB,FosB/FosD family fosfomycin resistance bacillithiol transferase,known_resistance_gene,FOSFOMYCIN,FOSFOMYCIN,EXACTX,100.0,100.0,1

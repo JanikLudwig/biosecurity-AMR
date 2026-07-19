@@ -1,0 +1,47 @@
+{
+  "antibiotic": "clindamycin",
+  "calibration_status": "sigmoid_partial_thresholds",
+  "called_test_metrics": {
+    "accuracy": 0.9375,
+    "called_count": 32,
+    "coverage": 0.6530612244897959,
+    "resistant_calls": 0,
+    "resistant_fraction_in_susceptible_calls": 0.0625,
+    "susceptible_calls": 32,
+    "susceptible_fraction_in_resistant_calls": null
+  },
+  "class_counts": {
+    "calibration": {
+      "resistant": 11,
+      "susceptible": 39
+    },
+    "test": {
+      "resistant": 13,
+      "susceptible": 36
+    },
+    "train": {
+      "resistant": 167,
+      "susceptible": 109
+    }
+  },
+  "decision_thresholds": {
+    "lower": 0.22965927640298864,
+    "resistant_call_error": null,
+    "resistant_calls": 0,
+    "susceptible_call_error": 0.1,
+    "susceptible_calls": 30,
+    "upper": null
+  },
+  "feature_count": 104,
+  "no_call_rate": 0.3469387755102041,
+  "status": "trained",
+  "test_metrics": {
+    "auroc": 0.903846153846154,
+    "balanced_accuracy": 0.6645299145299145,
+    "brier": 0.13393842796364414,
+    "f1": 0.5,
+    "pr_auc": 0.7024087275218498,
+    "resistant_recall": 0.38461538461538464,
+    "susceptible_recall": 0.9444444444444444
+  }
+}
