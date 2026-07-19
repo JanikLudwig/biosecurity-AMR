@@ -1,0 +1,3 @@
+- [Project: Genome Firewall](project-genome-firewall.md) — what the build is, teammate scope split, synthetic-features caveat
+- [User: deterministic, no LLM agents](user-deterministic-no-llm-agents.md) — decision path must be deterministic; "likely to work" requires provable target presence
+- [Key decisions](genome-firewall-key-decisions.md) — panel tiers, MLST split, M2 stack, run order
