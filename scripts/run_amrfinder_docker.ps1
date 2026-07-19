@@ -13,6 +13,7 @@ Param(
     [string]$OutputDir,
     [string]$LogDir,
     [int]$Threads,
+    [int]$Workers,
     [string]$Image,
     [string]$Organism,
     [string]$Manifest,
@@ -35,6 +36,7 @@ if ($InputDir) { $pythonArgs += "--input-dir", $InputDir }
 if ($OutputDir) { $pythonArgs += "--output-dir", $OutputDir }
 if ($LogDir) { $pythonArgs += "--log-dir", $LogDir }
 if ($Threads) { $pythonArgs += "--threads", $Threads.ToString() }
+if ($Workers) { $pythonArgs += "--workers", $Workers.ToString() }
 if ($Image) { $pythonArgs += "--image", $Image }
 if ($Organism) { $pythonArgs += "--organism", $Organism }
 if ($Manifest) { $pythonArgs += "--manifest", $Manifest }

@@ -78,3 +78,6 @@ reports/feature_matrix_summary.json
 # We keep tests/fixtures/ empty unless explicitly added via git add -f
 
 reports/
+
+data/manifests/*.csv
+data/manifests/*.csv.gz

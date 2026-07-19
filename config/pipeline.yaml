@@ -3,6 +3,7 @@ amrfinder:
   docker_image: ncbi/amr:4.2.7-2026-05-15.1
   organism: Staphylococcus_aureus
   threads: 4
+  workers: 1
   plus: false
 paths:
   genomes: data/raw/genomes

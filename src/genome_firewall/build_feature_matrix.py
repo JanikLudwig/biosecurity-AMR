@@ -16,11 +16,11 @@ logger = logging.getLogger(__name__)
 
 # Column synonyms fallback
 COLUMN_SYNONYMS = {
-    'gene_symbol': ['Gene symbol', 'Gene'],
+    'gene_symbol': ['Gene symbol', 'Gene', 'Element symbol'],
     'element_name': ['Element name', 'Sequence name'],
     'reference_accession': ['Closest reference accession', 'Closest reference name'],
-    'element_type': ['Element type'],
-    'element_subtype': ['Element subtype'],
+    'element_type': ['Element type', 'Type'],
+    'element_subtype': ['Element subtype', 'Subtype'],
     'class': ['Class'],
     'subclass': ['Subclass'],
     'method': ['Method']
@@ -39,16 +39,6 @@ def get_column(row: Dict[str, str], synonyms: List[str]) -> str:
             return row[syn].strip()
     return ""
 
-def extract_mutation(text: str) -> str:
-    """Attempts to find a canonical amino acid substitution like S84L."""
-    if not text:
-        return ""
-    # Look for patterns like S84L, H481Y, etc. (amino acid - pos - amino acid)
-    match = re.search(r'\b([A-Z]\d+[A-Z])\b', text)
-    if match:
-        return match.group(1)
-    return ""
-
 def determine_feature(row: Dict[str, str]) -> Tuple[str, str, str, str]:
     """
     Returns: feature_id, feature_type, gene_symbol, mutation
@@ -56,14 +46,26 @@ def determine_feature(row: Dict[str, str]) -> Tuple[str, str, str, str]:
     gene = get_column(row, COLUMN_SYNONYMS['gene_symbol'])
     elem = get_column(row, COLUMN_SYNONYMS['element_name'])
     ref = get_column(row, COLUMN_SYNONYMS['reference_accession'])
-    elem_type = get_column(row, COLUMN_SYNONYMS['element_type']).upper()
     
-    mutation_cand = extract_mutation(elem) or extract_mutation(gene)
+    elem_type = get_column(row, COLUMN_SYNONYMS['element_type']).strip().upper()
+    subtype = get_column(row, COLUMN_SYNONYMS['element_subtype']).strip().upper()
+    method = get_column(row, COLUMN_SYNONYMS['method']).strip().upper()
     
-    if 'MUTATION' in elem_type or mutation_cand:
+    is_mutation = False
+    if subtype == 'POINT' or method in ('POINT', 'POINTX') or 'MUTATION' in elem_type:
+        is_mutation = True
+        
+    if is_mutation:
         f_type = 'mutation'
         base_gene = gene if gene else (ref if ref else elem)
-        mut = mutation_cand if mutation_cand else "unknown_mut"
+        mut = "unknown_mut"
+        
+        # Split gene_symbol by underscore if possible
+        if gene and '_' in gene:
+            parts = gene.split('_', 1)
+            base_gene = parts[0]
+            mut = parts[1]
+            
         feat_id = f"mutation::{base_gene}::{mut}"
         return feat_id, f_type, base_gene, mut
     else:

@@ -33,6 +33,7 @@ def setup_genome_logger(genome_id: Path, log_dir: Path) -> logging.Logger:
     if g_logger.hasHandlers():
         g_logger.handlers.clear()
     
+    log_dir.mkdir(parents=True, exist_ok=True)
     log_file = log_dir / f"{genome_id}.log"
     fh = logging.FileHandler(log_file, encoding='utf-8')
     fh.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(message)s'))
@@ -298,9 +299,8 @@ def run_single_genome(
     
     return result
 
-def write_run_report(reports_dir: Path, results: List[Dict[str, Any]]):
-    reports_dir.mkdir(parents=True, exist_ok=True)
-    report_file = reports_dir / 'amrfinder_runs.csv'
+def write_run_report(report_file: Path, results: List[Dict[str, Any]]):
+    report_file.parent.mkdir(parents=True, exist_ok=True)
     
     if not results:
         return
@@ -314,6 +314,8 @@ def write_run_report(reports_dir: Path, results: List[Dict[str, Any]]):
             writer.writeheader()
         writer.writerows(results)
 
+import concurrent.futures
+
 def main():
     parser = argparse.ArgumentParser(description="Plattformübergreifender AMRFinderPlus-Runner")
     parser.add_argument('--backend', choices=['auto', 'docker', 'native'], help="Backend selection")
@@ -321,6 +323,7 @@ def main():
     parser.add_argument('--image', type=str, help="Docker image")
     parser.add_argument('--organism', type=str, help="Organism for AMRFinderPlus")
     parser.add_argument('--threads', type=int, help="Number of threads")
+    parser.add_argument('--workers', type=int, help="Number of concurrent workers")
     parser.add_argument('--input-dir', type=str, help="Input directory for FASTA files")
     parser.add_argument('--output-dir', type=str, help="Output directory")
     parser.add_argument('--log-dir', type=str, help="Log directory")
@@ -346,19 +349,31 @@ def main():
     image = args.image or config['amrfinder']['docker_image']
     organism = args.organism or config['amrfinder']['organism']
     threads = args.threads if args.threads is not None else config['amrfinder']['threads']
+    workers = args.workers if args.workers is not None else config['amrfinder'].get('workers', 1)
     plus = args.plus or config['amrfinder'].get('plus', False)
     
     input_dir = repo_root / (args.input_dir or config['paths']['genomes'])
     output_dir = repo_root / (args.output_dir or config['paths']['amrfinder_results'])
     log_dir = repo_root / (args.log_dir or config['paths']['amrfinder_logs'])
-    reports_dir = repo_root / (args.report if args.report else config['paths']['reports'])
+    report_file = repo_root / args.report if args.report else repo_root / config['paths']['reports'] / 'amrfinder_runs.csv'
     
     if threads <= 0:
         logger.error("Threads must be a positive integer.")
         sys.exit(1)
         
+    if workers <= 0:
+        logger.error("Workers must be a positive integer.")
+        sys.exit(1)
+        
     setup_logging(log_dir)
     
+    cpu_count = os.cpu_count() or 1
+    if workers * threads > cpu_count:
+        logger.warning(f"Warning: workers ({workers}) * threads ({threads}) = {workers * threads}, which is greater than os.cpu_count() ({cpu_count}).")
+        
+    if workers > 4:
+        logger.warning(f"Warning: workers ({workers}) > 4. Docker on Windows may run out of memory.")
+        
     try:
         backend = select_backend(backend_pref)
     except RuntimeError as e:
@@ -389,8 +404,10 @@ def main():
     results = []
     has_failure = False
     
-    for raw_id, fasta_path in genomes:
-        res = run_single_genome(
+    # Function to submit to executor
+    def run_wrapper(genome_tuple):
+        raw_id, fasta_path = genome_tuple
+        return run_single_genome(
             raw_id=raw_id,
             fasta_path=fasta_path,
             output_dir=output_dir,
@@ -402,15 +419,47 @@ def main():
             plus=plus,
             force=args.force
         )
-        results.append(res)
-        
-        if res['status'] == 'failed':
-            has_failure = True
-            if args.fail_fast:
-                logger.error(f"Fail-fast triggered by genome {raw_id}")
-                break
-                
-    write_run_report(reports_dir, results)
+
+    if workers == 1:
+        # Sequential execution
+        for g in genomes:
+            res = run_wrapper(g)
+            results.append(res)
+            if res['status'] == 'failed':
+                has_failure = True
+                if args.fail_fast:
+                    logger.error(f"Fail-fast triggered by genome {g[0]}")
+                    break
+    else:
+        # Parallel execution
+        with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
+            future_to_genome = {executor.submit(run_wrapper, g): g for g in genomes}
+            
+            for future in concurrent.futures.as_completed(future_to_genome):
+                g = future_to_genome[future]
+                try:
+                    res = future.result()
+                    results.append(res)
+                    if res['status'] == 'failed':
+                        has_failure = True
+                        if args.fail_fast:
+                            logger.error(f"Fail-fast triggered by genome {g[0]}. Cancelling pending tasks.")
+                            # Cancel pending tasks
+                            for f in future_to_genome:
+                                f.cancel()
+                            break
+                except Exception as exc:
+                    has_failure = True
+                    logger.error(f"Genome {g[0]} generated an exception: {exc}")
+                    if args.fail_fast:
+                        logger.error(f"Fail-fast triggered by genome {g[0]} exception. Cancelling pending tasks.")
+                        for f in future_to_genome:
+                            f.cancel()
+                        break
+                        
+    # Sort results to maintain deterministic report order
+    results.sort(key=lambda x: x['original_genome_id'])
+    write_run_report(report_file, results)
     
     if has_failure:
         logger.error("One or more processing steps failed.")
