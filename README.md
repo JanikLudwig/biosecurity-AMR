@@ -23,7 +23,7 @@ Folge diesen Schritten strikt in dieser Reihenfolge, um die Umgebung unter Windo
 
 1. **In das Repository wechseln:**
    ```powershell
-   cd C:\Users\benja\Desktop\Projekte\Hackathons\HackNation\biosecurity-AMR
+   cd path\to\biosecurity-AMR
    ```
 
 2. **Conda-Umgebung in der Anaconda Prompt erstellen:**
@@ -96,9 +96,9 @@ python -m genome_firewall.run_amrfinder --backend native --config config/pipelin
 
 - **Hinweis:** NCTC 8325 ist nur das Smoke-Test-Referenzgenom.
 - Die finale Trainingspopulation umfasst viele unterschiedliche Staphylococcus-aureus-Isolate.
-- Die Labels stammen aus laborbasierten BV-BRC-AMR-Ph‰notypen.
+- Die Labels stammen aus laborbasierten BV-BRC-AMR-Ph√§notypen.
 - *Computational Prediction* darf nicht als Laborlabel verwendet werden!
 - Features (AMRFinderPlus) und Labels (BV-BRC) bleiben stets getrennt.
-- Zun‰chst wird ein Audit ausgef¸hrt: `python -m genome_firewall.audit_bvbrc` oder `make audit`
-- Danach werden geeignete Antibiotika in der Config ausgew‰hlt.
-- Erst anschlieﬂend werden die zugehˆrigen FASTAs heruntergeladen: `python -m genome_firewall.prepare_cohort` & `python -m genome_firewall.download_fastas --mode pilot`
+- Zun√§chst wird ein Audit ausgef√ºhrt: `python -m genome_firewall.audit_bvbrc` oder `make audit`
+- Danach werden geeignete Antibiotika in der Config ausgew√§hlt.
+- Erst anschlie√üend werden die zugeh√∂rigen FASTAs heruntergeladen: `python -m genome_firewall.prepare_cohort` & `python -m genome_firewall.download_fastas --mode pilot`

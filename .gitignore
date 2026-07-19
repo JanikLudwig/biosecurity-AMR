@@ -84,3 +84,10 @@ data/manifests/*.csv.gz
 
 artifacts/
 scratch/
+
+data/local/
+
+artifacts/models/
+
+reports/model_training/
+tmp_pytest/

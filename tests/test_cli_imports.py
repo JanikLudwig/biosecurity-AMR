@@ -1,7 +1,7 @@
 import pytest
 import sys
 from unittest.mock import patch
-from src.genome_firewall import audit_bvbrc, prepare_cohort, download_fastas
+from genome_firewall import audit_bvbrc, prepare_cohort, download_fastas
 
 def test_imports_do_not_execute_logic():
     # If importing them executed logic, it would fail because data is missing.

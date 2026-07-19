@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 from pathlib import Path
-from src.genome_firewall.import_local_dataset import validate_fasta, run_import
+from genome_firewall.import_local_dataset import validate_fasta, run_import
 
 class DummyArgs:
     def __init__(self, tsv, fasta_dir, manifest, labels, reports_dir, seed=42):
