@@ -1,4 +1,17 @@
-# Core engine (annotate/predict/report/CLI) has NO third-party dependencies —
-# it runs on pure Python 3.9+ stdlib. The packages below are only for the demo UI.
-streamlit>=1.30
-pandas>=1.5
+# Genome Firewall (S. aureus prototype) — modules M2–M5 + web dashboard.
+# M1/AMRFinderPlus is teammate-owned and NOT required to run this package
+# (a synthetic placeholder feature matrix stands in until their output lands).
+# The core scientific stack (numpy/pandas/scipy/matplotlib) is assumed present.
+
+pyrodigal>=3.7        # M2: ORF calling from the assembly (binary wheel, no conda)
+pyhmmer>=0.12         # M2: target-protein homology search (binary wheel, no conda)
+scikit-learn>=1.4     # M3: per-drug logistic regression + calibration
+joblib>=1.3           # model persistence
+pyarrow>=14           # feature-matrix parquet I/O
+
+# Web UI (optional — only needed to serve the dashboard)
+fastapi>=0.110
+uvicorn[standard]>=0.29
+
+# Assumed already present in the environment:
+# numpy, pandas, scipy, matplotlib

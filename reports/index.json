@@ -1,0 +1,1655 @@
+{
+  "genomes": [
+    {
+      "genome_id": "1280.10033",
+      "mlst_group": "ST54",
+      "partition": "test",
+      "n_proteins": 2505,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.11024",
+      "mlst_group": "ST7",
+      "partition": "test",
+      "n_proteins": 2524,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 14,
+        "no-call": 30
+      }
+    },
+    {
+      "genome_id": "1280.11198",
+      "mlst_group": "ST1292",
+      "partition": "test",
+      "n_proteins": 2488,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.11231",
+      "mlst_group": "ST7",
+      "partition": "test",
+      "n_proteins": 2571,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.11314",
+      "mlst_group": "ST2885",
+      "partition": "test",
+      "n_proteins": 2503,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.11722",
+      "mlst_group": "ST2971",
+      "partition": "test",
+      "n_proteins": 2566,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 15,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.15897",
+      "mlst_group": "ST152",
+      "partition": "test",
+      "n_proteins": 2542,
+      "summary": {
+        "likely to fail": 2,
+        "likely to work": 15,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.15908",
+      "mlst_group": "ST3251",
+      "partition": "test",
+      "n_proteins": 2566,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.15921",
+      "mlst_group": "ST152",
+      "partition": "test",
+      "n_proteins": 2585,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 13,
+        "no-call": 30
+      }
+    },
+    {
+      "genome_id": "1280.16552",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2748,
+      "summary": {
+        "likely to fail": 8,
+        "likely to work": 8,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.16772",
+      "mlst_group": "ST9",
+      "partition": "test",
+      "n_proteins": 2633,
+      "summary": {
+        "likely to fail": 10,
+        "likely to work": 3,
+        "no-call": 31
+      }
+    },
+    {
+      "genome_id": "1280.16861",
+      "mlst_group": "ST9",
+      "partition": "test",
+      "n_proteins": 2551,
+      "summary": {
+        "likely to fail": 8,
+        "likely to work": 8,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.17656",
+      "mlst_group": "ST72",
+      "partition": "test",
+      "n_proteins": 2624,
+      "summary": {
+        "likely to fail": 6,
+        "likely to work": 9,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.24811",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2705,
+      "summary": {
+        "likely to fail": 4,
+        "likely to work": 12,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.24886",
+      "mlst_group": "ST80",
+      "partition": "test",
+      "n_proteins": 2547,
+      "summary": {
+        "likely to fail": 4,
+        "likely to work": 12,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.24898",
+      "mlst_group": "ST46",
+      "partition": "test",
+      "n_proteins": 2617,
+      "summary": {
+        "likely to fail": 4,
+        "likely to work": 12,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.24947",
+      "mlst_group": "ST1340",
+      "partition": "test",
+      "n_proteins": 2578,
+      "summary": {
+        "likely to fail": 5,
+        "likely to work": 10,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.25022",
+      "mlst_group": "ST149",
+      "partition": "test",
+      "n_proteins": 2533,
+      "summary": {
+        "likely to fail": 3,
+        "likely to work": 12,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.25097",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2563,
+      "summary": {
+        "likely to fail": 5,
+        "likely to work": 12,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.25102",
+      "mlst_group": "ST772",
+      "partition": "test",
+      "n_proteins": 2553,
+      "summary": {
+        "likely to fail": 5,
+        "likely to work": 10,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.25131",
+      "mlst_group": "ST241",
+      "partition": "test",
+      "n_proteins": 2766,
+      "summary": {
+        "likely to fail": 3,
+        "likely to work": 13,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.25148",
+      "mlst_group": "ST149",
+      "partition": "test",
+      "n_proteins": 2551,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 17,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.26006",
+      "mlst_group": "ST109",
+      "partition": "test",
+      "n_proteins": 2858,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 0,
+        "no-call": 44
+      }
+    },
+    {
+      "genome_id": "1280.26028",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2666,
+      "summary": {
+        "likely to fail": 2,
+        "likely to work": 15,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.26040",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2667,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.26045",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2329,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 0,
+        "no-call": 44
+      }
+    },
+    {
+      "genome_id": "1280.26049",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2665,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.26051",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2717,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 13,
+        "no-call": 30
+      }
+    },
+    {
+      "genome_id": "1280.26065",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2757,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.26066",
+      "mlst_group": "ST34",
+      "partition": "test",
+      "n_proteins": 2727,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.29769",
+      "mlst_group": "ST80",
+      "partition": "test",
+      "n_proteins": 2537,
+      "summary": {
+        "likely to fail": 6,
+        "likely to work": 7,
+        "no-call": 31
+      }
+    },
+    {
+      "genome_id": "1280.29787",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2588,
+      "summary": {
+        "likely to fail": 4,
+        "likely to work": 12,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.29902",
+      "mlst_group": "ST149",
+      "partition": "test",
+      "n_proteins": 2546,
+      "summary": {
+        "likely to fail": 4,
+        "likely to work": 12,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.29961",
+      "mlst_group": "ST72",
+      "partition": "test",
+      "n_proteins": 2565,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.30005",
+      "mlst_group": "ST72",
+      "partition": "test",
+      "n_proteins": 2607,
+      "summary": {
+        "likely to fail": 7,
+        "likely to work": 7,
+        "no-call": 30
+      }
+    },
+    {
+      "genome_id": "1280.30158",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2588,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 15,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.30170",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2565,
+      "summary": {
+        "likely to fail": 3,
+        "likely to work": 13,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.30194",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2583,
+      "summary": {
+        "likely to fail": 3,
+        "likely to work": 12,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.30249",
+      "mlst_group": "ST149",
+      "partition": "test",
+      "n_proteins": 2549,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 14,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.30313",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2588,
+      "summary": {
+        "likely to fail": 4,
+        "likely to work": 11,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.30327",
+      "mlst_group": "ST80",
+      "partition": "test",
+      "n_proteins": 2564,
+      "summary": {
+        "likely to fail": 6,
+        "likely to work": 9,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.30376",
+      "mlst_group": "ST80",
+      "partition": "test",
+      "n_proteins": 2517,
+      "summary": {
+        "likely to fail": 7,
+        "likely to work": 10,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.30455",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2553,
+      "summary": {
+        "likely to fail": 4,
+        "likely to work": 12,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.4734",
+      "mlst_group": "ST3317",
+      "partition": "test",
+      "n_proteins": 2703,
+      "summary": {
+        "likely to fail": 5,
+        "likely to work": 11,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.4949",
+      "mlst_group": "ST188",
+      "partition": "test",
+      "n_proteins": 2611,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.4959",
+      "mlst_group": "ST188",
+      "partition": "test",
+      "n_proteins": 2607,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 12,
+        "no-call": 31
+      }
+    },
+    {
+      "genome_id": "1280.51769",
+      "mlst_group": "ST7",
+      "partition": "test",
+      "n_proteins": 2514,
+      "summary": {
+        "likely to fail": 2,
+        "likely to work": 14,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.51872",
+      "mlst_group": "ST241",
+      "partition": "test",
+      "n_proteins": 2686,
+      "summary": {
+        "likely to fail": 12,
+        "likely to work": 5,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.51923",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2706,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.52171",
+      "mlst_group": "ST7",
+      "partition": "test",
+      "n_proteins": 2518,
+      "summary": {
+        "likely to fail": 7,
+        "likely to work": 9,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.52198",
+      "mlst_group": "ST72",
+      "partition": "test",
+      "n_proteins": 2501,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 17,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.52201",
+      "mlst_group": "ST188",
+      "partition": "test",
+      "n_proteins": 2553,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 15,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.52222",
+      "mlst_group": "ST256",
+      "partition": "test",
+      "n_proteins": 2539,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 15,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.52229",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2644,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 12,
+        "no-call": 32
+      }
+    },
+    {
+      "genome_id": "1280.59248",
+      "mlst_group": "ST20",
+      "partition": "test",
+      "n_proteins": 2579,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.59251",
+      "mlst_group": "ST20",
+      "partition": "test",
+      "n_proteins": 2576,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.59302",
+      "mlst_group": "ST7",
+      "partition": "test",
+      "n_proteins": 2574,
+      "summary": {
+        "likely to fail": 5,
+        "likely to work": 12,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.59311",
+      "mlst_group": "ST188",
+      "partition": "test",
+      "n_proteins": 2556,
+      "summary": {
+        "likely to fail": 5,
+        "likely to work": 11,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.59312",
+      "mlst_group": "ST7",
+      "partition": "test",
+      "n_proteins": 2575,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.59315",
+      "mlst_group": "ST9",
+      "partition": "test",
+      "n_proteins": 2558,
+      "summary": {
+        "likely to fail": 7,
+        "likely to work": 9,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.59353",
+      "mlst_group": "ST1218",
+      "partition": "test",
+      "n_proteins": 2468,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 14,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.59385",
+      "mlst_group": "ST7",
+      "partition": "test",
+      "n_proteins": 2643,
+      "summary": {
+        "likely to fail": 2,
+        "likely to work": 13,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.59396",
+      "mlst_group": "ST72",
+      "partition": "test",
+      "n_proteins": 2587,
+      "summary": {
+        "likely to fail": 10,
+        "likely to work": 5,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.59398",
+      "mlst_group": "STsolo_1280.59398",
+      "partition": "test",
+      "n_proteins": 2568,
+      "summary": {
+        "likely to fail": 13,
+        "likely to work": 4,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.59401",
+      "mlst_group": "ST188",
+      "partition": "test",
+      "n_proteins": 2615,
+      "summary": {
+        "likely to fail": 2,
+        "likely to work": 9,
+        "no-call": 33
+      }
+    },
+    {
+      "genome_id": "1280.59440",
+      "mlst_group": "STsolo_1280.59440",
+      "partition": "test",
+      "n_proteins": 2539,
+      "summary": {
+        "likely to fail": 2,
+        "likely to work": 12,
+        "no-call": 30
+      }
+    },
+    {
+      "genome_id": "1280.59448",
+      "mlst_group": "ST9",
+      "partition": "test",
+      "n_proteins": 2669,
+      "summary": {
+        "likely to fail": 10,
+        "likely to work": 5,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.59460",
+      "mlst_group": "ST9",
+      "partition": "test",
+      "n_proteins": 2772,
+      "summary": {
+        "likely to fail": 12,
+        "likely to work": 5,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.59462",
+      "mlst_group": "ST9",
+      "partition": "test",
+      "n_proteins": 2619,
+      "summary": {
+        "likely to fail": 12,
+        "likely to work": 5,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.59464",
+      "mlst_group": "ST9",
+      "partition": "test",
+      "n_proteins": 2554,
+      "summary": {
+        "likely to fail": 10,
+        "likely to work": 4,
+        "no-call": 30
+      }
+    },
+    {
+      "genome_id": "1280.59477",
+      "mlst_group": "ST7",
+      "partition": "test",
+      "n_proteins": 2537,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 13,
+        "no-call": 30
+      }
+    },
+    {
+      "genome_id": "1280.59499",
+      "mlst_group": "ST7",
+      "partition": "test",
+      "n_proteins": 2500,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 15,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.59502",
+      "mlst_group": "STsolo_1280.59502",
+      "partition": "test",
+      "n_proteins": 2498,
+      "summary": {
+        "likely to fail": 5,
+        "likely to work": 10,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.59511",
+      "mlst_group": "ST7",
+      "partition": "test",
+      "n_proteins": 2501,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.59512",
+      "mlst_group": "ST7",
+      "partition": "test",
+      "n_proteins": 2483,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 14,
+        "no-call": 30
+      }
+    },
+    {
+      "genome_id": "1280.59531",
+      "mlst_group": "ST188",
+      "partition": "test",
+      "n_proteins": 2469,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 14,
+        "no-call": 30
+      }
+    },
+    {
+      "genome_id": "1280.59540",
+      "mlst_group": "ST20",
+      "partition": "test",
+      "n_proteins": 2577,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 17,
+        "no-call": 26
+      }
+    },
+    {
+      "genome_id": "1280.59542",
+      "mlst_group": "ST188",
+      "partition": "test",
+      "n_proteins": 2625,
+      "summary": {
+        "likely to fail": 2,
+        "likely to work": 14,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.59545",
+      "mlst_group": "ST20",
+      "partition": "test",
+      "n_proteins": 2579,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 14,
+        "no-call": 30
+      }
+    },
+    {
+      "genome_id": "1280.59599",
+      "mlst_group": "ST7",
+      "partition": "test",
+      "n_proteins": 2598,
+      "summary": {
+        "likely to fail": 8,
+        "likely to work": 8,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.59603",
+      "mlst_group": "ST188",
+      "partition": "test",
+      "n_proteins": 2603,
+      "summary": {
+        "likely to fail": 7,
+        "likely to work": 9,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.59668",
+      "mlst_group": "ST188",
+      "partition": "test",
+      "n_proteins": 2553,
+      "summary": {
+        "likely to fail": 7,
+        "likely to work": 7,
+        "no-call": 30
+      }
+    },
+    {
+      "genome_id": "1280.59734",
+      "mlst_group": "ST188",
+      "partition": "test",
+      "n_proteins": 2551,
+      "summary": {
+        "likely to fail": 9,
+        "likely to work": 8,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.59751",
+      "mlst_group": "ST9",
+      "partition": "test",
+      "n_proteins": 2573,
+      "summary": {
+        "likely to fail": 9,
+        "likely to work": 7,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.59763",
+      "mlst_group": "ST9",
+      "partition": "test",
+      "n_proteins": 2539,
+      "summary": {
+        "likely to fail": 11,
+        "likely to work": 6,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.59766",
+      "mlst_group": "ST9",
+      "partition": "test",
+      "n_proteins": 2618,
+      "summary": {
+        "likely to fail": 11,
+        "likely to work": 6,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.59781",
+      "mlst_group": "ST9",
+      "partition": "test",
+      "n_proteins": 2548,
+      "summary": {
+        "likely to fail": 12,
+        "likely to work": 4,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.59784",
+      "mlst_group": "ST9",
+      "partition": "test",
+      "n_proteins": 2635,
+      "summary": {
+        "likely to fail": 10,
+        "likely to work": 6,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.59786",
+      "mlst_group": "ST9",
+      "partition": "test",
+      "n_proteins": 2625,
+      "summary": {
+        "likely to fail": 10,
+        "likely to work": 6,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.59790",
+      "mlst_group": "ST9",
+      "partition": "test",
+      "n_proteins": 2615,
+      "summary": {
+        "likely to fail": 9,
+        "likely to work": 6,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.59845",
+      "mlst_group": "ST188",
+      "partition": "test",
+      "n_proteins": 2606,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.59891",
+      "mlst_group": "ST1821",
+      "partition": "test",
+      "n_proteins": 2531,
+      "summary": {
+        "likely to fail": 7,
+        "likely to work": 8,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.7373",
+      "mlst_group": "ST1529",
+      "partition": "test",
+      "n_proteins": 2708,
+      "summary": {
+        "likely to fail": 7,
+        "likely to work": 6,
+        "no-call": 31
+      }
+    },
+    {
+      "genome_id": "1280.7403",
+      "mlst_group": "ST2126",
+      "partition": "test",
+      "n_proteins": 2546,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 14,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.7439",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2731,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.7922",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2635,
+      "summary": {
+        "likely to fail": 5,
+        "likely to work": 11,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.7950",
+      "mlst_group": "ST1841",
+      "partition": "test",
+      "n_proteins": 2571,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.7973",
+      "mlst_group": "ST46",
+      "partition": "test",
+      "n_proteins": 2552,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 14,
+        "no-call": 30
+      }
+    },
+    {
+      "genome_id": "1280.7980",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2679,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.8043",
+      "mlst_group": "ST188",
+      "partition": "test",
+      "n_proteins": 2796,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 16,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.8053",
+      "mlst_group": "ST2445",
+      "partition": "test",
+      "n_proteins": 2520,
+      "summary": {
+        "likely to fail": 2,
+        "likely to work": 16,
+        "no-call": 26
+      }
+    },
+    {
+      "genome_id": "1280.8054",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2639,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 15,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.8076",
+      "mlst_group": "ST72",
+      "partition": "test",
+      "n_proteins": 2579,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.8150",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2682,
+      "summary": {
+        "likely to fail": 3,
+        "likely to work": 11,
+        "no-call": 30
+      }
+    },
+    {
+      "genome_id": "1280.8167",
+      "mlst_group": "ST34",
+      "partition": "test",
+      "n_proteins": 2789,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 15,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.8168",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2646,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.8173",
+      "mlst_group": "ST3423",
+      "partition": "test",
+      "n_proteins": 2707,
+      "summary": {
+        "likely to fail": 8,
+        "likely to work": 8,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.8175",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2651,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.8196",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2690,
+      "summary": {
+        "likely to fail": 2,
+        "likely to work": 13,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.8208",
+      "mlst_group": "ST54",
+      "partition": "test",
+      "n_proteins": 2543,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.8209",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2586,
+      "summary": {
+        "likely to fail": 4,
+        "likely to work": 11,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.8238",
+      "mlst_group": "ST7",
+      "partition": "test",
+      "n_proteins": 2429,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 15,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.8239",
+      "mlst_group": "ST215",
+      "partition": "test",
+      "n_proteins": 4112,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 0,
+        "no-call": 44
+      }
+    },
+    {
+      "genome_id": "1280.8283",
+      "mlst_group": "ST1542",
+      "partition": "test",
+      "n_proteins": 2560,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.8290",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2705,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 15,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.8294",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2516,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.8321",
+      "mlst_group": "ST3437",
+      "partition": "test",
+      "n_proteins": 2615,
+      "summary": {
+        "likely to fail": 4,
+        "likely to work": 12,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.8341",
+      "mlst_group": "ST1163",
+      "partition": "test",
+      "n_proteins": 2574,
+      "summary": {
+        "likely to fail": 2,
+        "likely to work": 12,
+        "no-call": 30
+      }
+    },
+    {
+      "genome_id": "1280.8378",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2736,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.8483",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2635,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.8486",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2627,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.8641",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2572,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.8647",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2613,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.8721",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2580,
+      "summary": {
+        "likely to fail": 3,
+        "likely to work": 12,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.8722",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2591,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.8761",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2605,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 14,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.8801",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2669,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.8835",
+      "mlst_group": "ST3532",
+      "partition": "test",
+      "n_proteins": 2534,
+      "summary": {
+        "likely to fail": 4,
+        "likely to work": 11,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.9434",
+      "mlst_group": "ST7",
+      "partition": "test",
+      "n_proteins": 2484,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 14,
+        "no-call": 30
+      }
+    },
+    {
+      "genome_id": "1280.9452",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2723,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 16,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.9456",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2634,
+      "summary": {
+        "likely to fail": 2,
+        "likely to work": 14,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.9457",
+      "mlst_group": "ST2443",
+      "partition": "test",
+      "n_proteins": 2571,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.9471",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2680,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.9473",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2678,
+      "summary": {
+        "likely to fail": 3,
+        "likely to work": 14,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.9699",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2567,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 13,
+        "no-call": 30
+      }
+    },
+    {
+      "genome_id": "1280.9701",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2690,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.9719",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2642,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.9727",
+      "mlst_group": "ST34",
+      "partition": "test",
+      "n_proteins": 2785,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.9736",
+      "mlst_group": "ST3458",
+      "partition": "test",
+      "n_proteins": 2630,
+      "summary": {
+        "likely to fail": 3,
+        "likely to work": 10,
+        "no-call": 31
+      }
+    },
+    {
+      "genome_id": "1280.9825",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2642,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 14,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.9856",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2685,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.9867",
+      "mlst_group": "ST34",
+      "partition": "test",
+      "n_proteins": 2808,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 15,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1280.9878",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2636,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 15,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1280.9911",
+      "mlst_group": "ST30",
+      "partition": "test",
+      "n_proteins": 2707,
+      "summary": {
+        "likely to fail": 1,
+        "likely to work": 16,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.9927",
+      "mlst_group": "ST3439",
+      "partition": "test",
+      "n_proteins": 2510,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 17,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1280.9935",
+      "mlst_group": "ST20",
+      "partition": "test",
+      "n_proteins": 2527,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 15,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1413327.3",
+      "mlst_group": "ST9",
+      "partition": "test",
+      "n_proteins": 2608,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 16,
+        "no-call": 28
+      }
+    },
+    {
+      "genome_id": "1422528.3",
+      "mlst_group": "ST3706",
+      "partition": "test",
+      "n_proteins": 2662,
+      "summary": {
+        "likely to fail": 4,
+        "likely to work": 11,
+        "no-call": 29
+      }
+    },
+    {
+      "genome_id": "1422730.3",
+      "mlst_group": "ST752",
+      "partition": "test",
+      "n_proteins": 2570,
+      "summary": {
+        "likely to fail": 3,
+        "likely to work": 14,
+        "no-call": 27
+      }
+    },
+    {
+      "genome_id": "1422765.3",
+      "mlst_group": "ST1538",
+      "partition": "test",
+      "n_proteins": 2641,
+      "summary": {
+        "likely to fail": 0,
+        "likely to work": 13,
+        "no-call": 31
+      }
+    }
+  ],
+  "count": 150
+}

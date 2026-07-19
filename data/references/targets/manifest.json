@@ -1,0 +1,87 @@
+{
+  "gyrA": {
+    "accession": "P20831",
+    "desc": "DNA gyrase subunit A",
+    "length": 889
+  },
+  "gyrB": {
+    "accession": "P0A0K8",
+    "desc": "DNA gyrase subunit B",
+    "length": 644
+  },
+  "grlA": {
+    "accession": "P0C1U9",
+    "desc": "Topoisomerase IV subunit A (ParC)",
+    "length": 800
+  },
+  "grlB": {
+    "accession": "P0C1S7",
+    "desc": "Topoisomerase IV subunit B (ParE)",
+    "length": 663
+  },
+  "pbpB": {
+    "accession": "Q8KHY3",
+    "desc": "Penicillin-binding protein 2",
+    "length": 727
+  },
+  "pbpA": {
+    "accession": "Q53725",
+    "desc": "Penicillin-binding protein 1",
+    "length": 744
+  },
+  "pbpD": {
+    "accession": "Q53613",
+    "desc": "Penicillin-binding protein 4",
+    "length": 431
+  },
+  "folA": {
+    "accession": "P0A017",
+    "desc": "Dihydrofolate reductase (DHFR)",
+    "length": 159
+  },
+  "folP": {
+    "accession": "O05701",
+    "desc": "Dihydropteroate synthase (DHPS)",
+    "length": 267
+  },
+  "fusA": {
+    "accession": "P68790",
+    "desc": "Elongation factor G (EF-G)",
+    "length": 693
+  },
+  "ileS": {
+    "accession": "P41972",
+    "desc": "Isoleucine--tRNA ligase",
+    "length": 917
+  },
+  "rpoB": {
+    "accession": "H2DFG5",
+    "desc": "DNA-directed RNA polymerase subunit beta",
+    "length": 223
+  },
+  "murA": {
+    "accession": "A0A0U2VPV7",
+    "desc": "UDP-GlcNAc 1-carboxyvinyltransferase (MurA)",
+    "length": 421
+  },
+  "rplD": {
+    "accession": "W8TRC7",
+    "desc": "50S ribosomal protein L4",
+    "length": 207
+  },
+  "rplV": {
+    "accession": "A0A127E5W8",
+    "desc": "50S ribosomal protein L22",
+    "length": 117
+  },
+  "rpsJ": {
+    "accession": "A0A0D1JTN2",
+    "desc": "30S ribosomal protein S10",
+    "length": 102
+  },
+  "pbpC": {
+    "accession": "Q5D1F0",
+    "desc": "Penicillin-binding protein 3",
+    "length": 691
+  }
+}

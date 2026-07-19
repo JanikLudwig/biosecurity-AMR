@@ -1,0 +1,744 @@
+[
+  {
+    "drug": "erythromycin",
+    "drug_display": "Erythromycin",
+    "tier": "A",
+    "n_resistant": 1272,
+    "n_susceptible": 1668,
+    "n_total": 2940,
+    "n_groups": 238,
+    "drug_class": "macrolide",
+    "mechanism": "Binds 23S rRNA in the 50S subunit; blocks elongation.",
+    "target_kind": "protein",
+    "target_genes": [
+      "rplD",
+      "rplV"
+    ],
+    "modelable": true,
+    "note": "erm* rRNA methylases (MLS_B) and msr(A) efflux are the main determinants."
+  },
+  {
+    "drug": "ciprofloxacin",
+    "drug_display": "Ciprofloxacin",
+    "tier": "A",
+    "n_resistant": 1107,
+    "n_susceptible": 1768,
+    "n_total": 2875,
+    "n_groups": 220,
+    "drug_class": "fluoroquinolone",
+    "mechanism": "Inhibits DNA gyrase and topoisomerase IV.",
+    "target_kind": "protein",
+    "target_genes": [
+      "gyrA",
+      "grlA"
+    ],
+    "modelable": true,
+    "note": "High-level resistance from QRDR point mutations in gyrA + grlA(parC)."
+  },
+  {
+    "drug": "gentamicin",
+    "drug_display": "Gentamicin",
+    "tier": "A",
+    "n_resistant": 301,
+    "n_susceptible": 2574,
+    "n_total": 2875,
+    "n_groups": 239,
+    "drug_class": "aminoglycoside",
+    "mechanism": "Binds 16S rRNA in the 30S subunit; mistranslation.",
+    "target_kind": "protein",
+    "target_genes": [
+      "rpsL",
+      "rpsJ"
+    ],
+    "modelable": true,
+    "note": "aac(6')-aph(2'') bifunctional enzyme is the dominant staph determinant."
+  },
+  {
+    "drug": "tetracycline",
+    "drug_display": "Tetracycline",
+    "tier": "A",
+    "n_resistant": 454,
+    "n_susceptible": 2202,
+    "n_total": 2656,
+    "n_groups": 220,
+    "drug_class": "tetracycline",
+    "mechanism": "Binds 30S subunit (16S rRNA); blocks tRNA binding.",
+    "target_kind": "protein",
+    "target_genes": [
+      "rpsL",
+      "rpsJ"
+    ],
+    "modelable": true,
+    "note": "tet(K)/tet(L) efflux and tet(M)/tet(O) ribosomal protection."
+  },
+  {
+    "drug": "penicillin",
+    "drug_display": "Penicillin",
+    "tier": "A",
+    "n_resistant": 1914,
+    "n_susceptible": 248,
+    "n_total": 2162,
+    "n_groups": 205,
+    "drug_class": "beta-lactam (penicillin)",
+    "mechanism": "Inhibits PBP transpeptidation (cell wall).",
+    "target_kind": "protein",
+    "target_genes": [
+      "pbpB",
+      "pbpA"
+    ],
+    "modelable": true,
+    "note": "Penicillinase (blaZ) hydrolyses penicillin; mecA/mecC (PBP2a) bypasses the target."
+  },
+  {
+    "drug": "fusidic_acid",
+    "drug_display": "Fusidic Acid",
+    "tier": "A",
+    "n_resistant": 279,
+    "n_susceptible": 1663,
+    "n_total": 1942,
+    "n_groups": 215,
+    "drug_class": "fusidane",
+    "mechanism": "Inhibits elongation factor G (fusA); blocks translocation.",
+    "target_kind": "protein",
+    "target_genes": [
+      "fusA"
+    ],
+    "modelable": true,
+    "note": "fusB/fusC protection proteins or fusA point mutations."
+  },
+  {
+    "drug": "clindamycin",
+    "drug_display": "Clindamycin",
+    "tier": "A",
+    "n_resistant": 846,
+    "n_susceptible": 929,
+    "n_total": 1775,
+    "n_groups": 139,
+    "drug_class": "lincosamide",
+    "mechanism": "Binds 23S rRNA peptidyl-transferase centre (50S).",
+    "target_kind": "protein",
+    "target_genes": [
+      "rplD",
+      "rplC"
+    ],
+    "modelable": true,
+    "note": "erm* confers MLS_B (inducible/constitutive); lnu/vga/lsa also implicated."
+  },
+  {
+    "drug": "cefoxitin",
+    "drug_display": "Cefoxitin",
+    "tier": "A",
+    "n_resistant": 1045,
+    "n_susceptible": 660,
+    "n_total": 1705,
+    "n_groups": 122,
+    "drug_class": "beta-lactam (cephamycin)",
+    "mechanism": "Inhibits PBP transpeptidation; MRSA surrogate.",
+    "target_kind": "protein",
+    "target_genes": [
+      "pbpB",
+      "pbpA"
+    ],
+    "modelable": true,
+    "note": "Standard phenotypic surrogate for mecA-mediated methicillin resistance."
+  },
+  {
+    "drug": "methicillin",
+    "drug_display": "Methicillin",
+    "tier": "A",
+    "n_resistant": 850,
+    "n_susceptible": 832,
+    "n_total": 1682,
+    "n_groups": 185,
+    "drug_class": "beta-lactam (anti-staph penicillin)",
+    "mechanism": "Inhibits PBP transpeptidation.",
+    "target_kind": "protein",
+    "target_genes": [
+      "pbpB",
+      "pbpA"
+    ],
+    "modelable": true,
+    "note": "Defines MRSA: mecA/mecC encode PBP2a, a low-affinity target bypass."
+  },
+  {
+    "drug": "trimethoprim_sulfamethoxazole",
+    "drug_display": "Trimethoprim/sulfamethoxazole",
+    "tier": "A",
+    "n_resistant": 276,
+    "n_susceptible": 1122,
+    "n_total": 1398,
+    "n_groups": 97,
+    "drug_class": "folate-pathway inhibitor (combination)",
+    "mechanism": "Trimethoprim inhibits DHFR (folA); sulfamethoxazole inhibits DHPS (folP).",
+    "target_kind": "protein",
+    "target_genes": [
+      "folA",
+      "folP"
+    ],
+    "modelable": true,
+    "note": "Two-target combination; dfr (DHFR bypass) drives clinical failure, sul supports."
+  },
+  {
+    "drug": "oxacillin",
+    "drug_display": "Oxacillin",
+    "tier": "A",
+    "n_resistant": 614,
+    "n_susceptible": 754,
+    "n_total": 1368,
+    "n_groups": 107,
+    "drug_class": "beta-lactam (anti-staph penicillin)",
+    "mechanism": "Inhibits PBP transpeptidation.",
+    "target_kind": "protein",
+    "target_genes": [
+      "pbpB",
+      "pbpA"
+    ],
+    "modelable": true,
+    "note": "Oxacillin/methicillin resistance is driven by mecA/mecC (acquired PBP2a)."
+  },
+  {
+    "drug": "chloramphenicol",
+    "drug_display": "Chloramphenicol",
+    "tier": "A",
+    "n_resistant": 107,
+    "n_susceptible": 1167,
+    "n_total": 1274,
+    "n_groups": 95,
+    "drug_class": "phenicol",
+    "mechanism": "Binds 23S rRNA peptidyl-transferase centre (50S).",
+    "target_kind": "protein",
+    "target_genes": [
+      "rplD",
+      "rplV"
+    ],
+    "modelable": true,
+    "note": "Chloramphenicol acetyltransferases (cat) inactivate the drug."
+  },
+  {
+    "drug": "rifampin",
+    "drug_display": "Rifampin",
+    "tier": "B",
+    "n_resistant": 49,
+    "n_susceptible": 1910,
+    "n_total": 1959,
+    "n_groups": 210,
+    "drug_class": "rifamycin",
+    "mechanism": "Inhibits RNA polymerase \u03b2-subunit (rpoB).",
+    "target_kind": "protein",
+    "target_genes": [
+      "rpoB"
+    ],
+    "modelable": true,
+    "note": "Resistance from rpoB RRDR point mutations."
+  },
+  {
+    "drug": "mupirocin",
+    "drug_display": "Mupirocin",
+    "tier": "B",
+    "n_resistant": 31,
+    "n_susceptible": 1283,
+    "n_total": 1314,
+    "n_groups": 150,
+    "drug_class": "pseudomonic acid",
+    "mechanism": "Inhibits isoleucyl-tRNA synthetase (ileS).",
+    "target_kind": "protein",
+    "target_genes": [
+      "ileS"
+    ],
+    "modelable": true,
+    "note": "High-level resistance from mupA (ileS2); low-level from ileS mutations."
+  },
+  {
+    "drug": "daptomycin",
+    "drug_display": "Daptomycin",
+    "tier": "B",
+    "n_resistant": 78,
+    "n_susceptible": 865,
+    "n_total": 943,
+    "n_groups": 68,
+    "drug_class": "lipopeptide",
+    "mechanism": "Disrupts the cytoplasmic membrane (Ca2+-dependent).",
+    "target_kind": "membrane",
+    "target_genes": [],
+    "modelable": true,
+    "note": "Target is the membrane, not one ORF; presence gate is not applicable."
+  },
+  {
+    "drug": "levofloxacin",
+    "drug_display": "Levofloxacin",
+    "tier": "B",
+    "n_resistant": 31,
+    "n_susceptible": 189,
+    "n_total": 220,
+    "n_groups": 44,
+    "drug_class": "fluoroquinolone",
+    "mechanism": "Inhibits DNA gyrase and topoisomerase IV.",
+    "target_kind": "protein",
+    "target_genes": [
+      "gyrA",
+      "grlA"
+    ],
+    "modelable": true,
+    "note": ""
+  },
+  {
+    "drug": "moxifloxacin",
+    "drug_display": "Moxifloxacin",
+    "tier": "B",
+    "n_resistant": 110,
+    "n_susceptible": 69,
+    "n_total": 179,
+    "n_groups": 29,
+    "drug_class": "fluoroquinolone",
+    "mechanism": "Inhibits DNA gyrase and topoisomerase IV.",
+    "target_kind": "protein",
+    "target_genes": [
+      "gyrA",
+      "grlA"
+    ],
+    "modelable": true,
+    "note": ""
+  },
+  {
+    "drug": "ceftaroline",
+    "drug_display": "Ceftaroline",
+    "tier": "B",
+    "n_resistant": 42,
+    "n_susceptible": 69,
+    "n_total": 111,
+    "n_groups": 21,
+    "drug_class": "beta-lactam (anti-MRSA cephalosporin)",
+    "mechanism": "Binds PBP2a as well as native PBPs; active against MRSA.",
+    "target_kind": "protein",
+    "target_genes": [
+      "pbpB",
+      "pbpA"
+    ],
+    "modelable": true,
+    "note": "5th-gen cephalosporin; resistance from PBP2a/PBP4 target mutations."
+  },
+  {
+    "drug": "vancomycin",
+    "drug_display": "Vancomycin",
+    "tier": "C",
+    "n_resistant": 9,
+    "n_susceptible": 2143,
+    "n_total": 2152,
+    "n_groups": 197,
+    "drug_class": "glycopeptide",
+    "mechanism": "Binds D-Ala-D-Ala of lipid II (cell-wall precursor).",
+    "target_kind": "cell_wall",
+    "target_genes": [],
+    "modelable": false,
+    "note": "VISA is a wall-thickening phenotype (no single gene); vanA/vanB rare in staph."
+  },
+  {
+    "drug": "linezolid",
+    "drug_display": "Linezolid",
+    "tier": "C",
+    "n_resistant": 6,
+    "n_susceptible": 1567,
+    "n_total": 1573,
+    "n_groups": 114,
+    "drug_class": "oxazolidinone",
+    "mechanism": "Binds 23S rRNA; blocks initiation complex (50S).",
+    "target_kind": "protein",
+    "target_genes": [
+      "rplC",
+      "rplD"
+    ],
+    "modelable": false,
+    "note": "Rare in S. aureus; cfr/optrA/poxtA or 23S G2576T mutations."
+  },
+  {
+    "drug": "trimethoprim",
+    "drug_display": "Trimethoprim",
+    "tier": "C",
+    "n_resistant": 19,
+    "n_susceptible": 588,
+    "n_total": 607,
+    "n_groups": 101,
+    "drug_class": "folate-pathway inhibitor",
+    "mechanism": "Inhibits dihydrofolate reductase (folA).",
+    "target_kind": "protein",
+    "target_genes": [
+      "folA"
+    ],
+    "modelable": false,
+    "note": ""
+  },
+  {
+    "drug": "fosfomycin",
+    "drug_display": "Fosfomycin",
+    "tier": "C",
+    "n_resistant": 4,
+    "n_susceptible": 367,
+    "n_total": 371,
+    "n_groups": 62,
+    "drug_class": "fosfomycin",
+    "mechanism": "Inhibits MurA (UDP-GlcNAc enolpyruvyl transferase).",
+    "target_kind": "protein",
+    "target_genes": [
+      "murA"
+    ],
+    "modelable": false,
+    "note": ""
+  },
+  {
+    "drug": "teicoplanin",
+    "drug_display": "Teicoplanin",
+    "tier": "C",
+    "n_resistant": 2,
+    "n_susceptible": 308,
+    "n_total": 310,
+    "n_groups": 51,
+    "drug_class": "glycopeptide",
+    "mechanism": "Binds D-Ala-D-Ala of lipid II (cell-wall precursor).",
+    "target_kind": "cell_wall",
+    "target_genes": [],
+    "modelable": false,
+    "note": ""
+  },
+  {
+    "drug": "tigecycline",
+    "drug_display": "Tigecycline",
+    "tier": "C",
+    "n_resistant": 12,
+    "n_susceptible": 183,
+    "n_total": 195,
+    "n_groups": 28,
+    "drug_class": "glycylcycline",
+    "mechanism": "Binds 30S subunit; higher affinity than tetracyclines.",
+    "target_kind": "protein",
+    "target_genes": [
+      "rpsL",
+      "rpsJ"
+    ],
+    "modelable": false,
+    "note": ""
+  },
+  {
+    "drug": "doxycycline",
+    "drug_display": "Doxycycline",
+    "tier": "C",
+    "n_resistant": 1,
+    "n_susceptible": 47,
+    "n_total": 48,
+    "n_groups": 13,
+    "drug_class": "tetracycline",
+    "mechanism": "Binds 30S subunit (16S rRNA); blocks tRNA binding.",
+    "target_kind": "protein",
+    "target_genes": [
+      "rpsL",
+      "rpsJ"
+    ],
+    "modelable": false,
+    "note": ""
+  },
+  {
+    "drug": "tobramycin",
+    "drug_display": "Tobramycin",
+    "tier": "C",
+    "n_resistant": 7,
+    "n_susceptible": 36,
+    "n_total": 43,
+    "n_groups": 17,
+    "drug_class": "aminoglycoside",
+    "mechanism": "Binds 16S rRNA in the 30S subunit.",
+    "target_kind": "protein",
+    "target_genes": [
+      "rpsL",
+      "rpsJ"
+    ],
+    "modelable": false,
+    "note": ""
+  },
+  {
+    "drug": "kanamycin",
+    "drug_display": "Kanamycin",
+    "tier": "C",
+    "n_resistant": 7,
+    "n_susceptible": 35,
+    "n_total": 42,
+    "n_groups": 16,
+    "drug_class": "aminoglycoside",
+    "mechanism": "Binds 16S rRNA in the 30S subunit.",
+    "target_kind": "protein",
+    "target_genes": [
+      "rpsL",
+      "rpsJ"
+    ],
+    "modelable": false,
+    "note": ""
+  },
+  {
+    "drug": "amoxicillin_clavulanic_acid",
+    "drug_display": "Amoxicillin/Clavulanic Acid",
+    "tier": "C",
+    "n_resistant": 10,
+    "n_susceptible": 9,
+    "n_total": 19,
+    "n_groups": 11,
+    "drug_class": "beta-lactam + \u03b2-lactamase inhibitor",
+    "mechanism": "Inhibits PBP transpeptidation.",
+    "target_kind": "protein",
+    "target_genes": [
+      "pbpB",
+      "pbpA"
+    ],
+    "modelable": false,
+    "note": "Clavulanate restores activity vs blaZ; mecA still confers resistance."
+  },
+  {
+    "drug": "florfenicol",
+    "drug_display": "Florfenicol",
+    "tier": "C",
+    "n_resistant": 11,
+    "n_susceptible": 8,
+    "n_total": 19,
+    "n_groups": 3,
+    "drug_class": "unknown",
+    "mechanism": "",
+    "target_kind": "unknown",
+    "target_genes": [],
+    "modelable": false,
+    "note": "no curated target spec for this drug"
+  },
+  {
+    "drug": "streptomycin",
+    "drug_display": "Streptomycin",
+    "tier": "C",
+    "n_resistant": 19,
+    "n_susceptible": 0,
+    "n_total": 19,
+    "n_groups": 3,
+    "drug_class": "aminoglycoside",
+    "mechanism": "Binds 16S rRNA / S12 (rpsL) in the 30S subunit.",
+    "target_kind": "protein",
+    "target_genes": [
+      "rpsL",
+      "rpsJ"
+    ],
+    "modelable": false,
+    "note": ""
+  },
+  {
+    "drug": "tiamulin",
+    "drug_display": "Tiamulin",
+    "tier": "C",
+    "n_resistant": 12,
+    "n_susceptible": 7,
+    "n_total": 19,
+    "n_groups": 3,
+    "drug_class": "unknown",
+    "mechanism": "",
+    "target_kind": "unknown",
+    "target_genes": [],
+    "modelable": false,
+    "note": "no curated target spec for this drug"
+  },
+  {
+    "drug": "ampicillin",
+    "drug_display": "Ampicillin",
+    "tier": "C",
+    "n_resistant": 9,
+    "n_susceptible": 0,
+    "n_total": 9,
+    "n_groups": 5,
+    "drug_class": "beta-lactam (aminopenicillin)",
+    "mechanism": "Inhibits PBP transpeptidation.",
+    "target_kind": "protein",
+    "target_genes": [
+      "pbpB",
+      "pbpA"
+    ],
+    "modelable": false,
+    "note": ""
+  },
+  {
+    "drug": "ampicillin_sulbactam",
+    "drug_display": "Ampicillin/Sulbactam",
+    "tier": "C",
+    "n_resistant": 2,
+    "n_susceptible": 7,
+    "n_total": 9,
+    "n_groups": 7,
+    "drug_class": "unknown",
+    "mechanism": "",
+    "target_kind": "unknown",
+    "target_genes": [],
+    "modelable": false,
+    "note": "no curated target spec for this drug"
+  },
+  {
+    "drug": "cefazolin",
+    "drug_display": "Cefazolin",
+    "tier": "C",
+    "n_resistant": 2,
+    "n_susceptible": 7,
+    "n_total": 9,
+    "n_groups": 7,
+    "drug_class": "unknown",
+    "mechanism": "",
+    "target_kind": "unknown",
+    "target_genes": [],
+    "modelable": false,
+    "note": "no curated target spec for this drug"
+  },
+  {
+    "drug": "ceftriaxone",
+    "drug_display": "Ceftriaxone",
+    "tier": "C",
+    "n_resistant": 2,
+    "n_susceptible": 7,
+    "n_total": 9,
+    "n_groups": 7,
+    "drug_class": "unknown",
+    "mechanism": "",
+    "target_kind": "unknown",
+    "target_genes": [],
+    "modelable": false,
+    "note": "no curated target spec for this drug"
+  },
+  {
+    "drug": "cephalothin",
+    "drug_display": "Cephalothin",
+    "tier": "C",
+    "n_resistant": 7,
+    "n_susceptible": 0,
+    "n_total": 7,
+    "n_groups": 5,
+    "drug_class": "unknown",
+    "mechanism": "",
+    "target_kind": "unknown",
+    "target_genes": [],
+    "modelable": false,
+    "note": "no curated target spec for this drug"
+  },
+  {
+    "drug": "imipenem",
+    "drug_display": "Imipenem",
+    "tier": "C",
+    "n_resistant": 0,
+    "n_susceptible": 7,
+    "n_total": 7,
+    "n_groups": 7,
+    "drug_class": "unknown",
+    "mechanism": "",
+    "target_kind": "unknown",
+    "target_genes": [],
+    "modelable": false,
+    "note": "no curated target spec for this drug"
+  },
+  {
+    "drug": "meropenem",
+    "drug_display": "Meropenem",
+    "tier": "C",
+    "n_resistant": 0,
+    "n_susceptible": 7,
+    "n_total": 7,
+    "n_groups": 7,
+    "drug_class": "unknown",
+    "mechanism": "",
+    "target_kind": "unknown",
+    "target_genes": [],
+    "modelable": false,
+    "note": "no curated target spec for this drug"
+  },
+  {
+    "drug": "ofloxacin",
+    "drug_display": "Ofloxacin",
+    "tier": "C",
+    "n_resistant": 3,
+    "n_susceptible": 4,
+    "n_total": 7,
+    "n_groups": 5,
+    "drug_class": "unknown",
+    "mechanism": "",
+    "target_kind": "unknown",
+    "target_genes": [],
+    "modelable": false,
+    "note": "no curated target spec for this drug"
+  },
+  {
+    "drug": "minocycline",
+    "drug_display": "Minocycline",
+    "tier": "C",
+    "n_resistant": 0,
+    "n_susceptible": 4,
+    "n_total": 4,
+    "n_groups": 2,
+    "drug_class": "tetracycline",
+    "mechanism": "Binds 30S subunit (16S rRNA).",
+    "target_kind": "protein",
+    "target_genes": [
+      "rpsL",
+      "rpsJ"
+    ],
+    "modelable": false,
+    "note": ""
+  },
+  {
+    "drug": "neomycin",
+    "drug_display": "Neomycin",
+    "tier": "C",
+    "n_resistant": 0,
+    "n_susceptible": 3,
+    "n_total": 3,
+    "n_groups": 1,
+    "drug_class": "aminoglycoside",
+    "mechanism": "Binds 16S rRNA in the 30S subunit.",
+    "target_kind": "protein",
+    "target_genes": [
+      "rpsL",
+      "rpsJ"
+    ],
+    "modelable": false,
+    "note": ""
+  },
+  {
+    "drug": "nitrofurantoin",
+    "drug_display": "Nitrofurantoin",
+    "tier": "C",
+    "n_resistant": 0,
+    "n_susceptible": 2,
+    "n_total": 2,
+    "n_groups": 1,
+    "drug_class": "unknown",
+    "mechanism": "",
+    "target_kind": "unknown",
+    "target_genes": [],
+    "modelable": false,
+    "note": "no curated target spec for this drug"
+  },
+  {
+    "drug": "dicloxacillin",
+    "drug_display": "Dicloxacillin",
+    "tier": "C",
+    "n_resistant": 1,
+    "n_susceptible": 0,
+    "n_total": 1,
+    "n_groups": 1,
+    "drug_class": "unknown",
+    "mechanism": "",
+    "target_kind": "unknown",
+    "target_genes": [],
+    "modelable": false,
+    "note": "no curated target spec for this drug"
+  },
+  {
+    "drug": "quinupristin_dalfopristin",
+    "drug_display": "Quinupristin/Dalfopristin",
+    "tier": "C",
+    "n_resistant": 0,
+    "n_susceptible": 1,
+    "n_total": 1,
+    "n_groups": 1,
+    "drug_class": "unknown",
+    "mechanism": "",
+    "target_kind": "unknown",
+    "target_genes": [],
+    "modelable": false,
+    "note": "no curated target spec for this drug"
+  }
+]

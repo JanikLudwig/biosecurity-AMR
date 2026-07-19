@@ -4,26 +4,27 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "genome-firewall"
-version = "0.1.0"
-description = "Zero-shot, rule-based AMR decision-support prototype (Genome Firewall v0)."
+version = "1.0.0"
+description = "Genome Firewall — S. aureus antibiotic-response prediction with a deterministic drug-target-presence gate (M2)."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
 authors = [{ name = "Genome Firewall team" }]
-keywords = ["antimicrobial-resistance", "AMR", "biosecurity", "AMRFinderPlus", "cAMRah"]
+keywords = ["antimicrobial-resistance", "AMR", "biosecurity", "AMRFinderPlus", "pyrodigal", "pyhmmer"]
 
-# Core engine is dependency-free. The demo UI needs streamlit + pandas.
-dependencies = []
+dependencies = [
+  "pyrodigal>=3.7",
+  "pyhmmer>=0.12",
+  "scikit-learn>=1.4",
+  "joblib>=1.3",
+  "pyarrow>=14",
+]
 
 [project.optional-dependencies]
-app = ["streamlit>=1.30", "pandas>=1.5"]
-dev = ["pytest>=7"]
+web = ["fastapi>=0.110", "uvicorn[standard]>=0.29"]
 
 [project.scripts]
-genome-firewall = "genome_firewall.cli:main"
+gfw = "gfw.cli:main"
 
 [tool.setuptools]
-packages = ["genome_firewall"]
-
-[tool.setuptools.package-data]
-genome_firewall = ["data/*.json", "examples/*.tsv"]
+packages = ["gfw", "gfw.io", "gfw.targets"]

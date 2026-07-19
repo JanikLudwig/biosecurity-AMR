@@ -1,0 +1,38 @@
+┌────────────────────────────────────────────────────────┐
+       │                 BV-BRC Raw Database                    │
+       │   - Bacterial Genome (FASTA)                           │
+       │   - Antibiotic Labels                                  │
+       │   - Phenotype (Susceptible/Resistant)                  │
+       │   - Evidence (Laboratory vs. Computational)            │
+       └───────────┬───────────────────────────────────┬────────┘
+                   │                                   │
+      [Train Data] │                      [Train Label]│
+                   ▼                                   │
+      ┌─────────────────────────┐                      │
+      │   Bacteria (Unknown)    │                      │
+      │   (3,000 Genomes Dataset)│                      │
+      └────────────┬────────────┘                      │
+                   │                                   │
+                   ▼                                   │
+      ┌─────────────────────────┐                      │
+      │     AMRFinderPlus       │                      │
+      │   (Feature Extractor)   │                      │
+      └────────────┬────────────┘                      │
+                   │                                   │
+                   ▼ (Genomic Features)                │
+      ┌─────────────────────────────────────────┐      │
+      │            Predictor Model              │◄─────┘
+      │   (Learns gene/pattern associations)    │
+      └────────────────────┬────────────────────┘
+                           │
+                           ▼ (Model Output)
+      ┌─────────────────────────────────────────┐
+      │     List of Working Antibiotics         │
+      │     - Susceptibility Status             │◄─── [Validation Split via BV-BRC]
+      │     - Confidence Scores (%)             │
+      └────────────────────┬────────────────────┘
+                           │
+                           ▼
+      ┌─────────────────────────────────────────┐
+      │            Streamlit/Gradio UI          │
+      └─────────────────────────────────────────┘

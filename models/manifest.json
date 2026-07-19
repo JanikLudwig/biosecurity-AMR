@@ -1,0 +1,128 @@
+{
+  "erythromycin": {
+    "tier": "A",
+    "n_train": 1865,
+    "n_calib": 524,
+    "calibration": "isotonic",
+    "synthetic_features": true
+  },
+  "ciprofloxacin": {
+    "tier": "A",
+    "n_train": 1898,
+    "n_calib": 479,
+    "calibration": "isotonic",
+    "synthetic_features": true
+  },
+  "gentamicin": {
+    "tier": "A",
+    "n_train": 1824,
+    "n_calib": 517,
+    "calibration": "isotonic",
+    "synthetic_features": true
+  },
+  "tetracycline": {
+    "tier": "A",
+    "n_train": 1679,
+    "n_calib": 480,
+    "calibration": "isotonic",
+    "synthetic_features": true
+  },
+  "penicillin": {
+    "tier": "A",
+    "n_train": 1271,
+    "n_calib": 408,
+    "calibration": "isotonic",
+    "synthetic_features": true
+  },
+  "fusidic_acid": {
+    "tier": "A",
+    "n_train": 1173,
+    "n_calib": 409,
+    "calibration": "isotonic",
+    "synthetic_features": true
+  },
+  "clindamycin": {
+    "tier": "A",
+    "n_train": 1123,
+    "n_calib": 297,
+    "calibration": "isotonic",
+    "synthetic_features": true
+  },
+  "cefoxitin": {
+    "tier": "A",
+    "n_train": 1085,
+    "n_calib": 324,
+    "calibration": "isotonic",
+    "synthetic_features": true
+  },
+  "methicillin": {
+    "tier": "A",
+    "n_train": 1184,
+    "n_calib": 232,
+    "calibration": "isotonic",
+    "synthetic_features": true
+  },
+  "trimethoprim_sulfamethoxazole": {
+    "tier": "A",
+    "n_train": 932,
+    "n_calib": 207,
+    "calibration": "sigmoid",
+    "synthetic_features": true
+  },
+  "oxacillin": {
+    "tier": "A",
+    "n_train": 836,
+    "n_calib": 244,
+    "calibration": "isotonic",
+    "synthetic_features": true
+  },
+  "chloramphenicol": {
+    "tier": "A",
+    "n_train": 788,
+    "n_calib": 243,
+    "calibration": "sigmoid",
+    "synthetic_features": true
+  },
+  "rifampin": {
+    "tier": "B",
+    "n_train": 1195,
+    "n_calib": 405,
+    "calibration": "sigmoid",
+    "synthetic_features": true
+  },
+  "mupirocin": {
+    "tier": "B",
+    "n_train": 783,
+    "n_calib": 295,
+    "calibration": "sigmoid",
+    "synthetic_features": true
+  },
+  "daptomycin": {
+    "tier": "B",
+    "n_train": 558,
+    "n_calib": 181,
+    "calibration": "sigmoid",
+    "synthetic_features": true
+  },
+  "levofloxacin": {
+    "tier": "B",
+    "n_train": 148,
+    "n_calib": 37,
+    "calibration": "none",
+    "synthetic_features": true
+  },
+  "moxifloxacin": {
+    "tier": "B",
+    "n_train": 107,
+    "n_calib": 54,
+    "calibration": "sigmoid",
+    "synthetic_features": true
+  },
+  "ceftaroline": {
+    "tier": "B",
+    "n_train": 71,
+    "n_calib": 27,
+    "calibration": "sigmoid",
+    "synthetic_features": true
+  }
+}

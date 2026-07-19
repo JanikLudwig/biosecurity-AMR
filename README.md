@@ -1,187 +1,158 @@
-# 🧬 Genome Firewall — v0 (zero-shot)
+# 🧬 Genome Firewall — *S. aureus* prototype
 
-**An AI defense system against superbugs.** Turn a reconstructed bacterial
-genome into an *earlier* antibiotic-response prediction — *likely to fail /
-likely to work / no-call* — with a calibrated-style confidence, an evidence
-category, and a mandatory "confirm with standard lab testing" message.
+**An AI defense system against superbugs.** Turn a reconstructed *Staphylococcus
+aureus* genome into an *earlier* antibiotic-response prediction — **likely to
+fail / likely to work / no-call** per drug — with a calibrated confidence, an
+evidence category, the genes behind the call, and a mandatory
+"confirm with standard laboratory testing" notice.
 
-This is the **v0 MVP**: a transparent, **zero-shot rule engine** built on curated
-AMR knowledge. **No machine-learning training. No deep learning.** It runs on a
-CPU in milliseconds and every call is fully auditable to the gene that caused it.
+> ⚠️ **Research prototype — decision support only.** Every result must be confirmed
+> with standard laboratory testing before any treatment decision. The system is
+> **strictly defensive**: it only predicts and explains resistance that already
+> exists. It never designs, modifies, or optimizes an organism.
 
-> ⚠️ **Research prototype — decision support only.** Every result must be
-> confirmed with standard laboratory testing before any treatment decision. The
-> system is *strictly defensive*: it only predicts and explains resistance that
-> already exists. It never designs, modifies, or optimizes an organism.
+This build follows the **Gemini design pipeline** (BV-BRC → AMRFinderPlus features
+→ per-antibiotic predictor → confidence → UI) **plus the piece that was missing:
+a Drug-Target Detector (M2)** that proves the antibiotic's molecular target is
+physically present in the genome — so *likely to work* is **never** asserted from
+the mere absence of resistance markers.
 
----
-
-## Why "zero-shot"?
-
-The recommended baseline in the brief is one logistic-regression model per
-antibiotic. That already needs a labeled training set, a grouped train/test
-split, and calibration. **v0 skips training entirely**: it maps the AMR genes and
-mutations that an annotation tool detects directly to antibiotics using a curated
-knowledge base (gene/mutation → drug). Consequences:
-
-* **No train/test leakage — by construction.** The brief's main "weak submission"
-  failure mode (near-identical genomes in both train and test) *cannot happen*
-  because there is no training set.
-* **Fully explainable.** Every "likely to fail" points at the exact determinant
-  (`blaCTX-M-15`, `gyrA_S83L`, …). We only ever emit evidence category *(i) known
-  determinant* or *(iii) no known signal* — never *(ii) statistical association*,
-  because a rules engine has no statistical model to hide behind.
-* **A real, defensible MVP** you can extend into the logistic-regression baseline
-  later (the feature layer and evaluation dedup are already here).
+> The `genome_firewall/` package is the earlier zero-shot v0 and is **superseded**;
+> the current system lives in `gfw/`.
 
 ---
 
-## The three modules (per the challenge brief)
+## Architecture — deterministic modules, not LLM agents
 
-| # | Module | Where |
-|---|--------|-------|
-| 01 | **Genome Reader** — FASTA → AMR features (pluggable annotator) | [`annotate.py`](genome_firewall/annotate.py), [`fasta.py`](genome_firewall/fasta.py) |
-| 02 | **Predictor** — features → per-drug call + target gate + no-call | [`predict.py`](genome_firewall/predict.py), [`knowledge.py`](genome_firewall/knowledge.py) |
-| 03 | **Decision Report** — calibrated-style confidence, evidence, safety banner | [`report.py`](genome_firewall/report.py), [`app.py`](genome_firewall/app.py) |
+A biosecurity decision tool must be auditable, so **no autonomous LLM sits in the
+decision path**. The system is a pipeline of deterministic modules:
 
-### Module 01 — Genome Reader (pluggable annotator)
+```
+genome_id → genomes/<id>.fna   (already in repo; no assembly step)
+   │
+   ├───────────────────────────┬───────────────────────────────┐
+   ▼                           ▼                               ▼
+[M1 Genome Reader]        ★ [M2 Target Detector] ★        (M1 determinant hits
+ TEAMMATE-OWNED            THIS WORK                        reused for evidence
+ AMRFinderPlus →           pyrodigal ORFs → pyhmmer         category (i))
+ AMR feature matrix        vs curated S. aureus targets
+ (consumed via a           → per-drug target
+  fixed contract)            present / absent / n-a
+   │                           │
+   └────────────┬──────────────┘
+                ▼
+        [M3 Predictor]  one calibrated logistic regression per antibiotic
+                ▼
+        [M4 Decision]   fuse p(resistant) + target gate + determinant
+                        → likely to fail / likely to work / no-call
+                ▼
+        [M5 Report]     JSON / Markdown + safety banner  →  web dashboard
+```
 
-A thin annotator with three interchangeable backends, all emitting one normalized
-schema (`AmrHit`):
+| Module | File | Owner | Status |
+|---|---|---|---|
+| M1 Genome Reader (AMRFinderPlus → features) | `gfw/m1_adapter.py` (contract only) | **teammates** | consumed via contract |
+| **M2 Drug-Target Detector** | `gfw/targets/` | **this work** | ✅ real |
+| M3 Predictor (LR + calibration) | `gfw/predict.py` | this work | ✅ real |
+| M4 Decision layer (3-way call) | `gfw/decide.py` | this work | ✅ real |
+| M5 Report | `gfw/report.py`, `gfw/engine.py` | this work | ✅ real |
+| Web dashboard | `web/` | this work | ✅ real |
 
-* **`amrfinderplus`** *(default)* — runs the NCBI `amrfinder` CLI (public-domain).
-* **`camrah`** — runs **cAMRah**, the curated six-tool consensus workflow
-  (AMRFinderPlus + ResFinder + RGI/CARD + Abricate/NCBI + Abricate/ARG-ANNOT +
-  BV-BRC). Richest signal; used when installed.
-* **`tsv`** — ingests a *precomputed* AMRFinderPlus / cAMRah / Abricate table, so
-  the whole pipeline runs **today with zero bioinformatics install** (the brief
-  notes organizers may ship precomputed AMRFinderPlus results).
+### What's real vs. placeholder
+Everything is real **except the M1 feature matrix**, which teammates own. Until
+their AMRFinderPlus output lands, a **clearly-labelled synthetic** matrix
+(`scripts/make_placeholder_features.py`, tagged `__synthetic__=1`) stands in so
+M3–M5 and the UI can be exercised. Its metrics are **illustrative only** and every
+report/plot says so. To go real: drop AMRFinderPlus TSVs into `data/amrfinder/`,
+run `fold_amrfinder_dir()` (see `gfw/m1_adapter.py`), re-run `scripts/train.py`.
+**No other code changes** — M2, split, models, decision logic, UI stay identical.
 
-**On cAMRah:** we wire it in because its broader consensus improves recall of
-resistance markers *and* justifies a higher confidence when *no* marker is found
-(see `screening_completeness`). But it needs all six tools + databases installed,
-so v0 **defaults to AMRFinderPlus** — the single public-domain tool the brief
-recommends — and treats cAMRah as an opt-in upgrade (`--annotator camrah`).
+---
 
-### Module 02 — Predictor (zero-shot rules + target gate)
+## The M2 Drug-Target Detector (the new piece)
 
-For each drug in the panel:
+For each antibiotic, `gfw/targets/specs.py` records its molecular target as
+detectable **protein genes** (e.g. fluoroquinolones→`gyrA`+`grlA`,
+co-trimoxazole→`folA`+`folP`, β-lactams→`pbpB`+`pbpA`, macrolides→`rplD`+`rplV`),
+or as a **membrane / cell-wall** target with no single ORF (daptomycin,
+vancomycin → gate *not applicable*).
 
-1. **Sample gates** → out-of-scope species or failed assembly QC ⇒ `no-call`.
-2. **Determinant match** → any known resistance gene/mutation for the drug?
-   Weights combine by **noisy-OR**, scaled by alignment identity/coverage.
-   * combined *p(fail)* ≥ 0.60 ⇒ **likely to fail** (evidence *(i)*)
-   * 0.40–0.60, or a lone low-level marker ⇒ **no-call** (weak evidence)
-3. **Target-presence gate** (deterministic) → we never say *likely to work* from
-   the *absence* of markers alone; the drug's molecular target must be present.
-4. **No marker + target present** ⇒ **likely to work** (evidence *(iii)*), with
-   confidence **bounded by screening breadth** — absence of evidence is weaker
-   than evidence of absence, and a single-tool screen is bounded lower than a
-   cAMRah consensus.
+`gfw/targets/detector.py` then:
+1. calls ORFs from the assembly with **pyrodigal**,
+2. searches the curated *S. aureus* target references (`data/references/targets/`)
+   against that proteome with **pyhmmer**, and
+3. returns per drug `present / absent / not_applicable` with the matched ORF,
+   its **contig**, **percent identity**, and **coverage** — fully auditable.
 
-### Module 03 — Decision Report
+A **likely to work** call requires `target_status == present` and cites the
+detected protein; otherwise the system returns **no-call** rather than a false
+"works". `~1.5 s/genome` on CPU.
 
-A Streamlit app (and a CLI) that shows, per drug: the call, a confidence score +
-band, the evidence category, the supporting genes, the target-gate status, and an
-always-on **lab-confirmation** banner.
+---
+
+## Honest generalization (leakage-safe split)
+
+`gfw/split.py`: collapse near-identical genomes by **cgMLST hc10**, then hold out
+whole **MLST sequence-type lineages** for calibration and test (hc10 is too fine —
+nearly every genome is its own cluster). Reported metrics are on clonal groups
+unseen in training. Split is deterministic (seeded).
+
+## Data-driven panel
+
+`gfw/panel.py` includes **every antibiotic in the lab TSV**, tiered by balanced
+lab evidence: **Tier A** (train+calibrate), **Tier B** (low-power, biased to
+no-call), **Tier C** (structural no-call — "insufficient lab evidence"). Uses only
+the organizer-pinned **Laboratory-Method** results, never computational phenotypes.
 
 ---
 
 ## Quickstart
 
 ```bash
-# 1) Core engine has NO dependencies — try it immediately on a precomputed table:
-python -m genome_firewall.cli predict \
-    --tsv genome_firewall/examples/ecoli_resistant_amrfinder.tsv \
-    --tsv-source amrfinderplus --species "Escherichia coli"
+python -m venv --system-site-packages .venv
+.venv/bin/pip install -r requirements.txt
 
-# JSON or Markdown output:
-python -m genome_firewall.cli predict --tsv <table.tsv> --format json
-python -m genome_firewall.cli predict --tsv <table.tsv> --format md
+# One-time: curated target references (needs network to UniProt)
+.venv/bin/python scripts/fetch_references.py
 
-# 2) From an assembly, auto-selecting AMRFinderPlus/cAMRah if installed:
-python -m genome_firewall.cli predict --fasta assembly.fasta --annotator auto \
-    --species "Escherichia coli" --organism Escherichia
+# M1 placeholder until teammates' AMRFinderPlus output is available
+.venv/bin/python scripts/make_placeholder_features.py
 
-# 3) The demo app (needs: pip install -r requirements.txt):
-streamlit run genome_firewall/app.py
+# Train (saves panel + split + one calibrated model per modelable drug)
+.venv/bin/python scripts/train.py
 
-# 4) De-duplicate a genome collection for leakage-free EVALUATION:
-python -m genome_firewall.cli dedup a.fasta b.fasta c.fasta --threshold 0.9
+# Score on the grouped hidden test → reports/metrics.{json,csv} + plots
+.venv/bin/python scripts/evaluate.py
+
+# Predict one genome end-to-end (Markdown or --json)
+.venv/bin/python -m gfw.cli predict --genome 1280.10000
+
+# Precompute reports for the dashboard, then serve it
+.venv/bin/python scripts/precompute_reports.py --n 150 --partition test
+.venv/bin/python -m uvicorn web.api:app --host 0.0.0.0 --port 8000
+#   → open http://localhost:8000  (Predict · Performance · How it works)
 ```
 
-Run the tests (stdlib only, no pytest needed):
+## Success criteria (per drug, grouped hidden test)
 
-```bash
-python -m unittest discover -s tests -v
-```
+`scripts/evaluate.py` reports balanced accuracy, **recall for resistant and
+susceptible separately**, F1, AUROC, **PR-AUC**, **Brier score + reliability
+curve**, and the **no-call rate** with accuracy on the called subset.
 
----
+## Responsibility
 
-## Supported scope (stated honestly)
+Defensive by construction · calibrated confidence with an explicit no-call ·
+evidence categories (known determinant (i) / statistical (ii) / none (iii)) kept
+distinct · human oversight required (lab-confirmation banner on every report).
 
-* **Species:** *Escherichia coli* only. Any other species ⇒ `no-call`.
-* **Antibiotics (5):** Ampicillin, Ceftriaxone, Ciprofloxacin, Gentamicin,
-  Trimethoprim-sulfamethoxazole — spanning distinct mechanisms.
-* **Out of scope:** sample collection, basecalling, species ID, genome assembly,
-  or de-mixing multiple organisms. Input starts at a quality-checked assembly.
-
-The panel and gene→drug rules live in editable data files
-([`data/antibiotics.json`](genome_firewall/data/antibiotics.json),
-[`data/gene_drug_rules.json`](genome_firewall/data/gene_drug_rules.json)) — extend
-coverage without touching engine code.
-
----
-
-## How v0 addresses the Responsibility Requirement
-
-* **Defensive by construction** — read-only prediction of existing resistance;
-  no organism design/modification anywhere in the codebase.
-* **Honest generalization** — narrow, explicit scope; out-of-scope ⇒ no-call. No
-  training means no over-fitting to near-identical genomes.
-* **Calibrated confidence + no-call** — explicit no-call for weak/conflicting
-  evidence, shallow screening, absent/unknown target, or out-of-scope input.
-  Confidence is clearly labeled **rule-based and uncalibrated** in v0 (see
-  Limitations) rather than dressed up as a trained probability.
-* **Honest explanations** — only categories *(i)* known determinant and *(iii)*
-  no known signal; never presents a statistical score as biological cause.
-* **Human oversight** — a mandatory lab-confirmation banner on every report; the
-  tool is framed as decision support, never a treatment decision.
-
-## Limitations (v0)
-
-* Confidence values are **literature-informed heuristics, not empirically
-  calibrated** — v0 does not fit to labels, so there is no Brier score /
-  reliability curve yet. The `PredictConfig` thresholds and rule weights are the
-  knobs. Calibration against a labeled BV-BRC split is the first v1 step.
-* The target-presence gate assumes the panel's **essential** targets (gyrase,
-  PBPs, ribosome, DHFR/DHPS) are present in any viable in-scope genome; the
-  interface accepts real target-detection evidence when a future backend supplies
-  it.
-* Co-trimoxazole is modeled as a documented simplification (trimethoprim `dfr` as
-  the primary driver; `sul` as supporting evidence).
-
-## Roadmap to v1
-
-1. Fit one regularized logistic regression per antibiotic on the AMR feature
-   matrix (the brief's recommended baseline) using the grouped BV-BRC split.
-2. Empirically **calibrate** confidence (isotonic/Platt) and report Brier score +
-   reliability plots and per-group generalization.
-3. Use `genome_firewall.dedup` (or Mash/XTree) to enforce a leakage-free split.
-
-## Project layout
+## Layout
 
 ```
-genome_firewall/
-  fasta.py        # FASTA parsing + assembly QC
-  annotate.py     # Module 01: pluggable annotator (amrfinderplus|camrah|tsv)
-  knowledge.py    # loads the knowledge base; matches determinants -> drugs
-  predict.py      # Module 02: zero-shot rule engine + target gate + no-call
-  report.py       # Module 03: text/markdown report rendering
-  app.py          # Module 03: Streamlit demo UI
-  dedup.py        # MinHash k-mer dedup for leakage-free evaluation
-  cli.py          # command-line entry point
-  data/*.json     # editable drug panel + gene->drug rules
-  examples/*.tsv  # precomputed AMRFinderPlus tables (resistant/susceptible/weak)
-tests/            # stdlib unittest suite
+gfw/            io/ (fasta+QC, labels)  m1_adapter.py  targets/ (M2)
+                predict.py (M3)  decide.py (M4)  report.py engine.py (M5)  cli.py
+                panel.py  split.py  evaluate.py  config.py
+scripts/        fetch_references  make_placeholder_features  train  evaluate  precompute_reports
+web/            api.py (FastAPI)  static/ (SPA dashboard)
+data/           references/targets/  amrfinder/ (teammates drop TSVs)  artifacts/
+models/  reports/
 ```

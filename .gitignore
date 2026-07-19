@@ -9,3 +9,8 @@ dist/
 venv/
 *.tsv.out
 scratch/
+
+# Large downloaded genome FASTAs + heavy working files (never commit these)
+genomes/
+genomes.tar.gz
+

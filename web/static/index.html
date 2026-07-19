@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Genome Firewall — AI defense against superbugs</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="appbar">
+    <div class="brand">
+      <div class="logo">🧬</div>
+      <div>
+        <div>Genome Firewall <span class="sub">· S. aureus prototype</span></div>
+        <div class="sub" id="version">predicting antibiotic response from a genome</div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <span class="badge-synth" id="synthBadge" style="display:none">SYNTHETIC M1 FEATURES</span>
+    <nav class="tabs">
+      <button class="tab active" data-view="explorer">Predict</button>
+      <button class="tab" data-view="performance">Performance</button>
+      <button class="tab" data-view="about">How it works</button>
+    </nav>
+    <button class="icon-btn" id="themeToggle" title="Toggle theme">◐</button>
+  </header>
+
+  <div class="safety">
+    <span>⚕️</span>
+    <span><b>Decision support only.</b> Every result must be confirmed with standard
+      laboratory testing before any treatment decision. Strictly defensive — this tool
+      only predicts and explains resistance that already exists.</span>
+  </div>
+
+  <!-- ===== Predict / explorer ===== -->
+  <section class="view active" id="view-explorer">
+    <div class="explorer">
+      <aside class="sidebar">
+        <div class="search">
+          <input id="genomeSearch" placeholder="Search genome id or MLST…" />
+          <div class="filters">
+            <select id="partitionFilter">
+              <option value="">all partitions</option>
+              <option value="test" selected>hidden test</option>
+              <option value="calibration">calibration</option>
+              <option value="train">train</option>
+            </select>
+          </div>
+        </div>
+        <ul class="glist" id="genomeList"></ul>
+      </aside>
+      <main class="main" id="reportPane">
+        <div class="empty"><div><div class="spinner" style="margin:0 auto 14px"></div>
+          Loading genomes…</div></div>
+      </main>
+    </div>
+  </section>
+
+  <!-- ===== Performance ===== -->
+  <section class="view" id="view-performance">
+    <div class="perf" id="perfPane"></div>
+  </section>
+
+  <!-- ===== About ===== -->
+  <section class="view" id="view-about">
+    <div class="about">
+      <h2>What this is</h2>
+      <p class="muted">A deterministic, auditable pipeline that turns a reconstructed
+        <i>Staphylococcus aureus</i> genome into an <b>earlier</b> antibiotic-response
+        prediction — one of <b>likely to fail / likely to work / no-call</b> per drug —
+        with a calibrated confidence, an evidence category, and a mandatory
+        lab-confirmation notice. No autonomous LLM sits in the decision path.</p>
+
+      <div class="pipeline">
+        <div class="stage"><div class="k">M1 · teammate-owned</div><h4>Genome Reader</h4>
+          <p>AMRFinderPlus turns the FASTA into an AMR gene / mutation feature matrix.</p></div>
+        <div class="stage star"><div class="k">M2 · this work</div><h4>Drug-Target Detector</h4>
+          <p>pyrodigal calls ORFs; pyhmmer proves each drug's molecular <b>target protein</b>
+             is present — so “works” is never claimed from absence alone.</p></div>
+        <div class="stage"><div class="k">M3</div><h4>Predictor</h4>
+          <p>One calibrated logistic regression per antibiotic over the AMR features.</p></div>
+        <div class="stage"><div class="k">M4 · M5</div><h4>Decision &amp; Report</h4>
+          <p>Fuses model probability + target gate + determinant into the three-way call.</p></div>
+      </div>
+
+      <h2>How “likely to work” is protected</h2>
+      <p class="muted">A drug is only called <b>likely to work</b> when (1) the model's
+        resistance probability is low <b>and</b> (2) the M2 detector has physically found the
+        drug's molecular target in the genome (e.g. <code class="mono">gyrA</code> for
+        fluoroquinolones, <code class="mono">folA</code>+<code class="mono">folP</code> for
+        co-trimoxazole). If the target cannot be proven present, the result is a
+        <b>no-call</b>, never a false “works”.</p>
+
+      <h2>Honest generalization</h2>
+      <p class="muted">Near-identical genomes are collapsed by cgMLST (hc10) and whole
+        <b>MLST lineages are held out</b> for testing, so reported performance reflects unseen
+        clonal groups — not memorised near-duplicates.</p>
+
+      <h2>Responsibility</h2>
+      <ul class="muted">
+        <li><b>Defensive by construction</b> — read-only prediction of existing resistance.</li>
+        <li><b>Calibrated confidence + no-call</b> for weak, conflicting, or out-of-distribution input.</li>
+        <li><b>Honest explanations</b> — known determinant (i) vs statistical association (ii) vs no signal (iii) are labelled separately.</li>
+        <li><b>Human oversight</b> — every report must be confirmed by lab testing.</li>
+      </ul>
+      <p class="muted" id="aboutSafety"></p>
+    </div>
+  </section>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
