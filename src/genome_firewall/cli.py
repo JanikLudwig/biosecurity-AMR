@@ -18,6 +18,7 @@ from genome_firewall.annotation.amrfinder import (
     run_nucleotide,
 )
 from genome_firewall.config import DEFAULT_CONFIG, load_config
+from genome_firewall.decision import DEFAULT_DRUG_REGISTRY
 from genome_firewall.data.bvbrc import download_and_qc
 from genome_firewall.data.phenotypes import (
     audit_source,
@@ -33,7 +34,10 @@ from genome_firewall.splitting.homology import (
     phenotype_split_support,
     write_split_outputs,
 )
+from genome_firewall.validation import evaluate_report_directory
 from genome_firewall.modeling.baseline import load_modeling_table, train_all_drugs
+from genome_firewall.inference import predict_fasta
+from genome_firewall.lineage import build_lineage_reference
 
 app = typer.Typer(help="Defensive S. aureus antimicrobial-resistance research pipeline.")
 data_app = typer.Typer(help="Inspect and prepare BV-BRC phenotype data.")
@@ -43,6 +47,32 @@ app.add_typer(data_app, name="data")
 app.add_typer(amrfinder_app, name="amrfinder")
 app.add_typer(model_app, name="model")
 console = Console()
+
+
+@app.command("predict")
+def predict(
+    fasta: Path = typer.Argument(..., exists=True, readable=True),
+    model_directory: Path = typer.Option(Path("artifacts/models"), "--model-directory"),
+    output: Path = typer.Option(Path("artifacts/reports"), "--output"),
+    registry: Path = typer.Option(DEFAULT_DRUG_REGISTRY, "--registry"),
+    config_path: Path = typer.Option(DEFAULT_CONFIG, "--config"),
+    threads: int = typer.Option(2, min=1),
+) -> None:
+    """Generate a defensive antibiotic-response report from one assembled FASTA."""
+    report = predict_fasta(
+        fasta,
+        config=load_config(config_path),
+        model_directory=model_directory,
+        output_directory=output,
+        registry_path=registry,
+        threads=threads,
+    )
+    frame = pd.DataFrame(report["decisions"])
+    console.print(
+        frame[["antibiotic", "call", "confidence", "evidence_category", "target_status"]]
+    )
+    console.print(report["warning"])
+    console.print(f"Report: {output / f'{fasta.stem}.report.json'}")
 
 
 def _clean(config_path: Path):
@@ -360,3 +390,46 @@ def model_train(
     )
     console.print(summary[["antibiotic", "status", "calibration_status"]])
     console.print(f"Model artifacts: {output}")
+
+
+@model_app.command("lineage")
+def model_lineage(
+    splits: Path = typer.Option(
+        Path("data/processed/splits-500/genome-splits.csv"), "--splits"
+    ),
+    fasta_directory: Path = typer.Option(Path("data/raw/genomes"), "--fasta-directory"),
+    output: Path = typer.Option(
+        Path("artifacts/models/lineage-reference.joblib"), "--output"
+    ),
+    config_path: Path = typer.Option(DEFAULT_CONFIG, "--config"),
+) -> None:
+    """Build the calibrated sequence-lineage novelty reference used at inference."""
+    config = load_config(config_path)
+    artifact = build_lineage_reference(
+        splits_path=splits,
+        fasta_directory=fasta_directory,
+        output_path=output,
+        ksize=config["similarity"]["ksize"],
+        scaled=config["similarity"]["scaled"],
+        calibration_quantile=config["lineage"]["calibration_quantile"],
+    )
+    console.print(
+        f"Lineage reference: {len(artifact['training_genome_ids']):,} training genomes, "
+        f"minimum estimated ANI {artifact['minimum_training_ani']:.4%}"
+    )
+    console.print(f"Artifact: {output}")
+
+
+@model_app.command("evaluate-reports")
+def model_evaluate_reports(
+    reports: Path = typer.Option(Path("artifacts/reports/external"), "--reports"),
+    phenotypes: Path = typer.Option(..., "--phenotypes"),
+    output: Path = typer.Option(Path("artifacts/external-validation"), "--output"),
+) -> None:
+    """Evaluate frozen decision reports against an external laboratory cohort."""
+    summary, matched = evaluate_report_directory(reports, phenotypes)
+    output.mkdir(parents=True, exist_ok=True)
+    summary.to_csv(output / "summary.csv", index=False)
+    matched.to_csv(output / "matched-decisions.csv", index=False)
+    console.print(summary)
+    console.print(f"External validation outputs: {output}")

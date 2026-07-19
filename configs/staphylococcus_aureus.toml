@@ -47,6 +47,9 @@ train_fraction = 0.70
 calibration_fraction = 0.15
 test_fraction = 0.15
 
+[lineage]
+calibration_quantile = 0.05
+
 [model]
 regularization_c = 1.0
 seed = 42
@@ -57,3 +60,4 @@ min_calibration_per_class = 5
 min_threshold_calls = 5
 max_resistant_fraction_in_susceptible_calls = 0.10
 max_susceptible_fraction_in_resistant_calls = 0.10
+novelty_quantile = 0.05

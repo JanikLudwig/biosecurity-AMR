@@ -3,7 +3,20 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from genome_firewall.modeling.baseline import learn_no_call_thresholds, train_drug_model
+from genome_firewall.modeling.baseline import (
+    fit_feature_novelty_reference,
+    learn_no_call_thresholds,
+    maximum_binary_jaccard,
+    train_drug_model,
+)
+
+
+def test_binary_feature_novelty_reference() -> None:
+    values = np.array([[0, 0, 0], [1, 0, 0], [1, 1, 0]], dtype="uint8")
+    reference, threshold = fit_feature_novelty_reference(values, quantile=0.0)
+    assert len(reference) == 3
+    assert 0 <= threshold <= 1
+    assert maximum_binary_jaccard(np.array([1, 0, 0]), reference) == 1.0
 
 
 def test_learns_separated_no_call_thresholds() -> None:

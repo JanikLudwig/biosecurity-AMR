@@ -1,4 +1,5 @@
 from pathlib import Path
+import tempfile
 
 import pandas as pd
 import plotly.express as px
@@ -7,6 +8,8 @@ import streamlit as st
 from genome_firewall.annotation.amrfinder import parse_output
 from genome_firewall.config import DEFAULT_CONFIG, load_config
 from genome_firewall.data.phenotypes import load_and_clean, summarize_labels
+from genome_firewall.decision import DEFAULT_DRUG_REGISTRY
+from genome_firewall.inference import predict_fasta
 
 st.set_page_config(page_title="Genome Firewall Sandbox", layout="wide")
 
@@ -41,6 +44,61 @@ st.warning(
 
 config = load_config(DEFAULT_CONFIG)
 dataset = config["dataset"]
+
+st.header("Genome-to-antibiotic decision report")
+uploaded = st.file_uploader(
+    "Upload a reconstructed, quality-checked S. aureus FASTA",
+    type=["fna", "fa", "fasta"],
+)
+if uploaded is not None and st.button("Analyze genome", type="primary"):
+    with st.spinner("Running genome QC, AMRFinderPlus, target checks, and calibrated models..."):
+        with tempfile.TemporaryDirectory(prefix="genome-firewall-upload-") as temporary:
+            safe_name = Path(uploaded.name).name
+            uploaded_path = Path(temporary) / safe_name
+            uploaded_path.write_bytes(uploaded.getvalue())
+            try:
+                st.session_state["latest_report"] = predict_fasta(
+                    uploaded_path,
+                    config=config,
+                    model_directory=Path("artifacts/models"),
+                    output_directory=Path("artifacts/reports/uploads"),
+                    registry_path=DEFAULT_DRUG_REGISTRY,
+                    threads=2,
+                )
+            except Exception as error:
+                st.session_state.pop("latest_report", None)
+                st.error(f"Analysis failed safely: {type(error).__name__}: {error}")
+
+latest_report = st.session_state.get("latest_report")
+if latest_report:
+    st.warning(latest_report["warning"])
+    qc = latest_report["qc"]
+    qc_left, qc_middle, qc_right = st.columns(3)
+    qc_left.metric("Genome QC", "Pass" if qc["passed"] else "Fail")
+    qc_middle.metric("Assembly length", f"{qc['genome_length']:,} bp")
+    qc_right.metric("Contigs", f"{qc['contigs']:,}")
+    report_frame = pd.DataFrame(latest_report["decisions"])
+    report_frame["confidence"] = report_frame["confidence"].map(lambda value: f"{value:.1%}")
+    for column in ["supporting_elements", "targets_detected", "reasons"]:
+        report_frame[column] = report_frame[column].map(lambda values: ", ".join(values))
+    render_table(
+        report_frame[
+            [
+                "antibiotic",
+                "call",
+                "confidence",
+                "evidence_category",
+                "supporting_elements",
+                "target_status",
+                "targets_detected",
+                "reasons",
+            ]
+        ],
+        height=340,
+    )
+
+st.divider()
+st.header("Dataset and model diagnostics")
 
 
 @st.cache_data(show_spinner="Loading laboratory phenotype data...")

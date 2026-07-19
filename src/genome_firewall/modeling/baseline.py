@@ -22,6 +22,37 @@ from sklearn.metrics import (
 LABEL_MAP = {"Susceptible": 0, "Resistant": 1}
 
 
+def maximum_binary_jaccard(vector: np.ndarray, reference: np.ndarray) -> float:
+    """Return maximum Jaccard similarity to binary training feature profiles."""
+    if reference.size == 0:
+        return 0.0
+    vector_bool = vector.astype(bool)
+    reference_bool = reference.astype(bool)
+    intersection = np.logical_and(reference_bool, vector_bool).sum(axis=1)
+    union = np.logical_or(reference_bool, vector_bool).sum(axis=1)
+    similarity = np.divide(
+        intersection,
+        union,
+        out=np.ones_like(intersection, dtype=float),
+        where=union != 0,
+    )
+    return float(similarity.max())
+
+
+def fit_feature_novelty_reference(
+    values: np.ndarray, *, quantile: float
+) -> tuple[np.ndarray, float]:
+    """Store unique training profiles and a leave-one-profile-out similarity floor."""
+    reference = np.unique(values.astype("uint8"), axis=0)
+    if len(reference) <= 1:
+        return reference, 1.0
+    similarities: list[float] = []
+    for index, vector in enumerate(reference):
+        others = np.delete(reference, index, axis=0)
+        similarities.append(maximum_binary_jaccard(vector, others))
+    return reference, float(np.quantile(similarities, quantile))
+
+
 def learn_no_call_thresholds(
     target: np.ndarray,
     probability_resistant: np.ndarray,
@@ -240,6 +271,10 @@ def train_drug_model(
         random_state=config["seed"],
     )
     base.fit(train[feature_columns], train["target"].astype(int))
+    novelty_reference, novelty_min_jaccard = fit_feature_novelty_reference(
+        train[feature_columns].to_numpy(dtype="uint8"),
+        quantile=config.get("novelty_quantile", 0.05),
+    )
     estimator: Any = base
     minimum_calibration = config["min_calibration_per_class"]
     if min(counts["calibration"].values()) >= minimum_calibration:
@@ -280,6 +315,8 @@ def train_drug_model(
             "feature_columns": feature_columns,
             "calibration_status": metadata["calibration_status"],
             "decision_thresholds": thresholds,
+            "novelty_reference": novelty_reference,
+            "novelty_min_jaccard": novelty_min_jaccard,
         },
         output_directory / f"{antibiotic.replace('/', '_')}.joblib",
     )

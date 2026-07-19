@@ -42,9 +42,14 @@ may support `likely_to_fail`; absence of such a mechanism never establishes susc
       that call direction instead of weakening the error constraint or disabling the safe direction.
 - [x] Emit plot-ready held-out reliability data and accuracy/error metrics specifically among
       non-no-call results.
-- [ ] Add a versioned, cited drug-target registry and deterministic target-presence gate.
-- [ ] Add an out-of-distribution/feature-novelty gate and explicit evidence-conflict handling.
+- [x] Add a versioned, cited drug-target registry and deterministic target-presence gate.
+- [x] Add an AMR-feature-distribution novelty gate and explicit evidence-conflict handling.
+- [x] Add an assembled-FASTA to QC, AMRFinderPlus, target search, model, and report workflow.
+- [x] Expose the end-to-end report workflow in the Streamlit research sandbox.
+- [x] Add a sequence-sketch lineage novelty gate calibrated against group-disjoint genomes.
 - [ ] Validate once on a deduplicated external NCBI Pathogen Detection AST cohort.
+- [x] Add a frozen-report external-validation scorer; acquiring and deduplicating the external
+      NCBI AST cohort remains outstanding.
 - [ ] Compare the AMRFinder baseline with statistical genomic features such as sparse k-mers;
       describe these only as associations, not biological causes.
 

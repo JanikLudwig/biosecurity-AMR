@@ -18,6 +18,31 @@ uv run genome-firewall data select
 uv run streamlit run sandbox/app.py
 ```
 
+## Generate a decision report
+
+The end-to-end path accepts an already assembled *S. aureus* FASTA, runs assembly QC,
+AMRFinderPlus, molecular-target searches, feature-novelty checks, and the calibrated models:
+
+```bash
+uv run genome-firewall predict data/raw/genomes/1280.9342.fna
+```
+
+Reports are written under `artifacts/reports/` as JSON and CSV. A known resistance element,
+statistical association, and absence of a known resistance signal are reported as distinct evidence
+categories. Failed QC, an unverified target, an unseen AMR feature profile, conflicting evidence, or
+a probability inside the calibrated uncertainty interval produces `no_call`.
+
+Frozen reports from a separately deduplicated external cohort can be scored without retraining:
+
+```bash
+uv run genome-firewall model evaluate-reports \
+  --reports artifacts/reports/external \
+  --phenotypes data/external/phenotypes.csv
+```
+
+The current label acceptance and mixed-standard limitations are pinned in
+`docs/phenotype-policy.md`.
+
 The supplied source export is expected at `data/BVBRC_genome_amr.csv`. Frozen selection and
 QC manifests are written under `data/manifests/` and should be committed; downloaded FASTA
 files remain ignored because they are large and reproducible from those manifests.
@@ -98,6 +123,9 @@ uv run genome-firewall data split-support \
 # Train regularized per-drug baselines and calibrate only on the calibration split
 uv run genome-firewall model train \
   --splits data/processed/splits-500/genome-splits.csv
+
+# Package train-genome sketches and calibrate the lineage novelty floor
+uv run genome-firewall model lineage
 ```
 
 The 100-genome development run is plumbing validation, not a benchmark. If a calibration
