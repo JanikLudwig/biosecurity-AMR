@@ -102,3 +102,17 @@ python -m genome_firewall.run_amrfinder --backend native --config config/pipelin
 - Zunächst wird ein Audit ausgeführt: `python -m genome_firewall.audit_bvbrc` oder `make audit`
 - Danach werden geeignete Antibiotika in der Config ausgewählt.
 - Erst anschließend werden die zugehörigen FASTAs heruntergeladen: `python -m genome_firewall.prepare_cohort` & `python -m genome_firewall.download_fastas --mode pilot`
+
+## Single-genome prediction
+
+Beispiel:
+
+`ash
+python scripts/predict_genome.py patient.fna
+`
+
+- **Spezies:** Unterstützt ausschließlich *Staphylococcus aureus*.
+- **Backend:** Benötigt Docker als Standard für AMRFinderPlus.
+- **Vorhersagen:** Erstellt Resistenzwahrscheinlichkeiten (probability_resistant) für 3 Antibiotika (Cefoxitin, Ciprofloxacin, Erythromycin).
+- **Output:** Erzeugt JSON und CSV Vorhersagen im Ausgabeverzeichnis.
+- **Warnung:** Dies sind development-only Modelle und **kein klinisches Entscheidungssystem**!
