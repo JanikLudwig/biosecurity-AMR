@@ -77,14 +77,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Genome Firewall — Defensive AMR Prediction" },
+      { title: "GyraseX — Antibiotic Response Prediction" },
       {
         name: "description",
         content:
           "Defensive research prototype for calibrated antibiotic-response predictions from assembled Staphylococcus aureus genomes.",
       },
-      { name: "author", content: "Genome Firewall" },
-      { property: "og:title", content: "Genome Firewall — Defensive AMR Prediction" },
+      { name: "author", content: "GyraseX" },
+      { property: "og:title", content: "GyraseX — Antibiotic Response Prediction" },
       {
         property: "og:description",
         content:

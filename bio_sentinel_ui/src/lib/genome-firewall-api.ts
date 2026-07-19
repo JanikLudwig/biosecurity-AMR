@@ -134,6 +134,8 @@ export interface ModelsResponse {
         decision_thresholds: {
           lower: number | null;
           upper: number | null;
+          susceptible_calls: number;
+          resistant_calls: number;
           susceptible_call_error: number | null;
           resistant_call_error: number | null;
         };
@@ -191,19 +193,6 @@ export async function fetchModels(signal?: AbortSignal): Promise<ModelsResponse>
   const response = await fetch(`${API_BASE}/api/v1/models`, { signal });
   if (!response.ok) throw await apiError(response);
   return (await response.json()) as ModelsResponse;
-}
-
-export async function fetchRawM1(analysisId: string, signal?: AbortSignal): Promise<string> {
-  const response = await fetch(
-    `${API_BASE}/api/v1/analyses/${encodeURIComponent(analysisId)}/raw/m1`,
-    { signal },
-  );
-  if (!response.ok) throw await apiError(response);
-  return response.text();
-}
-
-export function rawWorkflowUrl(analysisId: string, workflow: "m1" | "m2"): string {
-  return `${API_BASE}/api/v1/analyses/${encodeURIComponent(analysisId)}/raw/${workflow}`;
 }
 
 export function storeAnalysis(report: AnalysisReport, sampleName: string): void {
