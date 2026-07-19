@@ -24,6 +24,7 @@ class SampleReport:
     decisions: List[DrugDecision]
     n_proteins: int = 0
     features_synthetic: bool = False
+    m1_metadata: Dict[str, object] = field(default_factory=dict)
     warnings: List[str] = field(default_factory=list)
     version: str = __version__
     safety_notice: str = SAFETY_NOTICE
@@ -43,6 +44,7 @@ class SampleReport:
             "qc": self.qc,
             "n_proteins_predicted": self.n_proteins,
             "features_synthetic": self.features_synthetic,
+            "m1": dict(self.m1_metadata),
             "summary": self.counts(),
             "decisions": [d.as_dict() for d in self.decisions],
             "warnings": list(self.warnings),
@@ -58,6 +60,11 @@ class SampleReport:
             L.append("> ⚠️ **SYNTHETIC M1 FEATURES (placeholder).** Predictions below are "
                      "illustrative of the pipeline only — not real performance. Swap in "
                      "teammates' AMRFinderPlus output to produce real calls.")
+        if self.m1_metadata:
+            available = self.m1_metadata.get("feature_row_available", False)
+            count = self.m1_metadata.get("nonzero_feature_count", 0)
+            L.append(f"**M1 AMRFinder feature row:** {'available' if available else 'unavailable'} "
+                     f"({count} nonzero feature(s)); M3 probabilities use only this branch.")
         c = self.counts()
         L.append(f"\n**Summary:** {c[FAIL]} likely to fail • {c[WORK]} likely to work • "
                  f"{c[NO_CALL]} no-call")

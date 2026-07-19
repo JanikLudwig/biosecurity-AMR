@@ -1,12 +1,16 @@
-"""M4 — The Decision layer.
+"""M4 — the only M1/M3--M2 join point.
 
-Fuses three deterministic inputs into the brief's three-way call:
+This module is the sole location that combines deterministic branch outputs:
 
 * **p_R**  — calibrated P(resistant) from the M3 model,
 * **target gate** — M2's proof that the drug's molecular target is present,
-* **determinant evidence** — did M1 report a known resistance gene for this drug,
+* **determinant evidence** — did M1 report a known resistance gene for this drug.
 
-and returns one of **likely to fail / likely to work / no-call** with a
+M2 evidence is not a feature column, training input, calibration input, or input
+to M3's logistic-regression probability. It is used here only to gate a candidate
+*likely to work* call; a *likely to fail* call remains M3-driven.
+
+The function returns one of **likely to fail / likely to work / no-call** with a
 confidence, an evidence category, and (for a no-call) an explicit reason.
 
 The rule that encodes the challenge's core requirement (`# design notes.md`):
@@ -81,7 +85,11 @@ def decide_drug(entry,
                 scope_ok: bool = True,
                 qc_ok: bool = True,
                 cfg: DecisionConfig = DECISION) -> DrugDecision:
-    """Decide one drug for one genome. ``entry`` is a panel ``DrugEntry``."""
+    """Apply M4 to completed M3 probability and M2 evidence for one drug.
+
+    Callers calculate ``p_resistant`` before calling M4. This function never
+    mutates or re-vectorizes M1 data, ensuring M2 cannot alter M3.
+    """
     determinants = _determinant_hits(entry.drug, present_genes)
     base = dict(drug=entry.drug, drug_display=entry.drug_display,
                 drug_class=entry.drug_class, tier=entry.tier,
@@ -114,7 +122,7 @@ def decide_drug(entry,
         hi = min(0.9, hi + cfg.tier_b_nocall_widen)
         lo = max(0.1, lo - cfg.tier_b_nocall_widen)
 
-    # --- likely to fail -------------------------------------------------------
+    # --- likely to fail: M3 drives this; M2 is report context only -----------
     if p >= hi:
         ev = EV_KNOWN if determinants else EV_STATISTICAL
         if determinants:
@@ -126,7 +134,7 @@ def decide_drug(entry,
         return DrugDecision(**base, call=FAIL, confidence=p,
                             evidence_category=ev, rationale=why)
 
-    # --- likely to work (requires a provably present target) ------------------
+    # --- likely to work: M2 may only downgrade this candidate to no-call -----
     if p <= lo:
         if cfg.require_target_for_work and target_status != "present":
             reason = ("drug_target_absent" if target_status == "absent"

@@ -39,6 +39,7 @@ class DrugModel:
     synthetic_features: bool = False
 
     def vectorize(self, feat: Dict[str, int]) -> np.ndarray:
+        """Map a M1 row into this model's saved, fixed feature-column order."""
         return np.array([[int(feat.get(f, 0)) for f in self.features]], dtype=np.int8)
 
     def predict_proba(self, feat: Dict[str, int]) -> float:
@@ -93,7 +94,11 @@ def train_models(features: pd.DataFrame,
                  split: pd.DataFrame,
                  panel,
                  synthetic: bool = False) -> Dict[str, DrugModel]:
-    """Fit one calibrated model per modelable (Tier A/B) drug."""
+    """Fit M3 only on M1 AMRFinder-derived feature columns and lab labels.
+
+    M2 target evidence is an independent inference branch and must never be
+    added to ``features``, ``Xtr``, ``Xca``, or any calibration input.
+    """
     part = split.set_index("genome_id")["partition"]
     feat_cols = list(features.columns)
     models: Dict[str, DrugModel] = {}

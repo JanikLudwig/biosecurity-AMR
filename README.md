@@ -28,26 +28,33 @@ A biosecurity decision tool must be auditable, so **no autonomous LLM sits in th
 decision path**. The system is a pipeline of deterministic modules:
 
 ```
-genome_id → genomes/<id>.fna   (already in repo; no assembly step)
-   │
-   ├───────────────────────────┬───────────────────────────────┐
-   ▼                           ▼                               ▼
-[M1 Genome Reader]        ★ [M2 Target Detector] ★        (M1 determinant hits
- TEAMMATE-OWNED            THIS WORK                        reused for evidence
- AMRFinderPlus →           pyrodigal ORFs → pyhmmer         category (i))
- AMR feature matrix        vs curated S. aureus targets
- (consumed via a           → per-drug target
-  fixed contract)            present / absent / n-a
-   │                           │
-   └────────────┬──────────────┘
-                ▼
-        [M3 Predictor]  one calibrated logistic regression per antibiotic
-                ▼
-        [M4 Decision]   fuse p(resistant) + target gate + determinant
-                        → likely to fail / likely to work / no-call
-                ▼
-        [M5 Report]     JSON / Markdown + safety banner  →  web dashboard
+Branch A — predictor                         Branch B — target evidence
+
+genome ID + FNA                              genome ID + FNA
+   │                                             │
+   ▼                                             ▼
+[M1 Genome Reader] teammate-owned             [M2 Target Detector]
+AMRFinderPlus TSVs → binary AMR matrix        pyrodigal ORFs → pyhmmer vs curated
+   │                                             targets → per-drug evidence
+   ▼                                             │
+[M3 Predictor] per-drug logistic regression     │
++ calibration → P(resistant)                    │
+   │                                             │
+   └──────────────────────┬──────────────────────┘
+                          ▼
+                 [M4 Decision — only join]
+                 M3 P(resistant) + M2 evidence
+                 → likely to fail / likely to work / no-call
+                          ▼
+                 [M5 Report] JSON / Markdown → dashboard
 ```
+
+M3 is trained, calibrated, and scored **only** from M1 AMRFinder-derived
+feature matrices and laboratory labels. M2 is an independent inference branch:
+it is never a feature column or input to training, calibration, or the
+logistic-regression probability. M4 uses M2 only to withhold a candidate
+*likely to work* call when the target is absent or cannot be proven present;
+M3's *likely to fail* call remains M3-driven and shows M2 as context.
 
 | Module | File | Owner | Status |
 |---|---|---|---|
@@ -63,9 +70,21 @@ Everything is real **except the M1 feature matrix**, which teammates own. Until
 their AMRFinderPlus output lands, a **clearly-labelled synthetic** matrix
 (`scripts/make_placeholder_features.py`, tagged `__synthetic__=1`) stands in so
 M3–M5 and the UI can be exercised. Its metrics are **illustrative only** and every
-report/plot says so. To go real: drop AMRFinderPlus TSVs into `data/amrfinder/`,
-run `fold_amrfinder_dir()` (see `gfw/m1_adapter.py`), re-run `scripts/train.py`.
-**No other code changes** — M2, split, models, decision logic, UI stay identical.
+report/plot says so.
+
+### M1 integration contract
+
+Teammates produce one standard AMRFinderPlus TSV per genome at
+`data/amrfinder/<genome_id>.tsv`. `gfw.m1_adapter.fold_amrfinder_dir()` folds
+those TSVs into `data/artifacts/features.parquet`: `genome_id` rows, AMR gene or
+mutation-symbol columns, and binary presence/absence values. `scripts/train.py`
+fits M3 **only** on that matrix plus lab labels. At inference, the genome's M1 row
+is mapped into each saved model's fixed feature-column order; missing symbols are
+zero. Neither this integration nor this repository executes AMRFinderPlus.
+
+To replace the placeholder: have teammates supply the TSVs, run the fold step,
+and re-run `scripts/train.py`. **No other code changes** — M2, split, decision
+logic, and UI stay identical.
 
 ---
 

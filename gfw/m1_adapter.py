@@ -10,9 +10,12 @@ I do not run AMRFinderPlus. I define and consume the contract:
   ``__synthetic__`` attribute in the parquet metadata marks placeholder data.
 
 :func:`fold_amrfinder_dir` turns a directory of AMRFinderPlus TSVs (Input A) into
-the feature matrix (Input B), so teammates only have to drop files. Until their
-real output lands, ``scripts/make_placeholder_features.py`` writes a clearly
-labelled synthetic matrix with the same schema so M3–M5 can be exercised.
+the feature matrix (Input B), so teammates only have to drop files. ``train.py``
+fits M3 only on this M1 matrix and laboratory labels; at inference each M1 row is
+mapped into the saved model's fixed feature-column order. M2 target evidence is
+not represented in this matrix and never enters M3 training or calibration.
+Until real output lands, ``scripts/make_placeholder_features.py`` writes a
+clearly labelled synthetic matrix with the same schema so M3–M5 can be exercised.
 """
 
 from __future__ import annotations
