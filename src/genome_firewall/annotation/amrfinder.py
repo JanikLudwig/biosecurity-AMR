@@ -108,8 +108,13 @@ def parse_output(path: Path, *, genome_id: str) -> pd.DataFrame:
             "identity": pd.to_numeric(raw["% Identity to reference"], errors="coerce"),
         }
     )
+    def mutation_key(value: object) -> str:
+        symbol = str(value)
+        gene, separator, change = symbol.partition("_")
+        return f"mutation::{gene}::{change}" if separator else f"mutation::{symbol}::unknown"
+
     evidence.loc[point_mask, "feature_key"] = raw.loc[point_mask, "Element symbol"].map(
-        lambda value: f"mutation::{value}"
+        mutation_key
     )
     evidence.loc[point_mask, "evidence_category"] = "known_resistance_mutation"
     evidence["feature_value"] = 1

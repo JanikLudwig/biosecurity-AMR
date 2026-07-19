@@ -15,5 +15,5 @@ def test_parser_separates_gene_and_mutation_evidence(tmp_path: Path) -> None:
     evidence = parse_output(output, genome_id="1280.test").set_index("element_symbol")
     assert evidence.loc["mecA", "feature_key"] == "gene::mecA"
     assert evidence.loc["mecA", "evidence_category"] == "known_resistance_gene"
-    assert evidence.loc["gyrA_S84L", "feature_key"] == "mutation::gyrA_S84L"
+    assert evidence.loc["gyrA_S84L", "feature_key"] == "mutation::gyrA::S84L"
     assert evidence.loc["gyrA_S84L", "evidence_category"] == "known_resistance_mutation"

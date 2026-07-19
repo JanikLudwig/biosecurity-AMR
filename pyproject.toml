@@ -15,6 +15,11 @@ dependencies = [
     "streamlit>=1.43.0",
     "sourmash>=4.9.4,<5",
     "typer>=0.15.2",
+    "fastapi>=0.139.2",
+    "uvicorn[standard]>=0.51.0",
+    "python-multipart>=0.0.32",
+    "pyhmmer>=0.12.1",
+    "pyrodigal>=3.7.1",
 ]
 
 [project.scripts]

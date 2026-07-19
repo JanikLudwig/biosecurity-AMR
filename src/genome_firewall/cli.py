@@ -20,6 +20,7 @@ from genome_firewall.annotation.amrfinder import (
 from genome_firewall.config import DEFAULT_CONFIG, load_config
 from genome_firewall.decision import DEFAULT_DRUG_REGISTRY
 from genome_firewall.data.bvbrc import download_and_qc
+from genome_firewall.data.training_v1 import prepare_training_v1
 from genome_firewall.data.phenotypes import (
     audit_source,
     load_and_clean,
@@ -47,6 +48,23 @@ app.add_typer(data_app, name="data")
 app.add_typer(amrfinder_app, name="amrfinder")
 app.add_typer(model_app, name="model")
 console = Console()
+
+
+@app.command("api")
+def serve_api(
+    host: str = typer.Option("127.0.0.1", "--host"),
+    port: int = typer.Option(8000, "--port", min=1, max=65535),
+    reload: bool = typer.Option(False, "--reload"),
+) -> None:
+    """Serve the FastAPI backend and its small demonstration frontend."""
+    import uvicorn
+
+    uvicorn.run(
+        "genome_firewall.api.app:app",
+        host=host,
+        port=port,
+        reload=reload,
+    )
 
 
 @app.command("predict")
@@ -157,6 +175,37 @@ def select(
     }
     write_selection(output, manifest, labels, metadata)
     console.print(f"Wrote {len(manifest):,} genomes and {len(labels):,} labels to {output}")
+
+
+@data_app.command("prepare-training-v1")
+def prepare_v1(
+    source: Path = typer.Option(Path("data/training-data-v1"), "--source"),
+    features: Path = typer.Option(
+        Path("data/processed/training-v1/features.parquet"), "--features"
+    ),
+    phenotypes: Path = typer.Option(
+        Path("data/processed/training-v1/phenotypes.csv"), "--phenotypes"
+    ),
+    genomes: Path = typer.Option(
+        Path("data/processed/training-v1/genomes.csv"), "--genomes"
+    ),
+    manifest: Path = typer.Option(
+        Path("data/processed/training-v1/dataset-manifest.json"), "--manifest"
+    ),
+) -> None:
+    """Normalize the supplied 3k tables without rerunning AMRFinderPlus."""
+    summary = prepare_training_v1(
+        source,
+        features_output=features,
+        phenotypes_output=phenotypes,
+        genomes_output=genomes,
+        manifest_output=manifest,
+    )
+    console.print(
+        f"Prepared {summary['genomes']:,} genomes, {summary['labels']:,} labels, "
+        f"and {summary['features']:,} features"
+    )
+    console.print(f"Download manifest: {genomes}")
 
 
 @data_app.command("download")
@@ -376,6 +425,12 @@ def model_train(
         Path("data/processed/splits/genome-splits.csv"), "--splits"
     ),
     output: Path = typer.Option(Path("artifacts/models"), "--output"),
+    antibiotics: list[str] | None = typer.Option(
+        None, "--antibiotic", help="Train only this antibiotic; repeat the option for several."
+    ),
+    evaluation_status: str = typer.Option(
+        "grouped-development", "--evaluation-status"
+    ),
     config_path: Path = typer.Option(DEFAULT_CONFIG, "--config"),
 ) -> None:
     """Train one baseline model per drug using fixed grouped splits."""
@@ -384,9 +439,19 @@ def model_train(
     summary = train_all_drugs(
         table,
         feature_columns,
-        antibiotics=config["dataset"]["antibiotics"],
+        antibiotics=antibiotics or config["dataset"]["antibiotics"],
         config=config["model"],
         output_directory=output,
+        bundle_metadata={
+            "species": config["dataset"]["species"],
+            "evaluation_status": evaluation_status,
+            "split_genomes": int(
+                pd.read_csv(splits, dtype=object, usecols=["genome_id"])["genome_id"].nunique()
+            ),
+            "split_path": str(splits),
+            "features_path": str(features),
+            "phenotypes_path": str(phenotypes),
+        },
     )
     console.print(summary[["antibiotic", "status", "calibration_status"]])
     console.print(f"Model artifacts: {output}")

@@ -78,3 +78,42 @@ def test_known_resistance_conflict_forces_no_call(tmp_path: Path) -> None:
     # drug-specific resistance evidence prevents a likely-to-work call.
     assert decision["call"] == "no_call"
     assert "model_susceptible_but_resistance_evidence_detected" in decision["reasons"]
+
+
+def test_target_gate_does_not_hide_resistant_signal(tmp_path: Path) -> None:
+    columns = ["gene::mecA"]
+    estimator = LogisticRegression().fit(
+        pd.DataFrame([[0], [0], [1], [1]], columns=columns), [0, 0, 1, 1]
+    )
+    decision = predict_antibiotic(
+        antibiotic="cefoxitin",
+        evidence=pd.DataFrame(
+            {
+                "feature_key": ["gene::mecA"],
+                "element_symbol": ["mecA"],
+                "evidence_category": ["known_resistance_gene"],
+                "amr_subclass": ["METHICILLIN"],
+                "coverage": [100.0],
+                "identity": [100.0],
+            }
+        ),
+        model_artifact={
+            "estimator": estimator,
+            "feature_columns": columns,
+            "decision_thresholds": {"lower": None, "upper": 0.0},
+            "novelty_reference": np.array([[0], [1]], dtype="uint8"),
+            "novelty_min_jaccard": 0.0,
+        },
+        drug={"resistance_terms": ["METHICILLIN"], "target_label": "PBPs"},
+        target_status={"status": "not_verified", "detected": []},
+        lineage_status={
+            "status": "in_distribution",
+            "maximum_training_ani": 1.0,
+            "minimum_training_ani": 0.95,
+            "nearest_training_genome": "g1",
+        },
+        qc_passed=True,
+        qc_reasons=[],
+    )
+    assert decision["call"] == "likely_to_fail"
+    assert decision["evidence_category"] == "known_resistance_gene_or_mutation"

@@ -1,0 +1,17 @@
+{
+    "created_at": "2026-07-19T07:03:41.051511",
+    "number_of_genomes": 3356,
+    "number_of_features": 158,
+    "number_of_gene_features": 58,
+    "number_of_mutation_features": 100,
+    "number_of_zero_hit_genomes": 38,
+    "number_of_input_files": 3356,
+    "skipped_or_failed_inputs": 0,
+    "parser_warnings": [],
+    "output_files": [
+        "data\\processed\\features.csv.gz",
+        "data\\processed\\amrfinder_hits_long.tsv.gz",
+        "data\\processed\\feature_dictionary.csv",
+        "reports\\feature_matrix_summary.json"
+    ]
+}

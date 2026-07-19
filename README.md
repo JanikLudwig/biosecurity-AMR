@@ -43,6 +43,73 @@ uv run genome-firewall model evaluate-reports \
 The current label acceptance and mixed-standard limitations are pinned in
 `docs/phenotype-policy.md`.
 
+## FastAPI: M1 + M2
+
+The API loads the versioned model bundle once at startup. `M1` is the AMRFinderPlus
+gene/mutation workflow; `M2` calls ORFs with Pyrodigal and verifies protein targets with PyHMMER,
+using nucleotide search for the erythromycin 23S rRNA target.
+
+```bash
+uv run genome-firewall api
+```
+
+Open <http://127.0.0.1:8000> for the small upload UI, or call it directly:
+
+```bash
+curl http://127.0.0.1:8000/api/v1/health
+curl http://127.0.0.1:8000/api/v1/models
+curl -X POST http://127.0.0.1:8000/api/v1/analyses \
+  -F fasta=@data/raw/genomes/1280.9342.fna
+```
+
+The JSON response keeps `workflows.M1` and `workflows.M2` separate and then combines them only in
+the final target-gated `decisions` list. Generated API reports are stored under
+`artifacts/api-reports/`. All model output is research-only and requires standard laboratory
+confirmation.
+
+## Rebuild the 3k model bundle
+
+The checked-in training-v1 tables already contain AMRFinderPlus features, so these steps do not
+rerun AMRFinderPlus over the training cohort:
+
+```bash
+# Normalize IDs, feature schema, laboratory labels, and the download manifest
+uv run genome-firewall data prepare-training-v1
+
+# Resumable: existing FASTAs are reused
+uv run genome-firewall data download \
+  --manifest data/processed/training-v1/genomes.csv \
+  --output data/raw/genomes \
+  --qc-output data/processed/training-v1/qc.csv
+
+# Whole-genome sourmash grouping and leakage-safe partitions
+uv run genome-firewall data cluster-split \
+  --qc-manifest data/processed/training-v1/qc.csv \
+  --phenotypes data/processed/training-v1/phenotypes.csv \
+  --output data/processed/training-v1/splits
+
+# Calibrated models for the supported three-drug panel
+uv run genome-firewall model train \
+  --features data/processed/training-v1/features.parquet \
+  --phenotypes data/processed/training-v1/phenotypes.csv \
+  --splits data/processed/training-v1/splits/genome-splits.csv \
+  --output artifacts/models-v1 \
+  --evaluation-status grouped-held-out \
+  --antibiotic cefoxitin \
+  --antibiotic ciprofloxacin \
+  --antibiotic erythromycin
+
+uv run genome-firewall model lineage \
+  --splits data/processed/training-v1/splits/genome-splits.csv \
+  --fasta-directory data/raw/genomes \
+  --output artifacts/models-v1/lineage-reference.joblib
+```
+
+Until the full assembly download and regrouping complete, a locally generated bundle may be
+marked `provisional-500-genome-grouped-development` in `/api/v1/models`; the API exposes that label
+so provisional results cannot be mistaken for the final 3k evaluation.
+
+
 The supplied source export is expected at `data/BVBRC_genome_amr.csv`. Frozen selection and
 QC manifests are written under `data/manifests/` and should be committed; downloaded FASTA
 files remain ignored because they are large and reproducible from those manifests.

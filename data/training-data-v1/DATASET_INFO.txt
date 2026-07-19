@@ -1,0 +1,9 @@
+﻿Dataset: Genome Firewall S. aureus training features
+Genomes: 3356
+AMRFinderPlus: 4.2.7
+Database: 2026-05-15.1
+Organism option: Staphylococcus_aureus
+Gene features: 58
+Mutation features: 100
+Created: 2026-07-19T07:18:07+02:00
+Source labels: BV-BRC laboratory phenotypes

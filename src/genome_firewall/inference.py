@@ -17,7 +17,8 @@ from genome_firewall.annotation.amrfinder import (
 from genome_firewall.data.qc import evaluate_quality, inspect_fasta
 from genome_firewall.decision import load_drug_registry, predict_antibiotic
 from genome_firewall.lineage import evaluate_lineage
-from genome_firewall.targets import verify_drug_targets
+from genome_firewall.modeling.bundle import ModelBundle
+from genome_firewall.targets import analyze_drug_targets
 
 CONFIRMATION_WARNING = (
     "Research prototype only. Every prediction must be confirmed with standard "
@@ -33,6 +34,7 @@ def predict_fasta(
     output_directory: Path,
     registry_path: Path,
     lineage_artifact: Path | None = None,
+    model_bundle: ModelBundle | None = None,
     threads: int = 2,
 ) -> dict[str, Any]:
     """Run the defensive FASTA-to-report path for one assembled S. aureus genome."""
@@ -43,6 +45,12 @@ def predict_fasta(
     expected_species = registry["registry"]["species"]
     if expected_species != config["dataset"]["species"]:
         raise ValueError("Drug registry species does not match experiment configuration")
+
+    bundle = model_bundle or ModelBundle(model_directory)
+    unsupported = sorted(set(bundle.antibiotics).difference(registry["drugs"]))
+    if unsupported:
+        raise ValueError(f"Model bundle drugs are absent from the registry: {unsupported}")
+    drugs = {antibiotic: registry["drugs"][antibiotic] for antibiotic in bundle.antibiotics}
 
     genome_id = fasta.stem
     metrics = inspect_fasta(fasta)
@@ -65,11 +73,12 @@ def predict_fasta(
             threads=threads,
         )
         evidence = parse_output(raw_amr, genome_id=genome_id)
-        target_statuses = verify_drug_targets(
+        target_analysis = analyze_drug_targets(
             fasta,
             amrfinder_executable=executable,
-            drugs=registry["drugs"],
+            drugs=drugs,
         )
+        target_statuses = target_analysis["drugs"]
     else:
         evidence = pd.DataFrame(
             columns=[
@@ -84,19 +93,22 @@ def predict_fasta(
         )
         target_statuses = {
             antibiotic: {"status": "not_evaluated", "detected": []}
-            for antibiotic in registry["drugs"]
+            for antibiotic in drugs
+        }
+        target_analysis = {
+            "workflow": "M2",
+            "status": "not_evaluated",
+            "reason": "assembly_qc_failed",
+            "drugs": target_statuses,
         }
 
     decisions = []
-    for antibiotic, drug in registry["drugs"].items():
-        model_path = model_directory / f"{antibiotic}.joblib"
-        if not model_path.is_file():
-            raise FileNotFoundError(f"Trained model is missing: {model_path}")
+    for antibiotic, drug in drugs.items():
         decisions.append(
             predict_antibiotic(
                 antibiotic=antibiotic,
                 evidence=evidence,
-                model_path=model_path,
+                model_artifact=bundle.artifact(antibiotic),
                 drug=drug,
                 target_status=target_statuses[antibiotic],
                 lineage_status=lineage_status,
@@ -122,6 +134,20 @@ def predict_fasta(
         "evidence_sources": {
             "amrfinder_mapping": registry["registry"]["amrfinder_mapping_source"],
             "drug_mechanisms": registry["registry"]["mechanism_source"],
+        },
+        "workflows": {
+            "M1": {
+                "name": "AMRFinderPlus feature extraction",
+                "feature_schema": bundle.manifest["feature_schema_sha256"],
+                "recognized_features": sorted(
+                    set(evidence["feature_key"]).intersection(bundle.feature_columns)
+                ),
+                "unknown_features": sorted(
+                    set(evidence["feature_key"]).difference(bundle.feature_columns)
+                ),
+                "evidence": json.loads(evidence.to_json(orient="records")),
+            },
+            "M2": target_analysis,
         },
         "lineage": lineage_status,
         "decisions": decisions,

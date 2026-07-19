@@ -34,6 +34,11 @@ artifacts/
 *.bai
 *.cram
 
+# Small, curated target references are application resources, not raw datasets.
+!src/genome_firewall/resources/
+!src/genome_firewall/resources/targets/
+!src/genome_firewall/resources/targets/*.fasta
+
 # Generated feature matrices and serialized models
 *.parquet
 *.joblib

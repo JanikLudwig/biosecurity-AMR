@@ -26,7 +26,7 @@ allowed_genome_quality = ["Good"]
 
 [bvbrc]
 api_base_url = "https://www.bv-brc.org/api"
-download_concurrency = 4
+download_concurrency = 12
 timeout_seconds = 120
 sequence_result_limit = 10000
 

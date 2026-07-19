@@ -95,7 +95,10 @@ async def download_and_qc(
             metadata_path = output_directory / f"{genome_id}.metadata.json"
             async with semaphore:
                 try:
-                    metadata = await client.metadata(genome_id)
+                    if metadata_path.is_file():
+                        metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+                    else:
+                        metadata = await client.metadata(genome_id)
                     if metadata.get("species") != species or int(metadata.get("taxon_id", -1)) != taxon_id:
                         raise ValueError("BV-BRC metadata does not match the supported species")
                     if not fasta_path.exists():
@@ -104,7 +107,7 @@ async def download_and_qc(
                     metadata_path.write_text(
                         json.dumps(metadata, indent=2, sort_keys=True) + "\n", encoding="utf-8"
                     )
-                    metrics = inspect_fasta(fasta_path)
+                    metrics = await asyncio.to_thread(inspect_fasta, fasta_path)
                     reasons = evaluate_quality(metrics, metadata, quality)
                     return {
                         "genome_id": genome_id,

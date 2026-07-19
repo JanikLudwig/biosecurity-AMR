@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Genome Firewall</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main>
+    <p class="eyebrow">DEFENSIVE AMR RESEARCH PROTOTYPE</p>
+    <h1>Genome Firewall</h1>
+    <p>Upload one assembled <em>Staphylococcus aureus</em> FASTA. M1 extracts known AMR
+      features; M2 verifies each antibiotic target.</p>
+    <p id="model-status">Loading model provenance…</p>
+    <form id="analysis-form">
+      <input id="fasta" name="fasta" type="file" accept=".fna,.fa,.fasta" required>
+      <button type="submit">Analyze genome</button>
+    </form>
+    <p id="status" role="status"></p>
+    <section id="results" hidden>
+      <h2>Antibiotic response</h2>
+      <div id="cards"></div>
+      <details><summary>M1 and M2 evidence</summary><pre id="evidence"></pre></details>
+    </section>
+    <aside>Research prototype only. Every prediction must be confirmed with standard laboratory antimicrobial-susceptibility testing.</aside>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

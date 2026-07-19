@@ -69,14 +69,20 @@ def predict_antibiotic(
     *,
     antibiotic: str,
     evidence: pd.DataFrame,
-    model_path: Path,
+    model_path: Path | None = None,
+    model_artifact: dict[str, Any] | None = None,
     drug: dict[str, Any],
     target_status: dict[str, Any],
     lineage_status: dict[str, Any],
     qc_passed: bool,
     qc_reasons: list[str],
 ) -> dict[str, Any]:
-    artifact = joblib.load(model_path)
+    if model_artifact is None:
+        if model_path is None:
+            raise ValueError("model_path or model_artifact is required")
+        artifact = joblib.load(model_path)
+    else:
+        artifact = model_artifact
     features, unknown_features = build_feature_vector(evidence, artifact["feature_columns"])
     feature_frame = pd.DataFrame([features], columns=artifact["feature_columns"])
     probability = float(artifact["estimator"].predict_proba(feature_frame)[0, 1])
@@ -95,8 +101,6 @@ def predict_antibiotic(
     evidence_category = "no_known_resistance_signal"
     if not qc_passed:
         reasons.extend(f"qc:{reason}" for reason in qc_reasons)
-    elif target_status["status"] != "present":
-        reasons.append("molecular_target_not_verified")
     elif lineage_status["status"] != "in_distribution":
         reasons.append(f"lineage_{lineage_status['status']}")
     elif not in_distribution:
@@ -106,6 +110,8 @@ def predict_antibiotic(
     elif signal == "susceptible_signal" and not relevant.empty:
         reasons.append("model_susceptible_but_resistance_evidence_detected")
         evidence_category = "conflicting_known_resistance_evidence"
+    elif signal == "susceptible_signal" and target_status["status"] != "present":
+        reasons.append("molecular_target_not_verified")
     elif signal == "susceptible_signal":
         call = "likely_to_work"
         evidence_category = "no_known_resistance_signal"

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from pathlib import Path
 from typing import Any
 
@@ -20,6 +21,10 @@ from sklearn.metrics import (
 )
 
 LABEL_MAP = {"Susceptible": 0, "Resistant": 1}
+
+
+def feature_schema_sha256(feature_columns: list[str]) -> str:
+    return hashlib.sha256("\n".join(feature_columns).encode("utf-8")).hexdigest()
 
 
 def maximum_binary_jaccard(vector: np.ndarray, reference: np.ndarray) -> float:
@@ -309,6 +314,7 @@ def train_drug_model(
     output_directory.mkdir(parents=True, exist_ok=True)
     joblib.dump(
         {
+            "schema_version": "genome-firewall-model-v1",
             "antibiotic": antibiotic,
             "estimator": estimator,
             "base_estimator": base,
@@ -317,6 +323,7 @@ def train_drug_model(
             "decision_thresholds": thresholds,
             "novelty_reference": novelty_reference,
             "novelty_min_jaccard": novelty_min_jaccard,
+            "feature_schema_sha256": feature_schema_sha256(feature_columns),
         },
         output_directory / f"{antibiotic.replace('/', '_')}.joblib",
     )
@@ -370,6 +377,7 @@ def train_all_drugs(
     antibiotics: list[str],
     config: dict[str, Any],
     output_directory: Path,
+    bundle_metadata: dict[str, Any] | None = None,
 ) -> pd.DataFrame:
     output_directory.mkdir(parents=True, exist_ok=True)
     summaries: list[dict[str, Any]] = []
@@ -400,4 +408,37 @@ def train_all_drugs(
     )
     summary_frame = pd.json_normalize(summaries)
     summary_frame.to_csv(output_directory / "model-summary.csv", index=False)
+    trained = [summary["antibiotic"] for summary in summaries if summary["status"] == "trained"]
+    bundle = {
+        "schema_version": "genome-firewall-bundle-v1",
+        "antibiotics": trained,
+        "feature_count": len(feature_columns),
+        "feature_columns": feature_columns,
+        "feature_schema_sha256": feature_schema_sha256(feature_columns),
+        "models": {
+            antibiotic: {
+                "path": f"{antibiotic.replace('/', '_')}.joblib",
+                "metadata_path": f"{antibiotic.replace('/', '_')}.metadata.json",
+                "evaluation": {
+                    key: next(
+                        summary[key]
+                        for summary in summaries
+                        if summary["antibiotic"] == antibiotic
+                    )
+                    for key in [
+                        "calibration_status",
+                        "class_counts",
+                        "test_metrics",
+                        "no_call_rate",
+                        "called_test_metrics",
+                    ]
+                },
+            }
+            for antibiotic in trained
+        },
+        **(bundle_metadata or {}),
+    }
+    (output_directory / "bundle-manifest.json").write_text(
+        json.dumps(bundle, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
     return summary_frame

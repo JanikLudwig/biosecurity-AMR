@@ -6,6 +6,8 @@ from pathlib import Path
 from typing import Any
 
 DNA = frozenset("ACGTNRYKMSWBDHV")
+DNA_BYTES = b"ACGTNRYKMSWBDHV"
+CANONICAL_DNA_BYTES = b"ACGT"
 
 
 @dataclass(frozen=True)
@@ -24,42 +26,27 @@ class FastaMetrics:
 def inspect_fasta(path: Path) -> FastaMetrics:
     """Validate an assembled FASTA and compute small, dependency-free QC metrics."""
     lengths: list[int] = []
-    current_length = 0
     ambiguous = 0
-    seen_header = False
-    digest = hashlib.sha256()
-
-    with path.open("rb") as handle:
-        for line_number, raw_line in enumerate(handle, start=1):
-            digest.update(raw_line)
-            line = raw_line.strip()
-            if not line:
-                continue
-            if line.startswith(b">"):
-                if seen_header:
-                    if current_length == 0:
-                        raise ValueError(f"Empty FASTA record before line {line_number}")
-                    lengths.append(current_length)
-                seen_header = True
-                current_length = 0
-                continue
-            if not seen_header:
-                raise ValueError(f"Sequence found before first FASTA header at line {line_number}")
-            try:
-                sequence = line.decode("ascii").upper()
-            except UnicodeDecodeError as error:
-                raise ValueError(f"Non-ASCII sequence at line {line_number}") from error
-            invalid = set(sequence).difference(DNA)
-            if invalid:
-                raise ValueError(f"Invalid DNA symbols {sorted(invalid)} at line {line_number}")
-            current_length += len(sequence)
-            ambiguous += sum(base != "A" and base != "C" and base != "G" and base != "T" for base in sequence)
-
-    if not seen_header:
+    payload = path.read_bytes()
+    digest = hashlib.sha256(payload)
+    content = payload.strip()
+    if not content:
         raise ValueError("No FASTA records found")
-    if current_length == 0:
-        raise ValueError("Final FASTA record is empty")
-    lengths.append(current_length)
+    if not content.startswith(b">"):
+        raise ValueError("Sequence found before first FASTA header")
+    for record_number, record in enumerate(content.split(b">")[1:], start=1):
+        header, separator, body = record.partition(b"\n")
+        if not separator or not header.strip():
+            raise ValueError(f"FASTA record {record_number} has no header or sequence")
+        sequence = b"".join(body.split()).upper()
+        if not sequence:
+            raise ValueError(f"FASTA record {record_number} is empty")
+        invalid = set(sequence.translate(None, DNA_BYTES))
+        if invalid:
+            symbols = [chr(value) if value < 128 else repr(value) for value in sorted(invalid)]
+            raise ValueError(f"Invalid DNA symbols {symbols} in FASTA record {record_number}")
+        lengths.append(len(sequence))
+        ambiguous += len(sequence.translate(None, CANONICAL_DNA_BYTES))
 
     genome_length = sum(lengths)
     halfway = genome_length / 2
@@ -115,4 +102,3 @@ def evaluate_quality(
     if allowed and metadata.get("genome_quality") not in allowed:
         reasons.append("unsupported_genome_quality")
     return reasons
-
