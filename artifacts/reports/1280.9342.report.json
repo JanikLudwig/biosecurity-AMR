@@ -1,0 +1,160 @@
+{
+  "decisions": [
+    {
+      "all_relevant_elements": [
+        "gyrA_S84L",
+        "parC_S80F"
+      ],
+      "antibiotic": "ciprofloxacin",
+      "call": "likely_to_fail",
+      "confidence": 0.9398522796284117,
+      "evidence_category": "known_resistance_gene_or_mutation",
+      "feature_similarity": 0.8888888888888888,
+      "feature_similarity_floor": 0.5,
+      "lineage_status": "in_distribution",
+      "maximum_training_ani": 0.999971716255685,
+      "minimum_training_ani": 0.9923668127847838,
+      "model_signal": "resistant_signal",
+      "nearest_training_genome": "1280.9284",
+      "probability_resistant": 0.9398522796284117,
+      "reasons": [],
+      "supporting_elements": [
+        "gyrA_S84L",
+        "parC_S80F"
+      ],
+      "target_label": "DNA gyrase and topoisomerase IV",
+      "target_status": "present",
+      "targets_detected": [
+        "gyrA",
+        "gyrB",
+        "parC",
+        "parE"
+      ],
+      "unknown_features": []
+    },
+    {
+      "all_relevant_elements": [],
+      "antibiotic": "erythromycin",
+      "call": "no_call",
+      "confidence": 0.7041501290560239,
+      "evidence_category": "no_known_resistance_signal",
+      "feature_similarity": 0.8888888888888888,
+      "feature_similarity_floor": 0.5,
+      "lineage_status": "in_distribution",
+      "maximum_training_ani": 0.999971716255685,
+      "minimum_training_ani": 0.9923668127847838,
+      "model_signal": "no_call",
+      "nearest_training_genome": "1280.9284",
+      "probability_resistant": 0.2958498709439761,
+      "reasons": [
+        "calibrated_probability_inside_no_call_region"
+      ],
+      "supporting_elements": [],
+      "target_label": "23S ribosomal RNA within the bacterial 50S ribosomal subunit",
+      "target_status": "present",
+      "targets_detected": [
+        "23S rRNA"
+      ],
+      "unknown_features": []
+    },
+    {
+      "all_relevant_elements": [],
+      "antibiotic": "clindamycin",
+      "call": "no_call",
+      "confidence": 0.7087860172184655,
+      "evidence_category": "no_known_resistance_signal",
+      "feature_similarity": 0.8888888888888888,
+      "feature_similarity_floor": 0.5,
+      "lineage_status": "in_distribution",
+      "maximum_training_ani": 0.999971716255685,
+      "minimum_training_ani": 0.9923668127847838,
+      "model_signal": "no_call",
+      "nearest_training_genome": "1280.9284",
+      "probability_resistant": 0.2912139827815345,
+      "reasons": [
+        "calibrated_probability_inside_no_call_region"
+      ],
+      "supporting_elements": [],
+      "target_label": "23S ribosomal RNA within the bacterial 50S ribosomal subunit",
+      "target_status": "present",
+      "targets_detected": [
+        "23S rRNA"
+      ],
+      "unknown_features": []
+    },
+    {
+      "all_relevant_elements": [],
+      "antibiotic": "gentamicin",
+      "call": "likely_to_work",
+      "confidence": 0.9970374606861707,
+      "evidence_category": "no_known_resistance_signal",
+      "feature_similarity": 0.8888888888888888,
+      "feature_similarity_floor": 0.5,
+      "lineage_status": "in_distribution",
+      "maximum_training_ani": 0.999971716255685,
+      "minimum_training_ani": 0.9923668127847838,
+      "model_signal": "susceptible_signal",
+      "nearest_training_genome": "1280.9284",
+      "probability_resistant": 0.0029625393138292683,
+      "reasons": [],
+      "supporting_elements": [],
+      "target_label": "16S ribosomal RNA within the bacterial 30S ribosomal subunit",
+      "target_status": "present",
+      "targets_detected": [
+        "16S rRNA"
+      ],
+      "unknown_features": []
+    },
+    {
+      "all_relevant_elements": [],
+      "antibiotic": "tetracycline",
+      "call": "likely_to_work",
+      "confidence": 0.9527391330063565,
+      "evidence_category": "no_known_resistance_signal",
+      "feature_similarity": 0.8888888888888888,
+      "feature_similarity_floor": 0.5,
+      "lineage_status": "in_distribution",
+      "maximum_training_ani": 0.999971716255685,
+      "minimum_training_ani": 0.9923668127847838,
+      "model_signal": "susceptible_signal",
+      "nearest_training_genome": "1280.9284",
+      "probability_resistant": 0.04726086699364347,
+      "reasons": [],
+      "supporting_elements": [],
+      "target_label": "16S ribosomal RNA within the bacterial 30S ribosomal subunit",
+      "target_status": "present",
+      "targets_detected": [
+        "16S rRNA"
+      ],
+      "unknown_features": []
+    }
+  ],
+  "defensive_use_only": true,
+  "generated_at": "2026-07-19T00:57:22.048125+00:00",
+  "genome_id": "1280.9342",
+  "lineage": {
+    "maximum_training_ani": 0.999971716255685,
+    "minimum_training_ani": 0.9923668127847838,
+    "nearest_training_genome": "1280.9284",
+    "status": "in_distribution"
+  },
+  "provenance": {
+    "amrfinder_database": "2026-05-15.1",
+    "amrfinder_version": "4.2.7",
+    "drug_registry_version": "2026-07-19.1",
+    "model_directory": "artifacts/models"
+  },
+  "qc": {
+    "ambiguous_bases": 0,
+    "ambiguous_fraction": 0.0,
+    "contig_n50": 80789,
+    "contigs": 62,
+    "genome_length": 2803086,
+    "passed": true,
+    "reasons": [],
+    "sha256": "35671022e2fa3124ba0d3d83bf749634e44f1e31004cfe72f242acf0d76b925d"
+  },
+  "schema_version": "1.0",
+  "species_scope": "Staphylococcus aureus",
+  "warning": "Research prototype only. Every prediction must be confirmed with standard laboratory antimicrobial-susceptibility testing."
+}

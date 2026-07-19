@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/Users/mura/git/biosecurity-AMR/.tools/amrfinder/bin/amrfinder",
+    "--nucleotide",
+    "/Users/mura/git/biosecurity-AMR/data/raw/genomes/1280.9342.fna",
+    "--organism",
+    "Staphylococcus_aureus",
+    "--threads",
+    "2",
+    "--output",
+    "/Users/mura/git/biosecurity-AMR/artifacts/reports-v1/1280.9342.amrfinder.tsv"
+  ],
+  "executable_version": "4.2.7",
+  "database_version": "2026-05-15.1",
+  "stdout": "",
+  "stderr": "Running: /Users/mura/git/biosecurity-AMR/.tools/amrfinder/bin/amrfinder --nucleotide /Users/mura/git/biosecurity-AMR/data/raw/genomes/1280.9342.fna --organism Staphylococcus_aureus --threads 2 --output /Users/mura/git/biosecurity-AMR/artifacts/reports-v1/1280.9342.amrfinder.tsv\nSoftware directory: /Users/mura/git/biosecurity-AMR/.tools/amrfinder/bin/\nSoftware version: 4.2.7\nDatabase directory: /Users/mura/git/biosecurity-AMR/.tools/amrfinder/share/amrfinderplus/data/2026-05-15.1\nDatabase version: 2026-05-15.1\nAMRFinder translated nucleotide and mutation search\nRunning tblastn\nRunning blastn\nMaking report\namrfinder took 23 seconds to complete\n"
+}

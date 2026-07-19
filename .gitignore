@@ -12,7 +12,6 @@ data/raw/
 data/interim/
 data/processed/
 data/manifests/qc-smoke.csv
-artifacts/
 
 # Large biological sequence/read files. Keep only small fixtures under tests/fixtures
 # by explicitly negating them there if we add any later.

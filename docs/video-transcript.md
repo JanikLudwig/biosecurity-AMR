@@ -1,29 +1,34 @@
-# 60-Second Video Transcript
+# 60-Second Technical Video Transcript
 
-## Spoken narration
+The narration is 139 words. Read at a measured technical-demo pace while showing the three slides
+specified in [`three-slide-design-prompt.md`](three-slide-design-prompt.md).
 
-Antibiotic resistance testing can take days. Genome Firewall is a defensive research prototype
-that analyzes an assembled *Staphylococcus aureus* genome earlier.
+## Slide 1 — Feature extraction (0:00–0:18)
 
-First, M1 runs AMRFinderPlus and converts known resistance genes and mutations into 158 auditable
-features. Calibrated models estimate resistance for cefoxitin, ciprofloxacin, and erythromycin.
+> GyraseX reads a *Staphylococcus aureus* genome. M1 turns known resistance genes and
+> mutations into 158 auditable binary features. M2 independently verifies molecular targets using
+> PyHMMER for proteins and BLASTN for ribosomal RNA. This prevents marker absence alone from
+> triggering likely to work.
 
-But missing resistance markers do not prove a drug will work. M2 calls the genome's proteins and
-uses PyHMMER to verify protein targets, while a nucleotide search verifies erythromycin's 23S RNA
-target.
+## Slide 2 — Three possible decisions (0:18–0:40)
 
-We group closely related genomes before splitting them into training, calibration, and untouched
-test sets, reducing sequence leakage. We evaluate both resistant and susceptible recall,
-class-imbalance metrics, probability calibration, and performance after no-calls.
+> For genome 1280.51926, ciprofloxacin has no marker, verified targets, and nine-point-one
+> percent resistance: likely to work. For 1280.9342, erythromycin has no marker and a
+> verified target, but thirty-four-point-one percent falls inside the calibrated uncertainty band:
+> no-call. In 1280.51872, GyrA S84L and ParC S80F support ninety-six-point-one percent: likely to
+> fail.
 
-The report separates known biological evidence from statistical association and returns no-call
-for uncertain, novel, conflicting, or target-unverified cases. Every result must still be confirmed
-by standard laboratory testing.
+## Slide 3 — Training without genome leakage (0:40–1:00)
 
-## Suggested visuals
+> We train one regularized logistic model per drug on laboratory phenotypes. Homology-grouped train,
+> calibration, and test splits reduce sequence leakage. Sigmoid calibration and error-constrained
+> thresholds define the three decision regions. We measure balanced accuracy, class-specific recall,
+> PR-AUC, Brier score, and no-call coverage. Every prediction still requires laboratory
+> confirmation.
 
-- **0:00–0:08:** FASTA upload and the defensive-use label.
-- **0:08–0:25:** M1 AMRFinder genes/mutations flowing into three probability cards.
-- **0:25–0:38:** M2 PyHMMER protein hits and the 23S RNA target gate.
-- **0:38–0:50:** grouped train/calibration/test split and compact reliability/no-call metrics.
-- **0:50–1:00:** final decision table, evidence categories, and laboratory-confirmation warning.
+## Presenter notes
+
+- Say **likely to work** and **likely to fail**, not simply susceptible and resistant.
+- M1 marker absence is supporting evidence, never proof of susceptibility.
+- M2 proves target presence; it is not itself a susceptibility prediction.
+- The displayed evaluation is provisional grouped-development evidence, not clinical validation.

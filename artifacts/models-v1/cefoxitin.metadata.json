@@ -1,0 +1,47 @@
+{
+  "antibiotic": "cefoxitin",
+  "calibration_status": "sigmoid_partial_thresholds",
+  "called_test_metrics": {
+    "accuracy": 0.7777777777777778,
+    "called_count": 9,
+    "coverage": 0.25,
+    "resistant_calls": 0,
+    "resistant_fraction_in_susceptible_calls": 0.2222222222222222,
+    "susceptible_calls": 9,
+    "susceptible_fraction_in_resistant_calls": null
+  },
+  "class_counts": {
+    "calibration": {
+      "resistant": 15,
+      "susceptible": 18
+    },
+    "test": {
+      "resistant": 21,
+      "susceptible": 15
+    },
+    "train": {
+      "resistant": 90,
+      "susceptible": 66
+    }
+  },
+  "decision_thresholds": {
+    "lower": 0.23693805522518957,
+    "resistant_call_error": null,
+    "resistant_calls": 0,
+    "susceptible_call_error": 0.0,
+    "susceptible_calls": 7,
+    "upper": null
+  },
+  "feature_count": 158,
+  "no_call_rate": 0.75,
+  "status": "trained",
+  "test_metrics": {
+    "auroc": 0.8523809523809525,
+    "balanced_accuracy": 0.7904761904761906,
+    "brier": 0.17642563664256522,
+    "f1": 0.7894736842105263,
+    "pr_auc": 0.8840653220352468,
+    "resistant_recall": 0.7142857142857143,
+    "susceptible_recall": 0.8666666666666667
+  }
+}

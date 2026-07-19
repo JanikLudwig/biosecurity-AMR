@@ -1,0 +1,47 @@
+{
+  "antibiotic": "erythromycin",
+  "calibration_status": "sigmoid",
+  "called_test_metrics": {
+    "accuracy": 1.0,
+    "called_count": 40,
+    "coverage": 0.6153846153846154,
+    "resistant_calls": 3,
+    "resistant_fraction_in_susceptible_calls": 0.0,
+    "susceptible_calls": 37,
+    "susceptible_fraction_in_resistant_calls": 0.0
+  },
+  "class_counts": {
+    "calibration": {
+      "resistant": 20,
+      "susceptible": 40
+    },
+    "test": {
+      "resistant": 21,
+      "susceptible": 44
+    },
+    "train": {
+      "resistant": 184,
+      "susceptible": 123
+    }
+  },
+  "decision_thresholds": {
+    "lower": 0.2500830798623552,
+    "resistant_call_error": 0.0,
+    "resistant_calls": 5,
+    "susceptible_call_error": 0.08823529411764706,
+    "susceptible_calls": 34,
+    "upper": 0.8936648973322118
+  },
+  "feature_count": 158,
+  "no_call_rate": 0.38461538461538464,
+  "status": "trained",
+  "test_metrics": {
+    "auroc": 0.9599567099567099,
+    "balanced_accuracy": 0.8820346320346321,
+    "brier": 0.08711247046216802,
+    "f1": 0.85,
+    "pr_auc": 0.8997021595208241,
+    "resistant_recall": 0.8095238095238095,
+    "susceptible_recall": 0.9545454545454546
+  }
+}

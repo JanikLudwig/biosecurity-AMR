@@ -935,18 +935,21 @@ function ModelTab({
 
       {metrics && (
         <>
-          <div>
-            <div className="font-mono-tabular text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
-              Held-out evaluation
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <div className="font-mono-tabular text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
+                Held-out evaluation
+              </div>
+              <div className="mt-1 text-sm font-semibold">
+                {readable(models!.bundle.evaluation_status)}
+              </div>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Grouped development split across {models!.bundle.split_genomes} genomes ·{" "}
+                {models!.feature_count} AMR features · calibration{" "}
+                {readable(evaluation!.calibration_status)}
+              </p>
             </div>
-            <div className="mt-1 text-sm font-semibold">
-              {readable(models!.bundle.evaluation_status)}
-            </div>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Grouped development split across {models!.bundle.split_genomes} genomes ·{" "}
-              {models!.feature_count} AMR features · calibration{" "}
-              {readable(evaluation!.calibration_status)}
-            </p>
+            <ModelQcTooltip />
           </div>
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
             <MetricCell
@@ -981,8 +984,24 @@ function ModelTab({
         </>
       )}
 
-      {reliability.length > 0 && <ReliabilityPlot points={reliability} />}
+      {reliability.length > 0 && (
+        <div>
+          <div className="mb-3 font-mono-tabular text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
+            Probability reliability across labelled genomes
+          </div>
+          <ReliabilityPlot points={reliability} />
+        </div>
+      )}
 
+      <div className="border-b border-border pb-3">
+        <div className="font-mono-tabular text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
+          This genome
+        </div>
+        <p className="mt-1 text-xs text-muted-foreground">
+          The probability, decision thresholds, evidence, and quality checks for the uploaded
+          assembly.
+        </p>
+      </div>
       <div className="grid gap-4 xl:grid-cols-2">
         <AuditCard
           title="Decision audit"
@@ -1032,6 +1051,58 @@ function ModelTab({
         </p>
       </div>
     </div>
+  );
+}
+
+function ModelQcTooltip() {
+  return (
+    <TooltipProvider delayDuration={150}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            aria-label="Explain model scores and quality checks"
+            className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <CircleHelp className="h-4 w-4" />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent
+          side="bottom"
+          align="end"
+          className="w-[380px] max-w-[calc(100vw-2rem)] border border-border bg-card p-4 text-card-foreground shadow-xl"
+        >
+          <div className="font-mono-tabular text-[10px] font-semibold tracking-[0.16em] uppercase text-muted-foreground">
+            Model &amp; QC explained
+          </div>
+          <div className="mt-3 space-y-3 text-xs leading-5">
+            <p>
+              <span className="font-semibold">P(resistant)</span> is the model&apos;s estimated
+              probability that this isolate will resist the selected antibiotic. Lower means the
+              model sees a more susceptible-like pattern; higher means more resistant-like. It is
+              not a guarantee for an individual patient.
+            </p>
+            <p>
+              <span className="font-semibold">Thresholds</span> are learned separately for each
+              drug from calibration data. Below the work boundary the model can support likely to
+              work; above the fail boundary it can support likely to fail; the middle is deliberately
+              no-call.
+            </p>
+            <p>
+              <span className="font-semibold">The quality checks</span> ask whether the assembly
+              is usable and whether this genome looks enough like the training population. A failed
+              check, conflicting resistance evidence, or an unverified drug target can turn a
+              directional model signal into no-call.
+            </p>
+            <p className="text-muted-foreground">
+              Metrics summarize held-out test behavior: balanced accuracy measures both classes,
+              recall measures how often each class is found, and Brier score checks whether
+              probabilities are well calibrated. Lower Brier is better.
+            </p>
+          </div>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -1129,16 +1200,58 @@ function ReliabilityPlot({ points }: { points: ModelsResponse["bundle"]["reliabi
 }
 
 function MetricCell({ label, value, hint }: { label: string; value: string; hint: string }) {
+  const explanation = METRIC_EXPLANATIONS[label] ?? "Held-out evaluation metric.";
   return (
     <div className="rounded-md border border-border bg-card p-4">
-      <div className="font-mono-tabular text-[10px] tracking-[0.16em] uppercase text-muted-foreground">
-        {label}
+      <div className="flex items-center justify-between gap-2">
+        <div className="font-mono-tabular text-[10px] tracking-[0.16em] uppercase text-muted-foreground">
+          {label}
+        </div>
+        <TooltipProvider delayDuration={150}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                type="button"
+                aria-label={`Explain ${label}`}
+                className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <CircleHelp className="h-3 w-3" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent
+              side="top"
+              className="w-[280px] max-w-[calc(100vw-2rem)] border border-border bg-card p-3 text-card-foreground shadow-xl"
+            >
+              <div className="font-semibold">{label}</div>
+              <p className="mt-1 text-xs leading-5 text-muted-foreground">{explanation}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       <div className="mt-1 font-mono-tabular text-2xl font-semibold">{value}</div>
       <div className="mt-0.5 text-[11px] text-muted-foreground">{hint}</div>
     </div>
   );
 }
+
+const METRIC_EXPLANATIONS: Record<string, string> = {
+  "Brier score":
+    "Measures how close the predicted probabilities are to the observed outcomes. Zero is perfect; lower is better. A low score means a stated 70% probability tends to behave like roughly 70% in held-out data.",
+  AUROC:
+    "Measures how well the model ranks resistant genomes above susceptible genomes across many possible thresholds. 0.5 is random ranking and 1.0 is perfect ranking; higher is better.",
+  "PR-AUC":
+    "Summarizes the precision–recall trade-off, which is especially useful when resistant and susceptible cases are imbalanced. Higher is better, but compare it with the resistant-case prevalence.",
+  "Balanced accuracy":
+    "Averages recall for the resistant and susceptible classes. It prevents a model from looking good simply by favoring the more common class. Higher is better.",
+  "Resistant recall":
+    "The fraction of truly resistant held-out genomes that the model identifies as resistant-like. Higher means fewer resistant cases are missed.",
+  "Susceptible recall":
+    "The fraction of truly susceptible held-out genomes that the model identifies as susceptible-like. Higher means fewer usable antibiotics are incorrectly ruled out.",
+  "F1 score":
+    "Combines precision and recall for the resistant class into one number. Higher is better; it is useful when false alarms and missed resistant cases both matter.",
+  "No-call rate":
+    "The fraction of held-out genomes for which the system abstains because evidence is uncertain or safety gates fail. Lower is not automatically better: no-calls are an intentional safety behavior.",
+};
 
 function AuditCard({ title, rows }: { title: string; rows: string[][] }) {
   return (

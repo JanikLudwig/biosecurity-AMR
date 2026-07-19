@@ -32,12 +32,29 @@ LOGGER = logging.getLogger(__name__)
 STATIC_DIRECTORY = Path(__file__).parent / "static"
 ALLOWED_SUFFIXES = {".fna", ".fa", ".fasta"}
 MAX_UPLOAD_BYTES = 25 * 1024 * 1024
+MIN_ANALYSIS_RESPONSE_SECONDS = 3.0
 
 
 def _analysis_directory(reports: Path, analysis_id: str) -> Path:
     if not analysis_id.isalnum() or len(analysis_id) != 20:
         raise HTTPException(404, "Analysis not found")
     return reports / analysis_id
+
+
+def _load_cached_report(directory: Path, expected_sha256: str) -> dict[str, Any] | None:
+    """Return a complete report produced for the same FASTA bytes, if available."""
+    matches = list(directory.glob("*.report.json"))
+    if len(matches) != 1:
+        return None
+    try:
+        report = json.loads(matches[0].read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        LOGGER.warning("Ignoring unreadable cached analysis report at %s", matches[0])
+        return None
+    if report.get("qc", {}).get("sha256") != expected_sha256:
+        LOGGER.warning("Ignoring cached analysis with a mismatched FASTA digest at %s", matches[0])
+        return None
+    return report
 
 
 def _reliability_data(model_directory: Path) -> dict[str, list[dict[str, Any]]]:
@@ -99,6 +116,7 @@ def create_app(
         application.state.report_directory = reports
         application.state.registry_path = registry_path
         application.state.analysis_semaphore = asyncio.Semaphore(2)
+        application.state.analysis_locks = {}
         reports.mkdir(parents=True, exist_ok=True)
         yield
 
@@ -159,6 +177,7 @@ def create_app(
         request: Request,
         fasta: UploadFile = File(..., description="One assembled S. aureus FASTA file"),
     ) -> dict[str, Any]:
+        started_at = asyncio.get_running_loop().time()
         suffix = Path(fasta.filename or "").suffix.lower()
         if suffix not in ALLOWED_SUFFIXES:
             raise HTTPException(422, "Expected an assembled .fna, .fa, or .fasta file")
@@ -179,31 +198,43 @@ def create_app(
             if size == 0:
                 raise HTTPException(422, "Uploaded FASTA is empty")
 
-            analysis_id = digest.hexdigest()[:20]
+            fasta_sha256 = digest.hexdigest()
+            analysis_id = fasta_sha256[:20]
             input_path = temporary_directory / f"{analysis_id}{suffix}"
             initial_path.replace(input_path)
             destination = request.app.state.report_directory / analysis_id
-            try:
-                async with request.app.state.analysis_semaphore:
-                    report = await asyncio.to_thread(
-                        predict_fasta,
-                        input_path,
-                        config=request.app.state.config,
-                        model_directory=request.app.state.model_directory,
-                        output_directory=destination,
-                        registry_path=request.app.state.registry_path,
-                        model_bundle=request.app.state.bundle,
-                        threads=2,
-                    )
-            except ValueError as error:
-                raise HTTPException(422, str(error)) from error
-            except Exception as error:
-                LOGGER.exception("Genome analysis %s failed", analysis_id)
-                raise HTTPException(
-                    500,
-                    "Genome analysis failed; inspect the server log for the internal error",
-                ) from error
+            analysis_lock = request.app.state.analysis_locks.setdefault(
+                analysis_id, asyncio.Lock()
+            )
+            async with analysis_lock:
+                report = _load_cached_report(destination, fasta_sha256)
+                if report is not None:
+                    LOGGER.info("Reusing cached genome analysis %s", analysis_id)
+                else:
+                    try:
+                        async with request.app.state.analysis_semaphore:
+                            report = await asyncio.to_thread(
+                                predict_fasta,
+                                input_path,
+                                config=request.app.state.config,
+                                model_directory=request.app.state.model_directory,
+                                output_directory=destination,
+                                registry_path=request.app.state.registry_path,
+                                model_bundle=request.app.state.bundle,
+                                threads=2,
+                            )
+                    except ValueError as error:
+                        raise HTTPException(422, str(error)) from error
+                    except Exception as error:
+                        LOGGER.exception("Genome analysis %s failed", analysis_id)
+                        raise HTTPException(
+                            500,
+                            "Genome analysis failed; inspect the server log for the internal error",
+                        ) from error
         report["analysis_id"] = analysis_id
+        elapsed = asyncio.get_running_loop().time() - started_at
+        if elapsed < MIN_ANALYSIS_RESPONSE_SECONDS:
+            await asyncio.sleep(MIN_ANALYSIS_RESPONSE_SECONDS - elapsed)
         return report
 
     @application.get("/api/v1/analyses/{analysis_id}", response_model=AnalysisResponse)
