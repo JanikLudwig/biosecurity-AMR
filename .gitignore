@@ -1,0 +1,40 @@
+.DS_Store
+.env
+.venv/
+.tools/
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+*.py[cod]
+
+# Generated and downloaded artifacts
+data/raw/
+data/interim/
+data/processed/
+data/manifests/qc-smoke.csv
+artifacts/
+
+# Large biological sequence/read files. Keep only small fixtures under tests/fixtures
+# by explicitly negating them there if we add any later.
+*.fna
+*.fna.gz
+*.fa
+*.fa.gz
+*.fasta
+*.fasta.gz
+*.ffn
+*.ffn.gz
+*.faa
+*.faa.gz
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+*.bam
+*.bai
+*.cram
+
+# Generated feature matrices and serialized models
+*.parquet
+*.joblib
+*.npz

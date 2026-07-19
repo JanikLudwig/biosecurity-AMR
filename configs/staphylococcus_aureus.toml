@@ -1,0 +1,59 @@
+[dataset]
+species = "Staphylococcus aureus"
+taxon_id = 1280
+source_csv = "data/BVBRC_genome_amr.csv"
+evidence = "Laboratory Method"
+max_genomes = 2000
+seed = 42
+minimum_per_class = 200
+antibiotics = [
+  "erythromycin",
+  "ciprofloxacin",
+  "gentamicin",
+  "tetracycline",
+  "clindamycin",
+]
+
+[quality]
+min_genome_length = 2400000
+max_genome_length = 3100000
+max_contigs = 300
+min_n50 = 10000
+max_ambiguous_fraction = 0.01
+min_checkm_completeness = 95.0
+max_checkm_contamination = 5.0
+allowed_genome_quality = ["Good"]
+
+[bvbrc]
+api_base_url = "https://www.bv-brc.org/api"
+download_concurrency = 4
+timeout_seconds = 120
+sequence_result_limit = 10000
+
+[amrfinder]
+organism = "Staphylococcus_aureus"
+executable = ".tools/amrfinder/bin/amrfinder"
+
+[similarity]
+ksize = 31
+scaled = 1000
+# Tuned on the development cohort before model fitting. At 0.99, single-linkage
+# chaining collapsed 495 genomes into only 9 groups and removed gentamicin-
+# resistant calibration support. 0.9992 retains near-duplicate grouping while
+# producing 103 groups with both phenotype classes represented in held-out data.
+ani_threshold = 0.9992
+seed = 42
+train_fraction = 0.70
+calibration_fraction = 0.15
+test_fraction = 0.15
+
+[model]
+regularization_c = 1.0
+seed = 42
+min_train_per_class = 5
+min_calibration_per_class = 5
+# Prototype calibration policy, not a clinical safety claim. Boundaries are learned
+# per drug and direction; a direction that fails its constraint remains a no-call.
+min_threshold_calls = 5
+max_resistant_fraction_in_susceptible_calls = 0.10
+max_susceptible_fraction_in_resistant_calls = 0.10
