@@ -81,3 +81,6 @@ reports/
 
 data/manifests/*.csv
 data/manifests/*.csv.gz
+
+artifacts/
+scratch/

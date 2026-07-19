@@ -13,7 +13,11 @@ def safe_display_path(path_str):
     
     try:
         rel = path.relative_to(repo_root)
-        return rel.as_posix()
+        posix_path = rel.as_posix()
+        # Rule 3: Speichere niemals temporäre Verzeichnisnamen
+        if "tmp" in posix_path.lower() or "pytest" in posix_path.lower():
+            return path.name
+        return posix_path
     except ValueError:
         return path.name
 
