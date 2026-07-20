@@ -22,21 +22,21 @@ The program is configured for _S. aureus_ (NCBI taxon `1280`) but does **not** p
 
 ## Repository status and reproducibility
 
-The source, frozen feature tables, model manifests, evaluation metadata, and example reports are versioned. A fresh checkout does **not** contain the large/generated files required for live inference:
+The source, frozen feature tables, model artifacts, evaluation metadata, and example reports are versioned. The checked-in v1 bundle contains the files needed for model inference; a fresh checkout still needs the local software dependencies described below.
 
-| Available in the repository | Must be created or supplied locally |
+| Available in the repository | Still required locally |
 | --- | --- |
-| `data/training-data-v1/`: 3,356 feature rows, labels, feature dictionary, checksums, and AMRFinderPlus provenance | `data/processed/` normalised tables and grouped splits |
-| `data/demo-data.zip`: three assembled demo FASTAs | Downloaded FASTAs in `data/raw/genomes/` |
-| `artifacts/models-v1/`: bundle manifest, per-drug metadata, held-out predictions, reliability table, and score summary | Serialized `*.joblib` models and `lineage-reference.joblib` |
-| `artifacts/reports-v1/` and `artifacts/api-reports/`: frozen example outputs | A local AMRFinderPlus installation and database |
+| `data/training-data-v1/`: 3,356 feature rows, labels, feature dictionary, checksums, and AMRFinderPlus provenance | `data/processed/` normalised tables and grouped splits, if rebuilding the models |
+| `data/demo-data.zip`: three assembled demo FASTAs | Downloaded FASTAs in `data/raw/genomes/`, if rebuilding the models |
+| `artifacts/models-v1/`: manifest, three serialized `*.joblib` models, lineage reference, metadata, held-out predictions, reliability table, and score summary | A local AMRFinderPlus installation/database and its adjacent `blastn` executable |
+| `artifacts/reports-v1/` and `artifacts/api-reports/`: frozen example outputs | A reconstructed, species-verified input FASTA |
 
-The missing files are intentionally ignored by Git because they are generated, large, or environment-specific. Consequently, `genome-firewall api` and `genome-firewall predict` will not work from a pristine clone until a compatible bundle and lineage reference are rebuilt (or otherwise provided). The commands in [Rebuild a local bundle](#rebuild-a-local-bundle) produce them.
+After `uv sync` and AMRFinderPlus setup, the default API can load `artifacts/models-v1/` and analyse a submitted FASTA without retraining. Use the environment created by `uv`; the serialized artifacts depend on the compatible scikit-learn version specified by this project. Rebuilding is optional and is documented in [Rebuild the bundle (optional)](#rebuild-the-bundle-optional).
 
 There are two artifact families in the tree:
 
-- **`artifacts/models-v1/`** is the default API bundle definition: three antibiotics, 158 features, and a declared `provisional-500-genome-grouped-development` evaluation. Its serialized model files are absent from this checkout.
-- **`artifacts/models/`** contains metadata for a separate five-antibiotic, 104-feature development run, but has no `bundle-manifest.json`; it is not a runnable bundle from this checkout. The CLI's historical default points here, so pass `--model-directory artifacts/models-v1` after rebuilding the v1 bundle.
+- **`artifacts/models-v1/`** is the default API bundle: three antibiotics, 158 features, a lineage reference, and a declared `provisional-500-genome-grouped-development` evaluation. It is the runnable service bundle.
+- **`artifacts/models/`** contains five serialized models and a lineage reference from a separate 104-feature development run, but has no `bundle-manifest.json`; it is not a runnable bundle through the CLI/API. The CLI's historical default points here, so pass `--model-directory artifacts/models-v1` when using the provided v1 bundle.
 
 ## Architecture
 
@@ -135,7 +135,7 @@ The lineage artifact stores training sourmash sketches and sets its minimum acce
 
 ## Current model scores
 
-The following are the score metadata committed in [`artifacts/models-v1/model-summary.csv`](artifacts/models-v1/model-summary.csv). They describe the **provisional 495-genome grouped-development evaluation**, not an external validation or clinical performance claim. The underlying serialized v1 models are absent from this checkout; these numbers are preserved evaluation metadata.
+The following scores are committed with the runnable v1 bundle in [`artifacts/models-v1/model-summary.csv`](artifacts/models-v1/model-summary.csv). They describe the **provisional 495-genome grouped-development evaluation**, not an external validation or clinical performance claim.
 
 | Drug | Test labels (S / R) | Balanced accuracy | Resistant recall | Susceptible recall | AUROC | PR-AUC | Brier ↓ | Model-signal coverage | No-call rate |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -191,7 +191,7 @@ The setup script installs under `.tools/amrfinder/`, downloads the AMRFinder dat
 
 ### Inspect the included data without inference
 
-These commands work without downloaded assemblies or serialized models:
+These commands inspect and prepare the included data without running an AMR analysis:
 
 ```bash
 uv run genome-firewall data summarize
@@ -201,9 +201,9 @@ uv run genome-firewall data prepare-training-v1
 
 They inspect the supplied BV-BRC export, write an AST provenance audit under `data/processed/phenotype-audit/`, and normalise the frozen v1 tables under `data/processed/training-v1/`.
 
-### Rebuild a local bundle
+### Rebuild the bundle (optional)
 
-The following is the complete local-rebuild path. It downloads assemblies from BV-BRC, can take substantial time and storage, and creates ignored files. It also creates a new local evaluation; do not present it as the committed provisional result unless its inputs and split provenance match.
+The provided `artifacts/models-v1/` bundle is enough for local inference; do not rebuild it merely to run the demo. Rebuild only to reproduce or extend the model-development workflow. The following process downloads assemblies from BV-BRC, can take substantial time and storage, and creates a new local evaluation. It writes to `artifacts/models-local/` so the supplied runnable bundle is preserved; do not present the new result as the committed provisional evaluation unless its inputs and split provenance match.
 
 ```bash
 # 1. Materialise the frozen feature/label contract.
@@ -227,7 +227,7 @@ uv run genome-firewall model train \
   --features data/processed/training-v1/features.parquet \
   --phenotypes data/processed/training-v1/phenotypes.csv \
   --splits data/processed/training-v1/splits/genome-splits.csv \
-  --output artifacts/models-v1 \
+  --output artifacts/models-local \
   --antibiotic cefoxitin \
   --antibiotic ciprofloxacin \
   --antibiotic erythromycin
@@ -236,14 +236,14 @@ uv run genome-firewall model train \
 uv run genome-firewall model lineage \
   --splits data/processed/training-v1/splits/genome-splits.csv \
   --fasta-directory data/raw/genomes \
-  --output artifacts/models-v1/lineage-reference.joblib
+  --output artifacts/models-local/lineage-reference.joblib
 ```
 
-`model train` writes the `*.joblib` files, `bundle-manifest.json`, per-drug metadata, test predictions, reliability bins, and `model-summary.csv`. The bundle loader rejects a model with a different antibiotic, feature order, or schema hash.
+`model train` writes the `*.joblib` files, `bundle-manifest.json`, per-drug metadata, test predictions, reliability bins, and `model-summary.csv`. The bundle loader rejects a model with a different antibiotic, feature order, or schema hash. Use `--model-directory artifacts/models-local` with the CLI or set `GENOME_FIREWALL_MODEL_DIRECTORY=artifacts/models-local` before starting the API to use this rebuilt bundle.
 
 ### Analyse one demo FASTA
 
-The repository includes three assembled demo FASTAs in `data/demo-data.zip`. After rebuilding the compatible bundle, extract one and run:
+The repository includes three assembled demo FASTAs in `data/demo-data.zip`. After completing the prerequisites, extract one and run it with the provided v1 bundle:
 
 ```bash
 unzip -q data/demo-data.zip -d /tmp/genome-firewall-demo
@@ -258,7 +258,7 @@ The command writes four auditable outputs for the genome ID: the raw AMRFinderPl
 
 ### Serve the FastAPI demo
 
-With a rebuilt `artifacts/models-v1/` directory and a ready AMRFinderPlus installation:
+With the provided `artifacts/models-v1/` directory and a ready AMRFinderPlus installation:
 
 ```bash
 uv run genome-firewall api
@@ -303,7 +303,7 @@ This client is a visualisation layer; it does not replace the API's controls or 
 | `src/genome_firewall/` | Python package: CLI, data acquisition/QC, annotation, splitting, models, targets, decision logic, inference, and API |
 | `configs/` | _S. aureus_ QC/splitting/model parameters and drug-target registry |
 | `data/` | Supplied BV-BRC export, initial manifests, frozen v1 data tables, and compressed demo FASTAs |
-| `artifacts/` | Versioned metadata, metric reports, and frozen example analyses; generated model binaries are ignored |
+| `artifacts/` | Versioned v1 model binaries and lineage reference, metric reports, development metadata, and frozen example analyses |
 | `tests/` | Contract tests for FASTA QC, target detection, model/schema validation, calibration thresholds, decisions, and external-report scoring |
 | `docs/` | Phenotype policy, implementation rationale, model/API design, and presentation material |
 | `bio_sentinel_ui/` | Optional Bun/React/TanStack interface branded “GyraseX” |
