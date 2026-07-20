@@ -1,4 +1,4 @@
-# Genome Firewall
+# GyraseX
 
 Genome Firewall is a defensive antimicrobial-resistance (AMR) research prototype for **one already assembled, already identified _Staphylococcus aureus_ genome**. It combines known AMR markers, calibrated statistical models, molecular-target checks, and conservative safety gates to return one of three research-only outcomes per supported antibiotic:
 
