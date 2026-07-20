@@ -40,5 +40,4 @@ data/manifests/qc-smoke.csv
 
 # Generated feature matrices and serialized models
 *.parquet
-*.joblib
 *.npz
