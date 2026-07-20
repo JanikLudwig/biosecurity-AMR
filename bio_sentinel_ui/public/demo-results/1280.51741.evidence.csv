@@ -1,0 +1,10 @@
+genome_id,feature_key,element_symbol,element_name,evidence_category,amr_class,amr_subclass,method,coverage,identity,feature_value
+1280.51741,gene::blaI,blaI,penicillinase repressor BlaI,known_resistance_gene,BETA-LACTAM,BETA-LACTAM,BLASTX,100.0,99.21,1
+1280.51741,gene::blaR1,blaR1,beta-lactam sensor/signal transducer BlaR1,known_resistance_gene,BETA-LACTAM,BETA-LACTAM,BLASTX,100.0,98.8,1
+1280.51741,gene::blaZ,blaZ,penicillin-hydrolyzing class A beta-lactamase BlaZ,known_resistance_gene,BETA-LACTAM,BETA-LACTAM,BLASTX,100.0,98.58,1
+1280.51741,gene::fosB,fosB,FosB/FosD family fosfomycin resistance bacillithiol transferase,known_resistance_gene,FOSFOMYCIN,FOSFOMYCIN,EXACTX,100.0,100.0,1
+1280.51741,mutation::gyrA::S84V,gyrA_S84V,Staphylococcus aureus quinolone resistant GyrA,known_resistance_mutation,QUINOLONE,QUINOLONE,POINTX,100.0,99.77,1
+1280.51741,mutation::mprF::P314L,mprF_P314L,Staphylococcus aureus daptomycin resistant MprF,known_resistance_mutation,LIPOPEPTIDE,DAPTOMYCIN,POINTX,95.12,99.5,1
+1280.51741,mutation::murA::G257D,murA_G257D,Staphylococcus aureus fosfomycin resistant MurA,known_resistance_mutation,FOSFOMYCIN,FOSFOMYCIN,POINTX,100.0,99.76,1
+1280.51741,mutation::parC::E84K,parC_E84K,Staphylococcus aureus quinolone resistant ParC,known_resistance_mutation,QUINOLONE,QUINOLONE,POINTX,100.0,99.38,1
+1280.51741,mutation::parC::S80F,parC_S80F,Staphylococcus aureus quinolone resistant ParC,known_resistance_mutation,QUINOLONE,QUINOLONE,POINTX,100.0,99.38,1

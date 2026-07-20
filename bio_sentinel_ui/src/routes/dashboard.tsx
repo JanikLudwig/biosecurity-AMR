@@ -91,7 +91,8 @@ function DashboardScreen() {
   useEffect(() => {
     if (!stored) return;
     const controller = new AbortController();
-    fetchModels(controller.signal)
+    const isSavedDemo = stored.report.analysis_id.startsWith("demo-");
+    fetchModels(controller.signal, isSavedDemo)
       .then(setModels)
       .catch((error: unknown) => {
         if ((error as DOMException)?.name !== "AbortError") {
@@ -533,7 +534,10 @@ function BioTab({
                 This value is inside the calibrated no-call band.
               </>
             ) : (
-              <>One or more safety checks prevented a directional call: {selected.reasons.map(readable).join(" · ")}.</>
+              <>
+                One or more safety checks prevented a directional call:{" "}
+                {selected.reasons.map(readable).join(" · ")}.
+              </>
             )}
           </AlertDescription>
         </Alert>
@@ -1083,14 +1087,14 @@ function ModelQcTooltip() {
               not a guarantee for an individual patient.
             </p>
             <p>
-              <span className="font-semibold">Thresholds</span> are learned separately for each
-              drug from calibration data. Below the work boundary the model can support likely to
-              work; above the fail boundary it can support likely to fail; the middle is deliberately
+              <span className="font-semibold">Thresholds</span> are learned separately for each drug
+              from calibration data. Below the work boundary the model can support likely to work;
+              above the fail boundary it can support likely to fail; the middle is deliberately
               no-call.
             </p>
             <p>
-              <span className="font-semibold">The quality checks</span> ask whether the assembly
-              is usable and whether this genome looks enough like the training population. A failed
+              <span className="font-semibold">The quality checks</span> ask whether the assembly is
+              usable and whether this genome looks enough like the training population. A failed
               check, conflicting resistance evidence, or an unverified drug target can turn a
               directional model signal into no-call.
             </p>

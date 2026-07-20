@@ -153,7 +153,13 @@ export interface ModelsResponse {
   };
 }
 
-const API_BASE = (import.meta.env.VITE_API_BASE_URL ?? "http://127.0.0.1:8000").replace(/\/$/, "");
+const configuredApiBase = import.meta.env.VITE_API_BASE_URL?.trim();
+const API_BASE = configuredApiBase
+  ? configuredApiBase.replace(/\/$/, "")
+  : import.meta.env.DEV
+    ? "http://127.0.0.1:8000"
+    : null;
+export const LIVE_ANALYSIS_AVAILABLE = API_BASE !== null;
 const ANALYSIS_KEY = "genome-firewall:analysis-v1";
 const SAMPLE_KEY = "genome-firewall:sample-name";
 
@@ -168,6 +174,7 @@ async function apiError(response: Response): Promise<Error> {
 }
 
 export async function analyzeGenome(file: File): Promise<AnalysisReport> {
+  if (!API_BASE) throw new Error("Live genome analysis is not enabled in this deployment.");
   const form = new FormData();
   form.append("fasta", file);
   const response = await fetch(`${API_BASE}/api/v1/analyses`, {
@@ -182,6 +189,14 @@ export async function fetchAnalysis(
   analysisId: string,
   signal?: AbortSignal,
 ): Promise<AnalysisReport> {
+  if (!API_BASE && analysisId.startsWith("demo-")) {
+    const id = analysisId.slice("demo-".length);
+    const response = await fetch(`/demo-results/${encodeURIComponent(id)}.report.json`, { signal });
+    if (!response.ok) throw await apiError(response);
+    const report = (await response.json()) as AnalysisReport;
+    return { ...report, analysis_id: analysisId };
+  }
+  if (!API_BASE) throw new Error("This deployment only contains saved demo analyses.");
   const response = await fetch(`${API_BASE}/api/v1/analyses/${encodeURIComponent(analysisId)}`, {
     signal,
   });
@@ -189,10 +204,25 @@ export async function fetchAnalysis(
   return (await response.json()) as AnalysisReport;
 }
 
-export async function fetchModels(signal?: AbortSignal): Promise<ModelsResponse> {
-  const response = await fetch(`${API_BASE}/api/v1/models`, { signal });
+async function fetchModelMetadata(endpoint: string, signal?: AbortSignal): Promise<ModelsResponse> {
+  const response = await fetch(endpoint, { signal });
   if (!response.ok) throw await apiError(response);
   return (await response.json()) as ModelsResponse;
+}
+
+export async function fetchModels(
+  signal?: AbortSignal,
+  useBundledMetadata = false,
+): Promise<ModelsResponse> {
+  const bundledEndpoint = "/demo-results/models.json";
+  if (useBundledMetadata || !API_BASE) return fetchModelMetadata(bundledEndpoint, signal);
+
+  try {
+    return await fetchModelMetadata(`${API_BASE}/api/v1/models`, signal);
+  } catch (error) {
+    if ((error as DOMException)?.name === "AbortError") throw error;
+    return fetchModelMetadata(bundledEndpoint, signal);
+  }
 }
 
 export function storeAnalysis(report: AnalysisReport, sampleName: string): void {
