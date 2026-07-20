@@ -90,6 +90,17 @@ For a `likely_to_work` call, relevant AMR evidence is determined from the drug r
 
 The `confidence` field is derived from the final direction (`1 - P(resistant)` for `likely_to_work`, otherwise `P(resistant)`; for `no_call`, the larger side). It is a report field, not a clinical confidence interval or a guarantee of treatment outcome.
 
+### Why “Outside AMR Feature Distribution” produces a no-call
+
+This message comes from M4's **AMR-feature novelty gate**, not from the M2 target check. The model has a fixed ordered schema of 158 AMRFinderPlus gene/mutation features. An input is considered inside that feature distribution only when both conditions hold:
+
+1. M1 detected no AMR feature absent from the bundle's 158-feature schema; and
+2. its binary feature profile has Jaccard similarity at least as high as the stored floor when compared with the closest training profile.
+
+Otherwise the report returns `no_call` with `outside_amr_feature_distribution`; it does not infer that the genome is invalid or resistant. Common causes are a resistance marker or marker combination not represented in the 495-genome development cohort, or a local AMRFinderPlus database that differs from the version recorded for the training data (`2026-05-15.1`).
+
+To investigate a result, inspect `workflows.M1.unknown_features`, the decision's `unknown_features`, `feature_similarity`, and `feature_similarity_floor`, together with the AMRFinderPlus/database versions in `provenance`. The safe remedy is to use the recorded annotation version or retrain and evaluate the model with representative labelled genomes. Do not suppress the novelty gate or silently discard unknown features.
+
 ## Molecular-target checks (M2)
 
 The v1 service bundle supports the following three drugs. The source registry also contains development entries for gentamicin, tetracycline, and clindamycin, but those are not part of the v1 API bundle.
