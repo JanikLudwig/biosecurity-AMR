@@ -11,7 +11,6 @@ import {
   Dna,
   FileText,
   Loader2,
-  ShieldCheck,
   Upload,
 } from "lucide-react";
 
@@ -78,7 +77,7 @@ function UploadScreen() {
 
       <header className="relative z-10 flex items-center justify-between border-b border-border/60 px-5 py-5 sm:px-8">
         <div className="flex items-center gap-2">
-          <ShieldCheck className="h-5 w-5 text-foreground" />
+          <Dna className="h-5 w-5 text-foreground" />
           <span className="font-mono-tabular text-sm font-semibold tracking-[0.12em]">
             GyraseX
           </span>
